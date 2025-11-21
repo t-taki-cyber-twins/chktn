@@ -15,94 +15,88 @@
         <!-- メインレイアウト -->
         <div class="main-layout">
             <!-- サイドメニュー -->
-            <aside class="sidebar">
-                <nav>
-                    <!-- 検索フォーム -->
-                    <div class="sidebar-search-form">
-                        <div class="sidebar-title">検索条件</div>
-                        <form id="search-form" class="search-form">
-                            <div class="search-form-actions">
-                                <button type="submit" class="btn btn-primary search-form-submit">検索</button>
-                                <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+            <app-sidebar>
+                <div class="sidebar-search-form">
+                    <div class="sidebar-title">検索条件</div>
+                    <form id="search-form" class="search-form">
+                        <div class="search-form-actions">
+                            <button type="submit" class="btn btn-primary search-form-submit">検索</button>
+                            <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
+                            <input type="text" id="search-engineer-name" name="engineer-name" class="search-form-input" placeholder="エンジニア名で検索">
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label for="search-skill" class="search-form-label">スキル</label>
+                            <select id="search-skill" name="skill" class="search-form-select" multiple>
+                                <option value="1">Java</option>
+                                <option value="2">Spring Boot</option>
+                                <option value="3">React</option>
+                                <option value="4">PostgreSQL</option>
+                                <option value="5">AWS</option>
+                                <option value="6">Python</option>
+                                <option value="7">Django</option>
+                            </select>
+                            <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label for="search-available-date" class="search-form-label">稼働開始可能日</label>
+                            <input type="date" id="search-available-date" name="available-date" class="search-form-input">
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label for="search-price-min" class="search-form-label">希望単価範囲</label>
+                            <div class="search-form-range">
+                                <input type="number" id="search-price-min" name="price-min" class="search-form-input" placeholder="最小値">
+                                <span class="search-form-range-separator">〜</span>
+                                <input type="number" id="search-price-max" name="price-max" class="search-form-input" placeholder="最大値">
                             </div>
-                            
-                            <div class="search-form-group">
-                                <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
-                                <input type="text" id="search-engineer-name" name="engineer-name" class="search-form-input" placeholder="エンジニア名で検索">
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label for="search-contract-type" class="search-form-label">希望契約形態</label>
+                            <select id="search-contract-type" name="contract-type" class="search-form-select">
+                                <option value="">すべて</option>
+                                <option value="contract">契約社員</option>
+                                <option value="employee">正社員</option>
+                                <option value="freelance">フリーランス</option>
+                                <option value="part-time">パートタイム</option>
+                            </select>
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label for="search-work-location" class="search-form-label">希望勤務地</label>
+                            <input type="text" id="search-work-location" name="work-location" class="search-form-input" placeholder="例: 東京都">
+                        </div>
+                        
+                        <div class="search-form-group">
+                            <label class="search-form-label">リモートワーク希望</label>
+                            <div class="search-form-radio-group">
+                                <label class="search-form-radio-label">
+                                    <input type="radio" name="remote-work" value="" class="search-form-radio" checked>
+                                    <span>すべて</span>
+                                </label>
+                                <label class="search-form-radio-label">
+                                    <input type="radio" name="remote-work" value="yes" class="search-form-radio">
+                                    <span>希望する</span>
+                                </label>
+                                <label class="search-form-radio-label">
+                                    <input type="radio" name="remote-work" value="no" class="search-form-radio">
+                                    <span>希望しない</span>
+                                </label>
+                                <label class="search-form-radio-label">
+                                    <input type="radio" name="remote-work" value="partial" class="search-form-radio">
+                                    <span>一部可</span>
+                                </label>
                             </div>
-                            
-                            <div class="search-form-group">
-                                <label for="search-skill" class="search-form-label">スキル</label>
-                                <select id="search-skill" name="skill" class="search-form-select" multiple>
-                                    <option value="1">Java</option>
-                                    <option value="2">Spring Boot</option>
-                                    <option value="3">React</option>
-                                    <option value="4">PostgreSQL</option>
-                                    <option value="5">AWS</option>
-                                    <option value="6">Python</option>
-                                    <option value="7">Django</option>
-                                </select>
-                                <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
-                            </div>
-                            
-                            <div class="search-form-group">
-                                <label for="search-available-date" class="search-form-label">稼働開始可能日</label>
-                                <input type="date" id="search-available-date" name="available-date" class="search-form-input">
-                            </div>
-                            
-                            <div class="search-form-group">
-                                <label for="search-price-min" class="search-form-label">希望単価範囲</label>
-                                <div class="search-form-range">
-                                    <input type="number" id="search-price-min" name="price-min" class="search-form-input" placeholder="最小値">
-                                    <span class="search-form-range-separator">〜</span>
-                                    <input type="number" id="search-price-max" name="price-max" class="search-form-input" placeholder="最大値">
-                                </div>
-                            </div>
-                            
-                            <div class="search-form-group">
-                                <label for="search-contract-type" class="search-form-label">希望契約形態</label>
-                                <select id="search-contract-type" name="contract-type" class="search-form-select">
-                                    <option value="">すべて</option>
-                                    <option value="contract">契約社員</option>
-                                    <option value="employee">正社員</option>
-                                    <option value="freelance">フリーランス</option>
-                                    <option value="part-time">パートタイム</option>
-                                </select>
-                            </div>
-                            
-                            <div class="search-form-group">
-                                <label for="search-work-location" class="search-form-label">希望勤務地</label>
-                                <input type="text" id="search-work-location" name="work-location" class="search-form-input" placeholder="例: 東京都">
-                            </div>
-                            
-                            <div class="search-form-group">
-                                <label class="search-form-label">リモートワーク希望</label>
-                                <div class="search-form-radio-group">
-                                    <label class="search-form-radio-label">
-                                        <input type="radio" name="remote-work" value="" class="search-form-radio" checked>
-                                        <span>すべて</span>
-                                    </label>
-                                    <label class="search-form-radio-label">
-                                        <input type="radio" name="remote-work" value="yes" class="search-form-radio">
-                                        <span>希望する</span>
-                                    </label>
-                                    <label class="search-form-radio-label">
-                                        <input type="radio" name="remote-work" value="no" class="search-form-radio">
-                                        <span>希望しない</span>
-                                    </label>
-                                    <label class="search-form-radio-label">
-                                        <input type="radio" name="remote-work" value="partial" class="search-form-radio">
-                                        <span>一部可</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <!-- 共通コンポーネント: 最近使った画面 -->
-                    <app-recent-screens></app-recent-screens>
-                </nav>
-            </aside>
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
 
             <!-- コンテンツエリア -->
             <main class="content-area">
@@ -110,69 +104,17 @@
                     <div class="search-results-header">
                         <h1 class="search-results-title">公開エンジニア検索結果</h1>
                         <div class="search-results-count">
-                            <span id="results-count">12件</span>のエンジニアが見つかりました
+                            <span id="results-count">0件</span>のエンジニアが見つかりました
                         </div>
                     </div>
 
                     <!-- 検索結果一覧 -->
                     <div class="engineer-list" id="engineer-list">
-                        <!-- エンジニアカード (JSで生成されますが、初期表示用にいくつか配置) -->
-                        <div class="engineer-card">
-                            <div class="engineer-card-header">
-                                <h2 class="engineer-card-title">
-                                    <a href="public-engineer-detail.html?engineerId=1" class="engineer-card-link">山田 太郎</a>
-                                </h2>
-                                <div class="engineer-card-badge">
-                                    <span class="badge badge-public">公開</span>
-                                </div>
-                            </div>
-                            <div class="engineer-card-body">
-                                <p class="engineer-card-description">
-                                    Java, Spring Bootを中心としたバックエンド開発が得意です。要件定義から設計、実装、テストまで一通り経験があります。
-                                </p>
-                                <div class="engineer-card-skills">
-                                    <span class="skill-tag">Java</span>
-                                    <span class="skill-tag">Spring Boot</span>
-                                    <span class="skill-tag">MySQL</span>
-                                    <span class="skill-tag">AWS</span>
-                                </div>
-                                <div class="engineer-card-details">
-                                    <div class="engineer-card-detail-item">
-                                        <span class="detail-label">稼働開始:</span>
-                                        <span class="detail-value">即日可能</span>
-                                    </div>
-                                    <div class="engineer-card-detail-item">
-                                        <span class="detail-label">希望単価:</span>
-                                        <span class="detail-value">80万円〜</span>
-                                    </div>
-                                    <div class="engineer-card-detail-item">
-                                        <span class="detail-label">希望契約:</span>
-                                        <span class="detail-value">フリーランス</span>
-                                    </div>
-                                    <div class="engineer-card-detail-item">
-                                        <span class="detail-label">希望勤務地:</span>
-                                        <span class="detail-value">東京都（リモート可）</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="engineer-card-footer">
-                                <div class="engineer-card-actions">
-                                    <a href="public-engineer-detail.html?engineerId=1" class="btn btn-secondary btn-sm">詳細を見る</a>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Cards will be populated by JS -->
                     </div>
 
                     <!-- ページネーション -->
-                    <div class="pagination">
-                        <button type="button" class="pagination-btn pagination-btn-prev" disabled>前へ</button>
-                        <div class="pagination-pages">
-                            <button type="button" class="pagination-page active">1</button>
-                            <button type="button" class="pagination-page">2</button>
-                            <button type="button" class="pagination-page">3</button>
-                        </div>
-                        <button type="button" class="pagination-btn pagination-btn-next">次へ</button>
-                    </div>
+                    <app-pagination></app-pagination>
                 </div>
             </main>
         </div>
@@ -180,9 +122,11 @@
 
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     
     <script src="js/common.js"></script>
-    <script src="js/public-engineer-search.js"></script>
+    <script type="module" src="js/public-engineer-search.js"></script>
 </body>
 </html>

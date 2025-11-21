@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initDeleteButtons();
     initPagination();
     initEditButtons();
+    
+    // 初期表示のために検索を実行
+    performSearch();
 });
 
 /**
@@ -198,9 +201,11 @@ function displaySearchResults(results) {
  * テーブル行のHTMLを生成
  */
 function createTableRow(meeting) {
-    const meetingDateTime = formatMeetingDateTime(meeting.meetingDate, meeting.meetingTime);
-    const statusBadgeClass = getStatusBadgeClass(meeting.status);
-    const statusText = getStatusText(meeting.status);
+    // meetingDate includes time in the new mock data structure
+    const meetingDateTime = meeting.meetingDate;
+    const statusBadgeClass = meeting.statusLabel === '面談予定' ? 'badge-status-pending' : 
+                             meeting.statusLabel === '面談完了' ? 'badge-status-completed' : 
+                             meeting.statusLabel === 'キャンセル' ? 'badge-status-cancelled' : 'badge-status-pending';
     
     // 自社案件の場合はproject-edit.html、他社の公開案件の場合はpublic-project-detail.htmlにリンク
     const projectLink = meeting.isOwnProject 
@@ -227,9 +232,9 @@ function createTableRow(meeting) {
             <td>${escapeHtml(meeting.projectCompany)}</td>
             <td>${escapeHtml(meeting.projectManager)}</td>
             <td>
-                <span class="badge ${statusBadgeClass}">${statusText}</span>
+                <span class="badge ${statusBadgeClass}">${escapeHtml(meeting.statusLabel)}</span>
             </td>
-            <td>${meetingDateTime}</td>
+            <td>${escapeHtml(meetingDateTime)}</td>
             <td>
                 <div class="table-actions">
                     <button type="button" class="btn btn-secondary btn-sm meeting-edit-btn" data-meeting-id="${meeting.id}">編集</button>
@@ -409,57 +414,13 @@ function initPagination() {
 /**
  * モック検索結果データを取得
  */
+import { mockEngineerMeetings } from './mock-data.js';
+
+/**
+ * モック検索結果データを取得
+ */
 function getMockSearchResults() {
-    return [
-        {
-            id: 1,
-            engineerName: '田中太郎',
-            engineerRepresentative: '鈴木一郎',
-            projectName: 'フルスタックエンジニア募集',
-            projectCompany: 'サンプル株式会社',
-            projectManager: '山田太郎',
-            status: 'pending',
-            meetingDate: '2024-12-15',
-            meetingTime: '14:00',
-            isOwnProject: true  // 自社案件
-        },
-        {
-            id: 2,
-            engineerName: '佐藤次郎',
-            engineerRepresentative: '高橋次郎',
-            projectName: 'フルスタックエンジニア募集',
-            projectCompany: 'サンプル株式会社',
-            projectManager: '山田太郎',
-            status: 'pending',
-            meetingDate: '2024-12-16',
-            meetingTime: '10:00',
-            isOwnProject: true  // 自社案件
-        },
-        {
-            id: 3,
-            engineerName: '佐藤次郎',
-            engineerRepresentative: '高橋次郎',
-            projectName: 'バックエンドエンジニア募集',
-            projectCompany: 'テック株式会社',
-            projectManager: '佐藤花子',
-            status: 'completed',
-            meetingDate: '2024-12-10',
-            meetingTime: '10:00',
-            isOwnProject: false  // 他社の公開案件
-        },
-        {
-            id: 4,
-            engineerName: '鈴木花子',
-            engineerRepresentative: '鈴木一郎',
-            projectName: 'フロントエンドエンジニア募集',
-            projectCompany: 'デザイン株式会社',
-            projectManager: '鈴木一郎',
-            status: 'cancelled',
-            meetingDate: '2024-12-08',
-            meetingTime: '15:00',
-            isOwnProject: false  // 他社の公開案件
-        }
-    ];
+    return mockEngineerMeetings;
 }
 
 /**

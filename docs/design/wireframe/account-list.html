@@ -17,56 +17,50 @@
         <!-- メインレイアウト -->
         <div class="main-layout">
             <!-- サイドメニュー -->
-            <aside class="sidebar">
-                <nav>
-                    <!-- 検索フォーム -->
-                    <div class="sidebar-search-form">
-                        <div class="sidebar-title">検索条件</div>
-                        <form id="search-form" class="search-form">
-                            <div class="search-form-actions">
-                                <button type="submit" class="btn btn-primary search-form-submit">検索</button>
-                                <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
-                            </div>
+            <app-sidebar>
+                <div class="sidebar-search-form">
+                    <div class="sidebar-title">検索条件</div>
+                    <form id="search-form" class="search-form">
+                        <div class="search-form-actions">
+                            <button type="submit" class="btn btn-primary search-form-submit">検索</button>
+                            <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-account-email" class="search-form-label">ログインメールアドレス</label>
-                                <input type="text" id="search-account-email" name="account-email"
-                                    class="search-form-input" placeholder="メールアドレスで検索">
-                            </div>
+                        <div class="search-form-group">
+                            <label for="search-account-email" class="search-form-label">ログインメールアドレス</label>
+                            <input type="text" id="search-account-email" name="account-email"
+                                class="search-form-input" placeholder="メールアドレスで検索">
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-employee-name" class="search-form-label">社員名</label>
-                                <input type="text" id="search-employee-name" name="employee-name"
-                                    class="search-form-input" placeholder="社員名で検索">
-                            </div>
+                        <div class="search-form-group">
+                            <label for="search-employee-name" class="search-form-label">社員名</label>
+                            <input type="text" id="search-employee-name" name="employee-name"
+                                class="search-form-input" placeholder="社員名で検索">
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-role-group" class="search-form-label">ロールグループ</label>
-                                <select id="search-role-group" name="role-group" class="search-form-select">
-                                    <option value="">すべて</option>
-                                    <option value="admin">管理者</option>
-                                    <option value="engineer-manager">エンジニア管理者</option>
-                                    <option value="back-office">バックオフィス</option>
-                                    <option value="viewer">閲覧者</option>
-                                </select>
-                            </div>
+                        <div class="search-form-group">
+                            <label for="search-role-group" class="search-form-label">ロールグループ</label>
+                            <select id="search-role-group" name="role-group" class="search-form-select">
+                                <option value="">すべて</option>
+                                <option value="admin">管理者</option>
+                                <option value="engineer-manager">エンジニア管理者</option>
+                                <option value="back-office">バックオフィス</option>
+                                <option value="viewer">閲覧者</option>
+                            </select>
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-status" class="search-form-label">ステータス</label>
-                                <select id="search-status" name="status" class="search-form-select">
-                                    <option value="">すべて</option>
-                                    <option value="active">有効</option>
-                                    <option value="inactive">無効</option>
-                                    <option value="locked">ロック中</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- 共通コンポーネント: 最近使った画面 -->
-                    <app-recent-screens></app-recent-screens>
-                </nav>
-            </aside>
+                        <div class="search-form-group">
+                            <label for="search-status" class="search-form-label">ステータス</label>
+                            <select id="search-status" name="status" class="search-form-select">
+                                <option value="">すべて</option>
+                                <option value="active">有効</option>
+                                <option value="inactive">無効</option>
+                                <option value="locked">ロック中</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
 
             <!-- コンテンツエリア -->
             <main class="content-area">
@@ -80,7 +74,7 @@
 
                     <div class="search-results-info">
                         <div class="search-results-count">
-                            <span id="results-count">8件</span>のアカウントが見つかりました
+                            <span id="results-count">0件</span>のアカウントが見つかりました
                         </div>
                         <div class="search-info-notice">
                             <strong>注意:</strong> アカウント管理は強力な権限です。原則としてテナント管理者のみに付与してください。
@@ -120,111 +114,13 @@
                                 </tr>
                             </thead>
                             <tbody id="account-table-body">
-                                <tr data-account-id="1">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="1">
-                                    </td>
-                                    <td>admin@example.com</td>
-                                    <td>山田 太郎</td>
-                                    <td>サンプル株式会社</td>
-                                    <td>
-                                        <span class="badge badge-danger">管理者</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-status-recruiting">有効</span>
-                                    </td>
-                                    <td>2025/11/20 09:30</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button type="button" class="btn btn-secondary btn-sm account-edit-btn"
-                                                data-account-id="1">編集</button>
-                                            <button type="button" class="btn btn-secondary btn-sm account-delete-btn"
-                                                data-account-id="1">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr data-account-id="2">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="2">
-                                    </td>
-                                    <td>suzuki@example.com</td>
-                                    <td>鈴木 一郎</td>
-                                    <td>サンプル株式会社</td>
-                                    <td>
-                                        <span class="badge badge-primary">エンジニア管理者</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-status-recruiting">有効</span>
-                                    </td>
-                                    <td>2025/11/19 15:22</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button type="button" class="btn btn-secondary btn-sm account-edit-btn"
-                                                data-account-id="2">編集</button>
-                                            <button type="button" class="btn btn-secondary btn-sm account-delete-btn"
-                                                data-account-id="2">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr data-account-id="3">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="3">
-                                    </td>
-                                    <td>tanaka@example.com</td>
-                                    <td>田中 花子</td>
-                                    <td>サンプル株式会社</td>
-                                    <td>
-                                        <span class="badge badge-secondary">バックオフィス</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-status-recruiting">有効</span>
-                                    </td>
-                                    <td>2025/11/18 11:45</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button type="button" class="btn btn-secondary btn-sm account-edit-btn"
-                                                data-account-id="3">編集</button>
-                                            <button type="button" class="btn btn-secondary btn-sm account-delete-btn"
-                                                data-account-id="3">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr data-account-id="4">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="4">
-                                    </td>
-                                    <td>sato@example.com</td>
-                                    <td>佐藤 次郎</td>
-                                    <td>サンプル株式会社</td>
-                                    <td>
-                                        <span class="badge badge-info">閲覧者</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-status-inactive">無効</span>
-                                    </td>
-                                    <td>2025/10/15 14:20</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button type="button" class="btn btn-secondary btn-sm account-edit-btn"
-                                                data-account-id="4">編集</button>
-                                            <button type="button" class="btn btn-secondary btn-sm account-delete-btn"
-                                                data-account-id="4">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <!-- Rows will be populated by JS -->
                             </tbody>
                         </table>
                     </div>
 
                     <!-- ページネーション -->
-                    <div class="pagination">
-                        <button type="button" class="pagination-btn pagination-btn-prev" disabled>前へ</button>
-                        <div class="pagination-pages">
-                            <button type="button" class="pagination-page active">1</button>
-                            <button type="button" class="pagination-page">2</button>
-                        </div>
-                        <button type="button" class="pagination-btn pagination-btn-next">次へ</button>
-                    </div>
+                    <app-pagination></app-pagination>
                 </div>
             </main>
         </div>
@@ -235,53 +131,13 @@
 
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     <script type="module" src="components/app-account-edit-modal.js"></script>
 
     <script src="js/common.js"></script>
-    <script>
-        // 簡易的な動作確認用スクリプト
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Account list page loaded');
-
-            const modal = document.getElementById('account-edit-modal');
-
-            // 新規登録ボタン
-            const newAccountBtn = document.getElementById('new-account-btn');
-            if (newAccountBtn) {
-                newAccountBtn.addEventListener('click', () => {
-                    modal.show();
-                });
-            }
-
-            // 編集ボタン
-            const editButtons = document.querySelectorAll('.account-edit-btn');
-            editButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const accountId = btn.getAttribute('data-account-id');
-                    // モックデータ
-                    const mockData = {
-                        id: accountId,
-                        email: 'admin@example.com',
-                        employeeId: '1',
-                        companyId: '1',
-                        roleGroupId: 'admin',
-                        status: 'active'
-                    };
-                    modal.show(mockData);
-                });
-            });
-
-            // 検索フォーム
-            const searchForm = document.getElementById('search-form');
-            if (searchForm) {
-                searchForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    alert('検索機能は未実装です。');
-                });
-            }
-        });
-    </script>
+    <script type="module" src="js/account-list.js"></script>
 </body>
 
 </html>

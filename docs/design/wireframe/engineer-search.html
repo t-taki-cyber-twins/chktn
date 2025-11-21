@@ -17,75 +17,70 @@
         <!-- メインレイアウト -->
         <div class="main-layout">
             <!-- サイドメニュー -->
-            <aside class="sidebar">
-                <nav>
-                    <!-- 検索フォーム -->
-                    <div class="sidebar-search-form">
-                        <div class="sidebar-title">検索条件</div>
-                        <form id="search-form" class="search-form">
-                            <div class="search-form-actions">
-                                <button type="submit" class="btn btn-primary search-form-submit">検索</button>
-                                <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
-                            </div>
+            <app-sidebar>
+                <!-- 検索フォーム -->
+                <div class="sidebar-search-form">
+                    <div class="sidebar-title">検索条件</div>
+                    <form id="search-form" class="search-form">
+                        <div class="search-form-actions">
+                            <button type="submit" class="btn btn-primary search-form-submit">検索</button>
+                            <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
-                                <input type="text" id="search-engineer-name" name="engineer-name"
-                                    class="search-form-input" placeholder="エンジニア名で検索">
-                            </div>
+                        <div class="search-form-group">
+                            <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
+                            <input type="text" id="search-engineer-name" name="engineer-name"
+                                class="search-form-input" placeholder="エンジニア名で検索">
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-skill" class="search-form-label">スキル</label>
-                                <input type="text" id="search-skill" name="skill" class="search-form-input"
-                                    placeholder="Java, AWSなど">
-                            </div>
+                        <div class="search-form-group">
+                            <label for="search-skill" class="search-form-label">スキル</label>
+                            <input type="text" id="search-skill" name="skill" class="search-form-input"
+                                placeholder="Java, AWSなど">
+                        </div>
 
-                            <div class="search-form-group">
-                                <label for="search-status" class="search-form-label">稼働ステータス</label>
-                                <select id="search-status" name="status" class="search-form-select">
-                                    <option value="">すべて</option>
-                                    <option value="available">即日可能</option>
-                                    <option value="working">稼働中</option>
-                                    <option value="leaving">離任予定</option>
-                                </select>
-                            </div>
+                        <div class="search-form-group">
+                            <label for="search-status" class="search-form-label">稼働ステータス</label>
+                            <select id="search-status" name="status" class="search-form-select">
+                                <option value="">すべて</option>
+                                <option value="available">即日可能</option>
+                                <option value="working">稼働中</option>
+                                <option value="leaving">離任予定</option>
+                            </select>
+                        </div>
 
-                            <div class="search-form-group">
-                                <label class="search-form-label">公開設定</label>
-                                <div class="search-form-checkbox-group">
-                                    <label class="search-form-checkbox-label">
-                                        <input type="checkbox" id="search-is-public" name="is-public"
-                                            class="search-form-checkbox" value="true">
-                                        <span>公開のみ</span>
-                                    </label>
-                                    <label class="search-form-checkbox-label">
-                                        <input type="checkbox" id="search-is-private" name="is-private"
-                                            class="search-form-checkbox" value="true">
-                                        <span>非公開のみ</span>
-                                    </label>
+                        <div class="search-form-group">
+                            <label class="search-form-label">公開設定</label>
+                            <div class="search-form-checkbox-group">
+                                <label class="search-form-checkbox-label">
+                                    <input type="checkbox" id="search-is-public" name="is-public"
+                                        class="search-form-checkbox" value="true">
+                                    <span>公開のみ</span>
+                                </label>
+                                <label class="search-form-checkbox-label">
+                                    <input type="checkbox" id="search-is-private" name="is-private"
+                                        class="search-form-checkbox" value="true">
+                                    <span>非公開のみ</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="search-engineer-representative" class="search-form-label">エンジニア担当者</label>
+                            <div class="form-select-wrapper">
+                                <button type="button" class="form-select-btn" id="search-engineer-representative-btn">
+                                    <span class="form-select-text">選択してください</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                                <div class="form-selected-values" id="search-engineer-representative-selected" style="display: none;">
+                                    <div class="selected-values-list" id="search-engineer-representative-selected-list"></div>
+                                    <button type="button" class="selected-value-remove-all" id="search-engineer-representative-remove-all">すべて解除</button>
                                 </div>
                             </div>
-
-                            <div class="search-form-group">
-                                <label for="search-engineer-representative" class="search-form-label">エンジニア担当者</label>
-                                <div class="form-select-wrapper">
-                                    <button type="button" class="form-select-btn" id="search-engineer-representative-btn">
-                                        <span class="form-select-text">選択してください</span>
-                                        <span class="form-select-arrow">▼</span>
-                                    </button>
-                                    <div class="form-selected-values" id="search-engineer-representative-selected" style="display: none;">
-                                        <div class="selected-values-list" id="search-engineer-representative-selected-list"></div>
-                                        <button type="button" class="selected-value-remove-all" id="search-engineer-representative-remove-all">すべて解除</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- 共通コンポーネント: 最近使った画面 -->
-                    <app-recent-screens></app-recent-screens>
-                </nav>
-            </aside>
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
 
             <!-- コンテンツエリア -->
             <main class="content-area">
@@ -145,101 +140,13 @@
                                 </tr>
                             </thead>
                             <tbody id="engineer-table-body">
-                                <tr data-engineer-id="1">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="1">
-                                    </td>
-                                    <td>
-                                        <a href="engineer-edit.html" class="table-link">山田 太郎</a>
-                                    </td>
-                                    <td>鈴木一郎</td>
-                                    <td>テック株式会社</td>
-                                    <td>Java, Spring Boot, AWS</td>
-                                    <td>5年</td>
-                                    <td>80万円</td>
-                                    <td>
-                                        <span class="badge badge-status-recruiting">即日可能</span>
-                                    </td>
-                                    <td>2024/12/01</td>
-                                    <td>
-                                        <span class="badge badge-public">公開</span>
-                                    </td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
-                                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
-                                                data-engineer-id="1">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr data-engineer-id="2">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="2">
-                                    </td>
-                                    <td>
-                                        <a href="engineer-edit.html" class="table-link">鈴木 一郎</a>
-                                    </td>
-                                    <td>田中太郎</td>
-                                    <td>システム株式会社</td>
-                                    <td>React, TypeScript, Node.js</td>
-                                    <td>3年</td>
-                                    <td>70万円</td>
-                                    <td>
-                                        <span class="badge badge-status-interviewing">稼働中</span>
-                                    </td>
-                                    <td>2025/04/01</td>
-                                    <td>
-                                        <span class="badge badge-private">非公開</span>
-                                    </td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
-                                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
-                                                data-engineer-id="2">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr data-engineer-id="3">
-                                    <td class="table-checkbox">
-                                        <input type="checkbox" class="row-select-checkbox" value="3">
-                                    </td>
-                                    <td>
-                                        <a href="engineer-edit.html" class="table-link">田中 花子</a>
-                                    </td>
-                                    <td>高橋次郎</td>
-                                    <td>システム株式会社</td>
-                                    <td>Python, Django, Machine Learning</td>
-                                    <td>4年</td>
-                                    <td>75万円</td>
-                                    <td>
-                                        <span class="badge badge-status-leaving">離任予定</span>
-                                    </td>
-                                    <td>2025/01/15</td>
-                                    <td>
-                                        <span class="badge badge-public">公開</span>
-                                    </td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
-                                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
-                                                data-engineer-id="3">削除</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <!-- Rows will be populated by JS -->
                             </tbody>
                         </table>
                     </div>
 
                     <!-- ページネーション -->
-                    <div class="pagination">
-                        <button type="button" class="pagination-btn pagination-btn-prev" disabled>前へ</button>
-                        <div class="pagination-pages">
-                            <button type="button" class="pagination-page active">1</button>
-                            <button type="button" class="pagination-page">2</button>
-                            <button type="button" class="pagination-page">3</button>
-                        </div>
-                        <button type="button" class="pagination-btn pagination-btn-next">次へ</button>
-                    </div>
+                    <app-pagination></app-pagination>
                 </div>
             </main>
         </div>
@@ -247,16 +154,23 @@
 
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     <script type="module" src="components/app-engineer-representative-selector.js"></script>
     <app-engineer-representative-selector></app-engineer-representative-selector>
 
     <script src="js/common.js"></script>
-    <script>
+    <script type="module">
         // Engineer search page script
+        import { mockEngineers } from './js/mock-data.js';
+
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Engineer search page loaded');
             
+            // Render engineer table
+            renderEngineerTable(mockEngineers);
+
             // Initialize Engineer Representative selection
             initEngineerRepresentativeSelection();
 
@@ -280,9 +194,65 @@
                         selectedList.innerHTML = '';
                         document.getElementById('search-engineer-representative-selected').style.display = 'none';
                     }
+                    // Re-render all data
+                    renderEngineerTable(mockEngineers);
                 });
             }
         });
+
+        /**
+         * Render engineer table
+         */
+        function renderEngineerTable(engineers) {
+            const tbody = document.getElementById('engineer-table-body');
+            if (!tbody) return;
+
+            tbody.innerHTML = engineers.map(engineer => `
+                <tr data-engineer-id="${engineer.id}">
+                    <td class="table-checkbox">
+                        <input type="checkbox" class="row-select-checkbox" value="${engineer.id}">
+                    </td>
+                    <td>
+                        <a href="engineer-edit.html" class="table-link">${escapeHtml(engineer.name)}</a>
+                    </td>
+                    <td>${escapeHtml(engineer.representative)}</td>
+                    <td>${escapeHtml(engineer.company)}</td>
+                    <td>${escapeHtml(engineer.skills)}</td>
+                    <td>${escapeHtml(engineer.experience)}</td>
+                    <td>${escapeHtml(engineer.price)}</td>
+                    <td>
+                        <span class="badge badge-status-${engineer.status}">${engineer.statusLabel}</span>
+                    </td>
+                    <td>${escapeHtml(engineer.availableDate)}</td>
+                    <td>
+                        <span class="badge badge-${engineer.isPublic ? 'public' : 'private'}">${engineer.isPublic ? '公開' : '非公開'}</span>
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
+                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
+                                data-engineer-id="${engineer.id}">削除</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Re-attach event listeners if needed (e.g. delete buttons)
+            attachTableEventListeners();
+        }
+
+        function attachTableEventListeners() {
+            document.querySelectorAll('.engineer-delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.engineerId;
+                    if(confirm('本当に削除しますか？')) {
+                        console.log('Delete engineer:', id);
+                        // In a real app, we would delete from data and re-render
+                        e.target.closest('tr').remove();
+                    }
+                });
+            });
+        }
 
         /**
          * Initialize Engineer Representative selection
@@ -374,13 +344,24 @@
             }
 
             console.log('検索パラメータ:', searchParams);
-            alert('検索機能は未実装です。\n検索パラメータ: ' + JSON.stringify(searchParams, null, 2));
+            
+            // Filter mock data (Simple implementation)
+            const filtered = mockEngineers.filter(engineer => {
+                let match = true;
+                if (searchParams['engineer-name'] && !engineer.name.includes(searchParams['engineer-name'])) match = false;
+                if (searchParams['status'] && engineer.status !== searchParams['status']) match = false;
+                // Add more filters as needed
+                return match;
+            });
+            
+            renderEngineerTable(filtered);
         }
 
         /**
          * HTML escape utility
          */
         function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;

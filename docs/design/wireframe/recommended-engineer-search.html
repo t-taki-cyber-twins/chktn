@@ -14,78 +14,73 @@
         <!-- メインレイアウト -->
         <div class="main-layout">
             <!-- サイドメニュー -->
-            <aside class="sidebar">
-                <nav>
-                    <!-- 検索フォーム -->
-                    <div class="sidebar-search-form">
-                        <div class="sidebar-title">検索条件</div>
-                        <form id="search-form" class="search-form">
-                            <div class="search-form-actions">
-                                <button type="submit" class="btn btn-primary search-form-submit">検索</button>
-                                <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+            <app-sidebar>
+                <div class="sidebar-search-form">
+                    <div class="sidebar-title">検索条件</div>
+                    <form id="search-form" class="search-form">
+                        <div class="search-form-actions">
+                            <button type="submit" class="btn btn-primary search-form-submit">検索</button>
+                            <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+                        </div>
+                        
+                        <!-- エンジニアセクション -->
+                        <div class="search-form-section">
+                            <div class="search-form-section-title">エンジニア</div>
+                            
+                            <div class="search-form-group">
+                                <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
+                                <input type="text" id="search-engineer-name" name="engineer-name" class="search-form-input" placeholder="エンジニア名で検索">
                             </div>
                             
-                            <!-- エンジニアセクション -->
-                            <div class="search-form-section">
-                                <div class="search-form-section-title">エンジニア</div>
-                                
-                                <div class="search-form-group">
-                                    <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
-                                    <input type="text" id="search-engineer-name" name="engineer-name" class="search-form-input" placeholder="エンジニア名で検索">
-                                </div>
-                                
-                                <div class="search-form-group">
-                                    <label for="search-engineer-skill" class="search-form-label">エンジニアスキル</label>
-                                    <select id="search-engineer-skill" name="engineer-skill" class="search-form-select" multiple>
-                                        <option value="1">Java</option>
-                                        <option value="2">Spring Boot</option>
-                                        <option value="3">React</option>
-                                        <option value="4">PostgreSQL</option>
-                                        <option value="5">AWS</option>
-                                        <option value="6">Python</option>
-                                        <option value="7">Django</option>
-                                        <option value="8">TypeScript</option>
-                                        <option value="9">Next.js</option>
-                                        <option value="10">Vue.js</option>
-                                    </select>
-                                    <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
-                                </div>
+                            <div class="search-form-group">
+                                <label for="search-engineer-skill" class="search-form-label">エンジニアスキル</label>
+                                <select id="search-engineer-skill" name="engineer-skill" class="search-form-select" multiple>
+                                    <option value="1">Java</option>
+                                    <option value="2">Spring Boot</option>
+                                    <option value="3">React</option>
+                                    <option value="4">PostgreSQL</option>
+                                    <option value="5">AWS</option>
+                                    <option value="6">Python</option>
+                                    <option value="7">Django</option>
+                                    <option value="8">TypeScript</option>
+                                    <option value="9">Next.js</option>
+                                    <option value="10">Vue.js</option>
+                                </select>
+                                <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 案件セクション -->
+                        <div class="search-form-section">
+                            <div class="search-form-section-title">案件</div>
+                            
+                            <div class="search-form-group">
+                                <label for="search-project-name" class="search-form-label">案件名</label>
+                                <input type="text" id="search-project-name" name="project-name" class="search-form-input" placeholder="案件名で検索">
                             </div>
                             
-                            <!-- 案件セクション -->
-                            <div class="search-form-section">
-                                <div class="search-form-section-title">案件</div>
-                                
-                                <div class="search-form-group">
-                                    <label for="search-project-name" class="search-form-label">案件名</label>
-                                    <input type="text" id="search-project-name" name="project-name" class="search-form-input" placeholder="案件名で検索">
-                                </div>
-                                
-                                <div class="search-form-group">
-                                    <label for="search-project-skill" class="search-form-label">案件スキル</label>
-                                    <select id="search-project-skill" name="project-skill" class="search-form-select" multiple>
-                                        <option value="1">Java</option>
-                                        <option value="2">Spring Boot</option>
-                                        <option value="3">React</option>
-                                        <option value="4">PostgreSQL</option>
-                                        <option value="5">AWS</option>
-                                        <option value="6">Python</option>
-                                        <option value="7">Django</option>
-                                        <option value="8">TypeScript</option>
-                                        <option value="9">Next.js</option>
-                                        <option value="10">Vue.js</option>
-                                    </select>
-                                    <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
-                                </div>
+                            <div class="search-form-group">
+                                <label for="search-project-skill" class="search-form-label">案件スキル</label>
+                                <select id="search-project-skill" name="project-skill" class="search-form-select" multiple>
+                                    <option value="1">Java</option>
+                                    <option value="2">Spring Boot</option>
+                                    <option value="3">React</option>
+                                    <option value="4">PostgreSQL</option>
+                                    <option value="5">AWS</option>
+                                    <option value="6">Python</option>
+                                    <option value="7">Django</option>
+                                    <option value="8">TypeScript</option>
+                                    <option value="9">Next.js</option>
+                                    <option value="10">Vue.js</option>
+                                </select>
+                                <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
                             </div>
-                            
-                        </form>
-                    </div>
-                    
-                    <!-- 共通コンポーネント: 最近使った画面 -->
-                    <app-recent-screens></app-recent-screens>
-                </nav>
-            </aside>
+                        </div>
+                        
+                    </form>
+                </div>
+            </app-sidebar>
+
             <!-- コンテンツエリア -->
             <main class="content-area">
                 <div class="engineer-search-results">
@@ -93,7 +88,7 @@
                         <div class="search-results-header-left">
                             <h1 class="search-results-title">おすすめエンジニア検索結果</h1>
                             <div class="search-results-count">
-                                <span id="results-count">15件</span>のマッチングが見つかりました
+                                <span id="results-count">0件</span>のマッチングが見つかりました
                             </div>
                         </div>
                         <div class="search-results-header-right">
@@ -115,24 +110,18 @@
                         <!-- マッチングカードはJSで生成されます -->
                     </div>
                     <!-- ページネーション -->
-                    <div class="pagination">
-                        <button type="button" class="pagination-btn pagination-btn-prev" disabled>前へ</button>
-                        <div class="pagination-pages">
-                            <button type="button" class="pagination-page active">1</button>
-                            <button type="button" class="pagination-page">2</button>
-                            <button type="button" class="pagination-page">3</button>
-                        </div>
-                        <button type="button" class="pagination-btn pagination-btn-next">次へ</button>
-                    </div>
+                    <app-pagination></app-pagination>
                 </div>
             </main>
         </div>
     </div>
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     
     <script src="js/common.js"></script>
-    <script src="js/recommended-engineer-search.js"></script>
+    <script type="module" src="js/recommended-engineer-search.js"></script>
 </body>
 </html>

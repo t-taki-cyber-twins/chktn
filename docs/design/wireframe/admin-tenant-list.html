@@ -6,6 +6,7 @@
   <title>テナント管理 - CHKTN</title>
   <link rel="stylesheet" href="css/admin-tenant-list.css">
   <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-pagination.js" type="module"></script>
 </head>
 <body>
   <div class="container">
@@ -95,13 +96,8 @@
             </table>
           </div>
           
-          <div class="pagination">
-            <a href="#" class="pagination-link">&laquo;</a>
-            <a href="#" class="pagination-link active">1</a>
-            <a href="#" class="pagination-link">2</a>
-            <a href="#" class="pagination-link">3</a>
-            <a href="#" class="pagination-link">&raquo;</a>
-          </div>
+          <!-- ページネーション -->
+          <app-pagination></app-pagination>
         </div>
       </main>
     </div>

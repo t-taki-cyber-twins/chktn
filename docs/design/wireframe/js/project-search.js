@@ -2,6 +2,8 @@
    案件検索画面固有JavaScript（自社案件）
    ======================================== */
 
+import { mockProjects } from './mock-data.js';
+
 let currentSortColumn = null;
 let currentSortDirection = 'asc';
 
@@ -14,6 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initBulkActions();
     initDeleteButtons();
     initPagination();
+    
+    // Initial render
+    const results = mockProjects;
+    displaySearchResults(results);
+    updateResultsCount(results.length);
 });
 
 /**
@@ -60,9 +67,14 @@ function performSearch() {
     
     console.log('検索パラメータ:', searchParams);
     
-    // TODO: 実際のAPI呼び出しに置き換える
-    // モックデータで検索結果を表示
-    const results = getMockSearchResults();
+    // モックデータで検索結果を表示 (Simple filtering)
+    const results = mockProjects.filter(project => {
+        let match = true;
+        if (searchParams['project-name'] && !project.name.includes(searchParams['project-name'])) match = false;
+        if (searchParams['status'] && project.status !== searchParams['status']) match = false;
+        return match;
+    });
+
     displaySearchResults(results);
     updateResultsCount(results.length);
 }
@@ -75,7 +87,7 @@ function resetSearchForm() {
     if (form) {
         form.reset();
         // すべての検索結果を表示
-        const results = getMockSearchResults();
+        const results = mockProjects;
         displaySearchResults(results);
         updateResultsCount(results.length);
     }
@@ -107,13 +119,14 @@ function displaySearchResults(results) {
 function createTableRow(project) {
     const startDate = formatDateShort(project.startDate);
     const endDate = formatDateShort(project.endDate);
-    const priceRange = project.priceMin && project.priceMax 
+    // mock-data.js uses 'price' string, fallback to min/max logic if needed (though mock-data has price string)
+    const priceRange = project.price || (project.priceMin && project.priceMax 
         ? `${project.priceMin}〜${project.priceMax}万円`
         : project.priceMin 
             ? `${project.priceMin}万円〜`
             : project.priceMax 
                 ? `〜${project.priceMax}万円`
-                : '要相談';
+                : '要相談');
     
     const badgeClass = project.isPublic ? 'badge-public' : 'badge-private';
     const badgeText = project.isPublic ? '公開' : '非公開';
@@ -132,11 +145,11 @@ function createTableRow(project) {
             <td>${escapeHtml(project.endCompany)}</td>
             <td>${startDate}</td>
             <td>${endDate}</td>
-            <td>${priceRange}</td>
+            <td>${escapeHtml(priceRange)}</td>
             <td>
                 <span class="badge ${statusBadgeClass}">${statusText}</span>
             </td>
-            <td>${escapeHtml(project.projectManager)}</td>
+            <td>${escapeHtml(project.manager)}</td>
             <td>
                 <span class="badge ${badgeClass}">${badgeText}</span>
             </td>
@@ -213,8 +226,9 @@ function sortTable(column, direction) {
                 bValue = new Date(b.cells[column === 'start-date' ? 3 : 4].textContent.trim());
                 break;
             case 'price':
-                aValue = parseFloat(a.cells[5].textContent.trim().replace(/[^0-9.]/g, ''));
-                bValue = parseFloat(b.cells[5].textContent.trim().replace(/[^0-9.]/g, ''));
+                // Extract number from string like "60〜80万円" -> 60
+                aValue = parseFloat(a.cells[5].textContent.trim().replace(/[^0-9.]/g, '')) || 0;
+                bValue = parseFloat(b.cells[5].textContent.trim().replace(/[^0-9.]/g, '')) || 0;
                 break;
             case 'status':
                 aValue = a.cells[6].textContent.trim();
@@ -407,53 +421,10 @@ function initPagination() {
 }
 
 /**
- * モック検索結果データを取得
- */
-function getMockSearchResults() {
-    return [
-        {
-            id: 1,
-            name: 'フルスタックエンジニア募集',
-            endCompany: 'サンプル株式会社',
-            startDate: '2024-12-01',
-            endDate: '2025-03-31',
-            priceMin: 60,
-            priceMax: 80,
-            status: 'recruiting',
-            projectManager: '山田太郎',
-            isPublic: true
-        },
-        {
-            id: 2,
-            name: 'バックエンドエンジニア募集',
-            endCompany: 'テック株式会社',
-            startDate: '2024-11-20',
-            endDate: '2025-02-28',
-            priceMin: 55,
-            priceMax: 70,
-            status: 'interviewing',
-            projectManager: '佐藤花子',
-            isPublic: false
-        },
-        {
-            id: 3,
-            name: 'フロントエンドエンジニア募集',
-            endCompany: 'デザイン株式会社',
-            startDate: '2025-01-01',
-            endDate: '2025-06-30',
-            priceMin: 50,
-            priceMax: 65,
-            status: 'confirmed',
-            projectManager: '鈴木一郎',
-            isPublic: true
-        }
-    ];
-}
-
-/**
  * HTMLエスケープ
  */
 function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;

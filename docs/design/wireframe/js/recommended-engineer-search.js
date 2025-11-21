@@ -2,18 +2,20 @@
    おすすめエンジニア検索画面固有JavaScript
    ======================================== */
 
+import { mockProjects, mockEngineers } from './mock-data.js';
+
 /**
  * ページ読み込み時の初期化
  */
 document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
     initSortForm();
-    // 初期表示時にモックデータを表示
-    const results = getMockSearchResults();
-    displaySearchResults(results);
-    updateResultsCount(results.length);
-    
+    initMatchingApplyButtons();
+    initMatchingInquiryButtons();
     initPagination();
+    
+    // 初期表示のために検索を実行
+    performSearch();
 });
 
 /**
@@ -60,7 +62,6 @@ function performSearch() {
     
     console.log('検索パラメータ:', searchParams);
     
-    // TODO: 実際のAPI呼び出しに置き換える
     // モックデータで検索結果を表示
     const results = getMockSearchResults();
     displaySearchResults(results);
@@ -156,22 +157,26 @@ function sortResults(sortValue) {
  * マッチングカードのHTMLを生成
  */
 function createMatchingCard(matching) {
-    const projectSkillsHtml = matching.project.skills.map(skill => 
+    // mockProjectsにはskillsがないため、仮の値を設定
+    const projectSkills = matching.project.skills ? matching.project.skills.split(', ') : ['Java', 'Spring Boot'];
+    const engineerSkills = matching.engineer.skills ? matching.engineer.skills.split(', ') : ['Java', 'Spring Boot', 'AWS'];
+
+    const projectSkillsHtml = projectSkills.map(skill => 
         `<span class="skill-tag">${escapeHtml(skill)}</span>`
     ).join('');
     
-    const engineerSkillsHtml = matching.engineer.skills.map(skill => 
+    const engineerSkillsHtml = engineerSkills.map(skill => 
         `<span class="skill-tag">${escapeHtml(skill)}</span>`
     ).join('');
     
     const scoreClass = getScoreClass(matching.score);
     
-    const projectWorkLocation = matching.project.workLocation || '';
+    const projectWorkLocation = matching.project.workLocation || '東京都'; // 仮の値
     const projectStartDate = matching.project.startDate ? formatDate(matching.project.startDate) : '';
-    const engineerNearestStation = matching.engineer.nearestStation || '';
-    const engineerWorkStatus = matching.engineer.workStatus || '待機中';
-    const engineerProjectEndDate = matching.engineer.projectEndDate ? formatDate(matching.engineer.projectEndDate) : '';
-    const matchingReason = matching.reason || '';
+    const engineerNearestStation = matching.engineer.nearestStation || '東京駅'; // 仮の値
+    const engineerWorkStatus = matching.engineer.statusLabel || '待機中';
+    const engineerProjectEndDate = matching.engineer.availableDate ? formatDate(matching.engineer.availableDate) : '';
+    const matchingReason = matching.reason || 'スキルマッチ度が高いです。';
     
     const projectDetailsHtml = `
         <div class="matching-card-details">
@@ -186,8 +191,8 @@ function createMatchingCard(matching) {
         </div>
     `;
     
-    const engineerWorkStatusText = engineerWorkStatus === '待機中' 
-        ? '待機中'
+    const engineerWorkStatusText = engineerWorkStatus === '待機中' || engineerWorkStatus === '即日可能'
+        ? engineerWorkStatus
         : `案件終了予定日: ${engineerProjectEndDate}`;
     
     const engineerDetailsHtml = `
@@ -294,7 +299,6 @@ function initMatchingApplyButtons() {
             const projectName = matchingCard.querySelector('.matching-card-section:last-child .matching-card-link').textContent;
             
             if (confirm(`「${engineerName}」と「${projectName}」の面談を申し込みますか？`)) {
-                // TODO: 実際のAPI呼び出しに置き換える
                 console.log('面談申込:', matchingId);
                 alert('面談を申し込みました。');
             }
@@ -314,8 +318,6 @@ function initMatchingInquiryButtons() {
             const engineerName = matchingCard.querySelector('.matching-card-section:first-child .matching-card-link').textContent;
             const projectName = matchingCard.querySelector('.matching-card-section:last-child .matching-card-link').textContent;
             
-            // TODO: 実際のAPI呼び出しに置き換える
-            // 問い合わせ画面への遷移またはモーダル表示
             console.log('問い合わせ:', matchingId, engineerName, projectName);
             alert(`「${engineerName}」と「${projectName}」について問い合わせますか？\n（問い合わせ画面への遷移は実装予定です）`);
         });
@@ -326,148 +328,43 @@ function initMatchingInquiryButtons() {
  * ページネーションの初期化
  */
 function initPagination() {
-    const prevButton = document.querySelector('.pagination-btn-prev');
-    const nextButton = document.querySelector('.pagination-btn-next');
-    const pageButtons = document.querySelectorAll('.pagination-page');
-    
-    if (prevButton) {
-        prevButton.addEventListener('click', function() {
-            // TODO: 前のページに移動
-            console.log('前のページへ');
-        });
-    }
-    
-    if (nextButton) {
-        nextButton.addEventListener('click', function() {
-            // TODO: 次のページに移動
-            console.log('次のページへ');
-        });
-    }
-    
-    pageButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // アクティブ状態を更新
-            pageButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            // TODO: 該当ページのデータを読み込み
-            console.log('ページ:', this.textContent);
-        });
-    });
+    // app-paginationコンポーネントを使用するため、ここでは特別な処理は不要
 }
 
 /**
  * モック検索結果データを取得
  */
 function getMockSearchResults() {
-    return [
-        {
-            id: 1,
-            score: 85,
-            reason: 'エンジニアのスキル（Java、Spring Boot、React、PostgreSQL）が案件の要件と完全に一致しており、さらにAWSの経験もあるため、即戦力として活躍できる可能性が高いです。',
-            project: {
-                id: 1,
-                name: 'フルスタックエンジニア募集',
-                skills: ['Java', 'Spring Boot', 'React', 'PostgreSQL'],
-                workLocation: '東京都千代田区',
-                startDate: '2024-12-01'
-            },
-            engineer: {
-                id: 1,
-                name: '山田太郎',
-                skills: ['Java', 'Spring Boot', 'React', 'PostgreSQL', 'AWS'],
-                nearestStation: '東京駅',
-                workStatus: '待機中',
-                projectEndDate: null
-            }
-        },
-        {
-            id: 2,
-            score: 72,
-            reason: 'Python、Django、PostgreSQLのスキルが一致していますが、AWSの経験が不足しているため、学習期間が必要になる可能性があります。',
-            project: {
-                id: 2,
-                name: 'バックエンドエンジニア募集',
-                skills: ['Python', 'Django', 'PostgreSQL', 'AWS'],
-                workLocation: '東京都港区',
-                startDate: '2024-11-20'
-            },
-            engineer: {
-                id: 2,
-                name: '佐藤花子',
-                skills: ['Python', 'Django', 'PostgreSQL'],
-                nearestStation: '新橋駅',
-                workStatus: '案件進行中',
-                projectEndDate: '2024-12-31'
-            }
-        },
-        {
-            id: 3,
-            score: 58,
-            reason: 'Reactの経験はありますが、TypeScriptやNext.jsの経験が不足しており、学習コストがかかる可能性があります。',
-            project: {
-                id: 3,
-                name: 'フロントエンドエンジニア募集',
-                skills: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS'],
-                workLocation: 'リモートワーク可',
-                startDate: '2025-01-01'
-            },
-            engineer: {
-                id: 3,
-                name: '鈴木一郎',
-                skills: ['JavaScript', 'React', 'Vue.js'],
-                nearestStation: '渋谷駅',
-                workStatus: '案件進行中',
-                projectEndDate: '2025-03-31'
-            }
-        },
-        {
-            id: 4,
-            score: 92,
-            reason: 'エンジニアのスキル（AWS、Docker、Kubernetes、Terraform）が案件の要件と完全に一致しており、さらにCI/CDの経験もあるため、非常に高いマッチング度です。',
-            project: {
-                id: 4,
-                name: 'DevOpsエンジニア募集',
-                skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform'],
-                workLocation: '東京都新宿区',
-                startDate: '2024-12-15'
-            },
-            engineer: {
-                id: 4,
-                name: '田中次郎',
-                skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD'],
-                nearestStation: '新宿駅',
-                workStatus: '待機中',
-                projectEndDate: null
-            }
-        },
-        {
-            id: 5,
-            score: 65,
-            reason: 'SwiftとiOSの経験はありますが、SwiftUIやCore Dataの経験が不足しており、学習が必要になる可能性があります。',
-            project: {
-                id: 5,
-                name: 'モバイルアプリ開発',
-                skills: ['Swift', 'iOS', 'SwiftUI', 'Core Data'],
-                workLocation: '東京都渋谷区',
-                startDate: '2025-02-01'
-            },
-            engineer: {
-                id: 5,
-                name: '高橋三郎',
-                skills: ['Swift', 'iOS', 'Objective-C'],
-                nearestStation: '表参道駅',
-                workStatus: '待機中',
-                projectEndDate: null
-            }
-        }
-    ];
+    // mockProjectsとmockEngineersを組み合わせてマッチングデータを生成
+    const results = [];
+    const projectCount = mockProjects.length;
+    const engineerCount = mockEngineers.length;
+    
+    // 簡易的に5件のマッチングデータを生成
+    for (let i = 0; i < 5; i++) {
+        const project = mockProjects[i % projectCount];
+        const engineer = mockEngineers[i % engineerCount];
+        
+        // ランダムなスコアを生成 (50-100)
+        const score = Math.floor(Math.random() * 51) + 50;
+        
+        results.push({
+            id: i + 1,
+            score: score,
+            reason: 'スキルマッチ度が高いです。', // 簡易的な理由
+            project: project,
+            engineer: engineer
+        });
+    }
+    
+    return results.sort((a, b) => b.score - a.score);
 }
 
 /**
  * HTMLエスケープ
  */
 function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
@@ -478,9 +375,6 @@ function escapeHtml(text) {
  */
 function formatDate(dateString) {
     if (!dateString) return '';
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}年${month}月${day}日`;
+    // YYYY/MM/DD 形式を YYYY年MM月DD日 に変換
+    return dateString.replace(/-/g, '年').replace(/(\d{2})$/, '月$1日').replace(/(\d{4})年(\d{2})月(\d{2})日/, '$1年$2月$3日').replace(/\//g, '年').replace(/(\d{2})$/, '月$1日').replace(/(\d{4})年(\d{2})月(\d{2})日/, '$1年$2月$3日');
 }

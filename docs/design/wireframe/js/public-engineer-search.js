@@ -2,12 +2,17 @@
    公開エンジニア検索画面固有JavaScript
    ======================================== */
 
+import { mockEngineers } from './mock-data.js';
+
 /**
  * ページ読み込み時の初期化
  */
 document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
     initPagination();
+    
+    // 初期表示のために検索を実行
+    performSearch();
 });
 
 /**
@@ -54,12 +59,12 @@ function performSearch() {
     
     console.log('検索パラメータ:', searchParams);
     
-    // TODO: 実際のAPI呼び出しに置き換える
     // モックデータで検索結果を表示
-    displaySearchResults(getMockSearchResults());
+    const results = getMockSearchResults();
+    displaySearchResults(results);
     
     // 検索結果件数を更新
-    updateResultsCount(getMockSearchResults().length);
+    updateResultsCount(results.length);
 }
 
 /**
@@ -70,8 +75,9 @@ function resetSearchForm() {
     if (form) {
         form.reset();
         // すべての検索結果を表示
-        displaySearchResults(getMockSearchResults());
-        updateResultsCount(getMockSearchResults().length);
+        const results = getMockSearchResults();
+        displaySearchResults(results);
+        updateResultsCount(results.length);
     }
 }
 
@@ -94,7 +100,9 @@ function displaySearchResults(results) {
  * エンジニアカードのHTMLを生成
  */
 function createEngineerCard(engineer) {
-    const skillsHtml = engineer.skills.map(skill => 
+    // mockEngineersのskillsは文字列なので配列に変換
+    const skills = engineer.skills ? engineer.skills.split(', ') : [];
+    const skillsHtml = skills.map(skill => 
         `<span class="skill-tag">${escapeHtml(skill)}</span>`
     ).join('');
     
@@ -102,11 +110,15 @@ function createEngineerCard(engineer) {
     const badgeText = engineer.isPublic ? '公開' : '非公開';
     
     const availableDate = formatDate(engineer.availableDate);
-    const priceRange = engineer.priceMin 
-        ? `${engineer.priceMin}万円〜`
-        : '要相談';
+    // mockEngineersのpriceは文字列（例: '80万円'）なのでそのまま表示するか、調整する
+    const priceRange = engineer.price || '要相談';
     
-    const remoteWorkText = getRemoteWorkText(engineer.remoteWork);
+    // mockEngineersにはないプロパティのデフォルト値設定
+    const remoteWork = engineer.remoteWork || 'yes'; // デフォルト: リモート可
+    const remoteWorkText = getRemoteWorkText(remoteWork);
+    const description = engineer.description || '経験豊富なエンジニアです。要件定義から実装まで幅広く対応可能です。';
+    const contractType = engineer.contractType || '準委任';
+    const workLocation = engineer.workLocation || '東京都';
     
     return `
         <div class="engineer-card">
@@ -119,7 +131,7 @@ function createEngineerCard(engineer) {
                 </div>
             </div>
             <div class="engineer-card-body">
-                <p class="engineer-card-description">${escapeHtml(engineer.description)}</p>
+                <p class="engineer-card-description">${escapeHtml(description)}</p>
                 <div class="engineer-card-skills">
                     ${skillsHtml}
                 </div>
@@ -130,15 +142,15 @@ function createEngineerCard(engineer) {
                     </div>
                     <div class="engineer-card-detail-item">
                         <span class="detail-label">希望単価:</span>
-                        <span class="detail-value">${priceRange}</span>
+                        <span class="detail-value">${escapeHtml(priceRange)}</span>
                     </div>
                     <div class="engineer-card-detail-item">
                         <span class="detail-label">希望契約:</span>
-                        <span class="detail-value">${escapeHtml(engineer.contractType)}</span>
+                        <span class="detail-value">${escapeHtml(contractType)}</span>
                     </div>
                     <div class="engineer-card-detail-item">
                         <span class="detail-label">希望勤務地:</span>
-                        <span class="detail-value">${escapeHtml(engineer.workLocation)}${remoteWorkText ? `（${remoteWorkText}）` : ''}</span>
+                        <span class="detail-value">${escapeHtml(workLocation)}${remoteWorkText ? `（${remoteWorkText}）` : ''}</span>
                     </div>
                 </div>
             </div>
@@ -165,84 +177,22 @@ function updateResultsCount(count) {
  * ページネーションの初期化
  */
 function initPagination() {
-    const prevButton = document.querySelector('.pagination-btn-prev');
-    const nextButton = document.querySelector('.pagination-btn-next');
-    const pageButtons = document.querySelectorAll('.pagination-page');
-    
-    if (prevButton) {
-        prevButton.addEventListener('click', function() {
-            // TODO: 前のページに移動
-            console.log('前のページへ');
-        });
-    }
-    
-    if (nextButton) {
-        nextButton.addEventListener('click', function() {
-            // TODO: 次のページに移動
-            console.log('次のページへ');
-        });
-    }
-    
-    pageButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // アクティブ状態を更新
-            pageButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            // TODO: 該当ページのデータを読み込み
-            console.log('ページ:', this.textContent);
-        });
-    });
+    // app-paginationコンポーネントを使用するため、ここでは特別な処理は不要
 }
 
 /**
  * モック検索結果データを取得
  */
 function getMockSearchResults() {
-    return [
-        {
-            id: 1,
-            name: '山田 太郎',
-            description: 'Java, Spring Bootを中心としたバックエンド開発が得意です。要件定義から設計、実装、テストまで一通り経験があります。',
-            skills: ['Java', 'Spring Boot', 'MySQL', 'AWS'],
-            availableDate: '2024-12-01',
-            priceMin: 80,
-            contractType: 'フリーランス',
-            workLocation: '東京都',
-            remoteWork: 'yes',
-            isPublic: true
-        },
-        {
-            id: 2,
-            name: '佐藤 花子',
-            description: 'React, TypeScriptを用いたフロントエンド開発の経験が豊富です。UI/UXデザインにも興味があります。',
-            skills: ['React', 'TypeScript', 'Next.js', 'Figma'],
-            availableDate: '2025-01-01',
-            priceMin: 70,
-            contractType: '正社員',
-            workLocation: '東京都',
-            remoteWork: 'partial',
-            isPublic: true
-        },
-        {
-            id: 3,
-            name: '鈴木 一郎',
-            description: 'Python, DjangoでのWebアプリ開発経験があります。データ分析の経験もあります。',
-            skills: ['Python', 'Django', 'PostgreSQL', 'Pandas'],
-            availableDate: '2024-12-15',
-            priceMin: 65,
-            contractType: '契約社員',
-            workLocation: '神奈川県',
-            remoteWork: 'no',
-            isPublic: true
-        }
-    ];
+    // isPublicがtrueのエンジニアのみをフィルタリング
+    return mockEngineers.filter(engineer => engineer.isPublic);
 }
 
 /**
  * HTMLエスケープ
  */
 function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
@@ -253,11 +203,8 @@ function escapeHtml(text) {
  */
 function formatDate(dateString) {
     if (!dateString) return '即日可能';
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}年${month}月${day}日`;
+    // YYYY/MM/DD 形式を YYYY年MM月DD日 に変換
+    return dateString.replace(/-/g, '年').replace(/(\d{2})$/, '月$1日').replace(/(\d{4})年(\d{2})月(\d{2})日/, '$1年$2月$3日').replace(/\//g, '年').replace(/(\d{2})$/, '月$1日').replace(/(\d{4})年(\d{2})月(\d{2})日/, '$1年$2月$3日');
 }
 
 /**
@@ -275,3 +222,6 @@ function getRemoteWorkText(remoteWork) {
             return '';
     }
 }
+
+
+
