@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メール管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/mail-management.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="mail-management">
+                    <div class="page-header">
+                        <h1 class="page-title">メール管理</h1>
+                    </div>
+
+                    <!-- タブナビゲーション -->
+                    <div class="tab-navigation">
+                        <button class="tab-button active" data-tab="template">メールテンプレート</button>
+                        <button class="tab-button" data-tab="mailing-list">メーリングリスト</button>
+                        <button class="tab-button" data-tab="default-settings">デフォルト設定</button>
+                    </div>
+
+                    <!-- タブ1: メールテンプレート管理 -->
+                    <div class="tab-content active" id="tab-template">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">メールテンプレート管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-template-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="template-search" class="search-input" placeholder="テンプレート名で検索...">
+                            <select id="template-category-filter" class="search-select">
+                                <option value="">すべてのカテゴリ</option>
+                                <option value="engineer">エンジニア関連</option>
+                                <option value="project">案件関連</option>
+                                <option value="meeting">面談関連</option>
+                                <option value="system">システム通知</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="template-table">
+                                <thead>
+                                    <tr>
+                                        <th>テンプレート名</th>
+                                        <th>カテゴリ</th>
+                                        <th>件名</th>
+                                        <th>最終更新日</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="template-table-body">
+                                    <tr data-template-id="1">
+                                        <td>面談確定通知</td>
+                                        <td>面談関連</td>
+                                        <td>【chktn】面談日程確定のお知らせ</td>
+                                        <td>2024/11/15</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm template-edit-btn" data-template-id="1">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm template-delete-btn" data-template-id="1">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-template-id="2">
+                                        <td>エンジニア登録完了</td>
+                                        <td>エンジニア関連</td>
+                                        <td>【chktn】エンジニア登録が完了しました</td>
+                                        <td>2024/11/10</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm template-edit-btn" data-template-id="2">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm template-delete-btn" data-template-id="2">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-template-id="3">
+                                        <td>案件公開通知</td>
+                                        <td>案件関連</td>
+                                        <td>【chktn】新規案件が公開されました</td>
+                                        <td>2024/11/08</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm template-edit-btn" data-template-id="3">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm template-delete-btn" data-template-id="3">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- タブ2: メーリングリスト管理 -->
+                    <div class="tab-content" id="tab-mailing-list">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">メーリングリスト管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-mailing-list-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="mailing-list-search" class="search-input" placeholder="リスト名で検索...">
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="mailing-list-table">
+                                <thead>
+                                    <tr>
+                                        <th>リスト名</th>
+                                        <th>説明</th>
+                                        <th>メールアドレス数</th>
+                                        <th>最終更新日</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mailing-list-table-body">
+                                    <tr data-mailing-list-id="1">
+                                        <td>営業部全体</td>
+                                        <td>営業部の全メンバー</td>
+                                        <td>15</td>
+                                        <td>2024/11/15</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm mailing-list-edit-btn" data-mailing-list-id="1">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm mailing-list-delete-btn" data-mailing-list-id="1">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-mailing-list-id="2">
+                                        <td>技術部リーダー</td>
+                                        <td>技術部のリーダー陣</td>
+                                        <td>5</td>
+                                        <td>2024/11/10</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm mailing-list-edit-btn" data-mailing-list-id="2">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm mailing-list-delete-btn" data-mailing-list-id="2">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-mailing-list-id="3">
+                                        <td>管理職</td>
+                                        <td>全部署の管理職</td>
+                                        <td>8</td>
+                                        <td>2024/11/05</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm mailing-list-edit-btn" data-mailing-list-id="3">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm mailing-list-delete-btn" data-mailing-list-id="3">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- タブ3: メールデフォルト設定管理 -->
+                    <div class="tab-content" id="tab-default-settings">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">メールデフォルト設定管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-default-setting-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="default-setting-search" class="search-input" placeholder="設定名で検索...">
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="default-setting-table">
+                                <thead>
+                                    <tr>
+                                        <th>設定名</th>
+                                        <th>From名</th>
+                                        <th>Fromメールアドレス</th>
+                                        <th>CC</th>
+                                        <th>BCC</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="default-setting-table-body">
+                                    <tr data-default-setting-id="1">
+                                        <td>標準送信設定</td>
+                                        <td>chktn事務局</td>
+                                        <td>info@chktn.example.com</td>
+                                        <td>-</td>
+                                        <td>admin@chktn.example.com</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm default-setting-edit-btn" data-default-setting-id="1">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm default-setting-delete-btn" data-default-setting-id="1">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-default-setting-id="2">
+                                        <td>営業部送信設定</td>
+                                        <td>chktn営業部</td>
+                                        <td>sales@chktn.example.com</td>
+                                        <td>sales-manager@chktn.example.com</td>
+                                        <td>-</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm default-setting-edit-btn" data-default-setting-id="2">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm default-setting-delete-btn" data-default-setting-id="2">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-default-setting-id="3">
+                                        <td>技術部送信設定</td>
+                                        <td>chktn技術部</td>
+                                        <td>tech@chktn.example.com</td>
+                                        <td>-</td>
+                                        <td>admin@chktn.example.com</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm default-setting-edit-btn" data-default-setting-id="3">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm default-setting-delete-btn" data-default-setting-id="3">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/mail-management.js"></script>
+</body>
+</html>

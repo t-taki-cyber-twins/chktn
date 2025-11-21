@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テキスト値管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/text-value-management.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="text-value-management">
+                    <div class="page-header">
+                        <h1 class="page-title">テキスト値管理</h1>
+                    </div>
+
+                    <div class="tab-content-header">
+                        <h2 class="tab-content-title">テキスト値一覧</h2>
+                        <div class="tab-content-actions">
+                            <button type="button" class="btn btn-primary" id="create-text-value-btn">新規作成</button>
+                        </div>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <input type="text" id="text-value-search" class="search-input" placeholder="キーまたは値で検索...">
+                        <select id="category-filter" class="search-select">
+                            <option value="">すべてのカテゴリ</option>
+                            <option value="department">部署名</option>
+                            <option value="position">役職名</option>
+                            <option value="engineer_status">エンジニアステータス</option>
+                            <option value="project_status">案件ステータス</option>
+                        </select>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="common-table" id="text-value-table">
+                            <thead>
+                                <tr>
+                                    <th>カテゴリ</th>
+                                    <th>キー</th>
+                                    <th>値</th>
+                                    <th>説明</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody id="text-value-table-body">
+                                <tr data-text-value-id="1">
+                                    <td>部署名</td>
+                                    <td>dept_sales</td>
+                                    <td>営業部</td>
+                                    <td>営業担当部署</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-edit-btn" data-text-value-id="1">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-delete-btn" data-text-value-id="1">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-text-value-id="2">
+                                    <td>部署名</td>
+                                    <td>dept_engineering</td>
+                                    <td>技術部</td>
+                                    <td>エンジニア管理部署</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-edit-btn" data-text-value-id="2">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-delete-btn" data-text-value-id="2">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-text-value-id="3">
+                                    <td>役職名</td>
+                                    <td>position_manager</td>
+                                    <td>マネージャー</td>
+                                    <td>管理職</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-edit-btn" data-text-value-id="3">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-delete-btn" data-text-value-id="3">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-text-value-id="4">
+                                    <td>役職名</td>
+                                    <td>position_leader</td>
+                                    <td>リーダー</td>
+                                    <td>チームリーダー</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-edit-btn" data-text-value-id="4">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-delete-btn" data-text-value-id="4">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-text-value-id="5">
+                                    <td>エンジニアステータス</td>
+                                    <td>engineer_available</td>
+                                    <td>待機中</td>
+                                    <td>アサイン可能なエンジニア</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-edit-btn" data-text-value-id="5">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-delete-btn" data-text-value-id="5">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-text-value-id="6">
+                                    <td>エンジニアステータス</td>
+                                    <td>engineer_assigned</td>
+                                    <td>稼働中</td>
+                                    <td>案件にアサイン済み</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-edit-btn" data-text-value-id="6">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm text-value-delete-btn" data-text-value-id="6">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/text-value-management.js"></script>
+</body>
+</html>

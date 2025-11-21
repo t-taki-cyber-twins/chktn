@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/announcement-management.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="announcement-management">
+                    <div class="page-header">
+                        <h1 class="page-title">お知らせ管理</h1>
+                    </div>
+
+                    <div class="tab-content-header">
+                        <h2 class="tab-content-title">お知らせ一覧</h2>
+                        <div class="tab-content-actions">
+                            <button type="button" class="btn btn-primary" id="create-announcement-btn">新規作成</button>
+                        </div>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <input type="text" id="announcement-search" class="search-input" placeholder="タイトルで検索...">
+                        <select id="category-filter" class="search-select">
+                            <option value="">すべてのカテゴリ</option>
+                            <option value="maintenance">メンテナンス</option>
+                            <option value="feature">新機能</option>
+                            <option value="improvement">改善</option>
+                            <option value="important">重要なお知らせ</option>
+                        </select>
+                        <select id="status-filter" class="search-select">
+                            <option value="">すべてのステータス</option>
+                            <option value="draft">下書き</option>
+                            <option value="published">公開中</option>
+                            <option value="archived">アーカイブ</option>
+                        </select>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="common-table" id="announcement-table">
+                            <thead>
+                                <tr>
+                                    <th>タイトル</th>
+                                    <th>カテゴリ</th>
+                                    <th>ステータス</th>
+                                    <th>公開日</th>
+                                    <th>作成者</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody id="announcement-table-body">
+                                <tr data-announcement-id="1">
+                                    <td>システムメンテナンスのお知らせ</td>
+                                    <td>メンテナンス</td>
+                                    <td><span class="badge badge-published">公開中</span></td>
+                                    <td>2024/11/15</td>
+                                    <td>管理者</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-edit-btn" data-announcement-id="1">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-delete-btn" data-announcement-id="1">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-announcement-id="2">
+                                    <td>新機能「レコメンドマッチング」が追加されました</td>
+                                    <td>新機能</td>
+                                    <td><span class="badge badge-published">公開中</span></td>
+                                    <td>2024/11/10</td>
+                                    <td>管理者</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-edit-btn" data-announcement-id="2">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-delete-btn" data-announcement-id="2">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-announcement-id="3">
+                                    <td>エンジニア管理機能の改善について</td>
+                                    <td>改善</td>
+                                    <td><span class="badge badge-published">公開中</span></td>
+                                    <td>2024/11/05</td>
+                                    <td>管理者</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-edit-btn" data-announcement-id="3">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-delete-btn" data-announcement-id="3">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-announcement-id="4">
+                                    <td>年末年始の営業日について</td>
+                                    <td>重要なお知らせ</td>
+                                    <td><span class="badge badge-draft">下書き</span></td>
+                                    <td>-</td>
+                                    <td>管理者</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-edit-btn" data-announcement-id="4">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm announcement-delete-btn" data-announcement-id="4">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/announcement-management.js"></script>
+</body>
+</html>

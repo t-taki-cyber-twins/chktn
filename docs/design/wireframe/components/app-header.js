@@ -87,9 +87,9 @@ class AppHeader extends HTMLElement {
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="client-list.html" class="dropdown-item">取引先会社管理</a>
                             <a href="custom-role-group.html" class="dropdown-item">カスタムロールグループ</a>
-                            <a href="#" class="dropdown-item">テキスト値管理</a>
-                            <a href="#" class="dropdown-item">メール管理</a>
-                            <a href="#" class="dropdown-item">お知らせ管理</a>
+                            <a href="text-value-management.html" class="dropdown-item">テキスト値管理</a>
+                            <a href="mail-management.html" class="dropdown-item">メール管理</a>
+                            <a href="announcement-management.html" class="dropdown-item">お知らせ管理</a>
                         </div>
                     </div>
                     
@@ -118,6 +118,7 @@ class AppHeader extends HTMLElement {
                             <a href="master-role.html" class="dropdown-item">マスタロール管理</a>
                             <a href="admin-tenant-list.html" class="dropdown-item">テナント管理</a>
                             <a href="admin-corporate-master-list.html" class="dropdown-item">法人マスタ管理</a>
+                            <a href="master-skill.html" class="dropdown-item">スキルマスタ管理</a>
                             <a href="#" class="dropdown-item">お知らせ管理</a>
                             <a href="#" class="dropdown-item">リファラー管理</a>
                         </div>

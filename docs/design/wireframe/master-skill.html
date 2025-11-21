@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スキルマスタ管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/master-skill.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="master-skill-management">
+                    <div class="page-header">
+                        <h1 class="page-title">スキルマスタ管理</h1>
+                    </div>
+
+                    <!-- タブナビゲーション -->
+                    <div class="tab-navigation">
+                        <button class="tab-button active" data-tab="skill">スキルマスタ管理</button>
+                        <button class="tab-button" data-tab="category">スキルカテゴリ管理</button>
+                    </div>
+
+                    <!-- タブ1: スキルマスタ管理 -->
+                    <div class="tab-content active" id="tab-skill">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">スキルマスタ管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-skill-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="skill-search" class="search-input" placeholder="スキル名で検索...">
+                            <select id="category-filter" class="search-select">
+                                <option value="">すべてのカテゴリ</option>
+                                <option value="1">プログラミング言語</option>
+                                <option value="2">フレームワーク</option>
+                                <option value="3">データベース</option>
+                                <option value="4">クラウド</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="skill-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>スキル名</th>
+                                        <th>カテゴリ</th>
+                                        <th>説明</th>
+                                        <th>公開状況</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="skill-table-body">
+                                    <tr data-skill-id="1">
+                                        <td>1</td>
+                                        <td>Java</td>
+                                        <td>プログラミング言語</td>
+                                        <td>オブジェクト指向プログラミング言語</td>
+                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="1">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm skill-delete-btn" data-skill-id="1">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-skill-id="2">
+                                        <td>2</td>
+                                        <td>Python</td>
+                                        <td>プログラミング言語</td>
+                                        <td>汎用プログラミング言語</td>
+                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="2">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm skill-delete-btn" data-skill-id="2">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-skill-id="3">
+                                        <td>3</td>
+                                        <td>Spring Boot</td>
+                                        <td>フレームワーク</td>
+                                        <td>Javaフレームワーク</td>
+                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="3">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm skill-delete-btn" data-skill-id="3">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-skill-id="4">
+                                        <td>4</td>
+                                        <td>React</td>
+                                        <td>フレームワーク</td>
+                                        <td>JavaScriptライブラリ</td>
+                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="4">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm skill-delete-btn" data-skill-id="4">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-skill-id="5">
+                                        <td>5</td>
+                                        <td>PostgreSQL</td>
+                                        <td>データベース</td>
+                                        <td>リレーショナルデータベース</td>
+                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="5">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm skill-delete-btn" data-skill-id="5">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-skill-id="6">
+                                        <td>6</td>
+                                        <td>AWS</td>
+                                        <td>クラウド</td>
+                                        <td>Amazon Web Services</td>
+                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="6">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm skill-delete-btn" data-skill-id="6">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- タブ2: スキルカテゴリ管理 -->
+                    <div class="tab-content" id="tab-category">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">スキルカテゴリ管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-category-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="category-search" class="search-input" placeholder="カテゴリ名で検索...">
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="category-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>カテゴリ名</th>
+                                        <th>説明</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="category-table-body">
+                                    <tr data-category-id="1">
+                                        <td>1</td>
+                                        <td>プログラミング言語</td>
+                                        <td>プログラミング言語に関するスキル</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm category-edit-btn" data-category-id="1">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm category-delete-btn" data-category-id="1">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-category-id="2">
+                                        <td>2</td>
+                                        <td>フレームワーク</td>
+                                        <td>フレームワークに関するスキル</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm category-edit-btn" data-category-id="2">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm category-delete-btn" data-category-id="2">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-category-id="3">
+                                        <td>3</td>
+                                        <td>データベース</td>
+                                        <td>データベースに関するスキル</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm category-edit-btn" data-category-id="3">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm category-delete-btn" data-category-id="3">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-category-id="4">
+                                        <td>4</td>
+                                        <td>クラウド</td>
+                                        <td>クラウドサービスに関するスキル</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm category-edit-btn" data-category-id="4">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm category-delete-btn" data-category-id="4">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/master-skill.js"></script>
+</body>
+</html>
