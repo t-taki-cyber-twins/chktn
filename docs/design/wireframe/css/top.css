@@ -87,42 +87,214 @@
 /* common.cssの.common-list-itemを使用 */
 
 
-.matching-header {
+/* マッチングリスト */
+.matching-list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
 }
 
-.matching-project {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
+/* マッチングカード */
+.matching-card {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.2s;
+}
+
+.matching-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.matching-card-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.matching-score-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
 }
 
 .matching-score {
-    font-size: 14px;
-    font-weight: 600;
-    color: #0066cc;
-    padding: 4px 12px;
-    background-color: #e6f2ff;
-    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
-.matching-engineer {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 8px;
+.matching-reason {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 4px;
 }
 
-.matching-skills {
+.matching-reason-label {
     font-size: 12px;
+    font-weight: 600;
     color: #666;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.matching-reason-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.matching-score-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+}
+
+.matching-score-value {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 4px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.matching-score-high {
+    background-color: #e6ffe6;
+    color: #00aa00;
+}
+
+.matching-score-medium {
+    background-color: #fff4e6;
+    color: #ff8800;
+}
+
+.matching-score-low {
+    background-color: #ffe6e6;
+    color: #cc0000;
+}
+
+.matching-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.matching-card-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.matching-card-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.matching-card-item {
+    flex: 1;
+}
+
+.matching-card-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.matching-card-link {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.matching-card-link:hover {
+    color: #0066cc;
+}
+
+.matching-card-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 12px;
 }
 
-.matching-actions {
+.skill-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.matching-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.matching-card-detail-item {
+    font-size: 13px;
+    color: #666;
     display: flex;
     gap: 8px;
+}
+
+.matching-card-detail-item .detail-label {
+    font-weight: 500;
+    color: #333;
+    min-width: 60px;
+}
+
+.matching-card-detail-item .detail-value {
+    color: #666;
+}
+
+.matching-card-footer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 12px;
+}
+
+.matching-card-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .matching-card-body {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .matching-score-section {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .matching-reason {
+        padding-top: 0;
+    }
 }
 
