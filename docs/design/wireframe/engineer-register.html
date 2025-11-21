@@ -309,66 +309,8 @@
         </div>
     </div>
 
-    <!-- エンジニア担当者選択モーダル -->
-    <div class="modal" id="engineer-managers-modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">エンジニア担当者を選択</h3>
-                <button type="button" class="modal-close" data-modal="engineer-managers-modal">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-search">
-                    <input type="text" class="form-input modal-search-input" placeholder="担当者名で検索">
-                    <button type="button" class="btn btn-primary modal-search-btn">検索</button>
-                </div>
-                <div class="modal-list">
-                    <ul class="employee-list">
-                        <li class="employee-list-item">
-                            <label class="employee-list-checkbox-label">
-                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="1" data-employee-name="田中太郎">
-                                <div class="employee-info">
-                                    <span class="employee-name">田中太郎</span>
-                                    <span class="employee-department">営業部</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="employee-list-item">
-                            <label class="employee-list-checkbox-label">
-                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="2" data-employee-name="佐藤花子">
-                                <div class="employee-info">
-                                    <span class="employee-name">佐藤花子</span>
-                                    <span class="employee-department">営業部</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="employee-list-item">
-                            <label class="employee-list-checkbox-label">
-                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="3" data-employee-name="鈴木一郎">
-                                <div class="employee-info">
-                                    <span class="employee-name">鈴木一郎</span>
-                                    <span class="employee-department">技術部</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="employee-list-item">
-                            <label class="employee-list-checkbox-label">
-                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="4" data-employee-name="高橋次郎">
-                                <div class="employee-info">
-                                    <span class="employee-name">高橋次郎</span>
-                                    <span class="employee-department">技術部</span>
-                                </div>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary engineer-managers-cancel-btn">キャンセル</button>
-                <button type="button" class="btn btn-primary engineer-managers-confirm-btn">選択を確定</button>
-            </div>
-        </div>
-    </div>
+    <!-- エンジニア担当者選択モーダルコンポーネント -->
+    <app-engineer-representative-selector></app-engineer-representative-selector>
 
     <!-- 案件追加フォームモーダル -->
     <div class="modal" id="project-add-modal">
@@ -442,6 +384,7 @@
     <script type="module" src="components/app-blacklist-selector.js"></script>
     <script type="module" src="components/app-skill-sheet-uploader.js"></script>
     <script type="module" src="components/app-project-selector.js"></script>
+    <script type="module" src="components/app-engineer-representative-selector.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/engineer-register.js"></script>

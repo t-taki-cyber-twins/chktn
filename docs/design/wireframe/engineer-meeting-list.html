@@ -36,6 +36,20 @@
                                 <label for="search-project-name" class="search-form-label">案件名</label>
                                 <input type="text" id="search-project-name" name="project-name" class="search-form-input" placeholder="案件名で検索">
                             </div>
+
+                            <div class="search-form-group">
+                                <label for="search-engineer-representative" class="search-form-label">エンジニア担当者</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="search-engineer-representative-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-values" id="search-engineer-representative-selected" style="display: none;">
+                                        <div class="selected-values-list" id="search-engineer-representative-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="search-engineer-representative-remove-all">すべて解除</button>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div class="search-form-group">
                                 <label for="search-status" class="search-form-label">ステータス</label>
@@ -80,6 +94,10 @@
                                         エンジニア名
                                         <span class="sort-icon">▼</span>
                                     </th>
+                                    <th class="table-sortable" data-sort="engineer-representative">
+                                        エンジニア担当者
+                                        <span class="sort-icon">▼</span>
+                                    </th>
                                     <th class="table-sortable" data-sort="project-name">
                                         案件名
                                         <span class="sort-icon">▼</span>
@@ -111,6 +129,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">田中太郎</a>
                                     </td>
+                                    <td>鈴木一郎</td>
                                     <td>
                                         <a href="project-edit.html" class="table-link"><span class="project-link-own-badge">自</span>フルスタックエンジニア募集</a>
                                     </td>
@@ -134,6 +153,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">佐藤次郎</a>
                                     </td>
+                                    <td>高橋次郎</td>
                                     <td>
                                         <a href="project-edit.html" class="table-link"><span class="project-link-own-badge">自</span>フルスタックエンジニア募集</a>
                                     </td>
@@ -157,6 +177,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">佐藤次郎</a>
                                     </td>
+                                    <td>高橋次郎</td>
                                     <td>
                                         <a href="public-project-detail.html" class="table-link">バックエンドエンジニア募集</a>
                                     </td>
@@ -180,6 +201,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">鈴木花子</a>
                                     </td>
+                                    <td>鈴木一郎</td>
                                     <td>
                                         <a href="public-project-detail.html" class="table-link">フロントエンドエンジニア募集</a>
                                     </td>
@@ -220,11 +242,15 @@
     <!-- メール送信プレビューモーダルコンポーネント -->
     <app-email-preview></app-email-preview>
 
+    <!-- エンジニア担当者選択モーダルコンポーネント -->
+    <app-engineer-representative-selector></app-engineer-representative-selector>
+
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     <script type="module" src="components/app-engineer-meeting-edit.js"></script>
     <script type="module" src="components/app-email-preview.js"></script>
+    <script type="module" src="components/app-engineer-representative-selector.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/engineer-meeting-list.js"></script>

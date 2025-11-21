@@ -801,6 +801,226 @@ body {
   margin-bottom: 16px;
 }
 
+/* ========================================
+   エンジニア担当者選択モーダル
+   ======================================== */
+.modal-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.employee-list {
+  list-style: none;
+}
+
+.employee-list-item {
+  margin-bottom: 8px;
+}
+
+.employee-list-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.employee-list-checkbox-label:hover {
+  background-color: #f5f5f5;
+  border-color: #0066cc;
+}
+
+.employee-list-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.employee-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.employee-department {
+  font-size: 12px;
+  color: #666;
+}
+
+.employee-list-checkbox-label input[type="checkbox"]:checked + .employee-info .employee-name {
+  color: #0066cc;
+  font-weight: 600;
+}
+
+/* ========================================
+   フォーム選択コンポーネント
+   ======================================== */
+.form-select-wrapper {
+  position: relative;
+}
+
+.form-select-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 0.2s;
+}
+
+.form-select-btn:hover {
+  border-color: #0066cc;
+}
+
+.form-select-text {
+  flex: 1;
+  text-align: left;
+}
+
+.form-select-arrow {
+  color: #666;
+  margin-left: 8px;
+}
+
+.form-selected-value {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #0066cc;
+  border-radius: 4px;
+  background-color: #e6f2ff;
+  margin-top: 8px;
+}
+
+.form-selected-values {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.selected-values-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-value-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background-color: #e6f2ff;
+  border: 1px solid #0066cc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.selected-value-tag .selected-value-text {
+  color: #0066cc;
+  font-weight: 500;
+}
+
+.selected-value-tag .selected-value-remove {
+  background: none;
+  border: none;
+  color: #0066cc;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+
+.selected-value-tag .selected-value-remove:hover {
+  background-color: #0066cc;
+  color: #fff;
+}
+
+.selected-value-tag-like {
+  background-color: #fff4e6;
+  border-color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-text {
+  color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-remove {
+  color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-remove:hover {
+  background-color: #ff8800;
+  color: #fff;
+}
+
+.selected-value-remove-all {
+  align-self: flex-start;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #666;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.selected-value-remove-all:hover {
+  color: #0066cc;
+}
+
+.selected-value-text {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.selected-value-remove {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.selected-value-remove:hover {
+  color: #e74c3c;
+}
+
+
 .search-form {
   padding: 0 24px;
 }

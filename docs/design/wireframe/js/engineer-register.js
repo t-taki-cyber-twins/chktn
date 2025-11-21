@@ -130,14 +130,15 @@ function initModals() {
 /**
  * エンジニア担当者選択処理（複数選択）
  */
+/**
+ * エンジニア担当者選択処理（複数選択）
+ */
 function initEngineerManagersSelection() {
     const selectBtn = document.getElementById('engineer-managers-btn');
     const selectedDiv = document.getElementById('engineer-managers-selected');
     const selectedList = document.getElementById('engineer-managers-selected-list');
     const removeAllBtn = document.getElementById('engineer-managers-remove-all');
-    const modal = document.getElementById('engineer-managers-modal');
-    const confirmBtn = document.querySelector('.engineer-managers-confirm-btn');
-    const cancelBtn = document.querySelector('.engineer-managers-cancel-btn');
+    const selectorComponent = document.querySelector('app-engineer-representative-selector');
     
     let selectedItems = []; // 選択されたアイテムの配列
 
@@ -176,65 +177,14 @@ function initEngineerManagersSelection() {
         });
     }
 
-    // チェックボックスの状態を更新
-    function updateCheckboxes() {
-        const checkboxes = document.querySelectorAll('.employee-list-checkbox');
-        checkboxes.forEach(checkbox => {
-            const employeeId = checkbox.getAttribute('data-employee-id');
-            const isSelected = selectedItems.some(item => item.id === employeeId);
-            checkbox.checked = isSelected;
-        });
-    }
-
     // 選択ボタンクリック
     if (selectBtn) {
         selectBtn.addEventListener('click', function() {
-            if (modal) {
-                modal.classList.add('active');
-                updateCheckboxes();
-            }
-        });
-    }
-
-    // チェックボックスの変更処理
-    const checkboxes = document.querySelectorAll('.employee-list-checkbox');
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const employeeId = this.getAttribute('data-employee-id');
-            const employeeName = this.getAttribute('data-employee-name');
-            
-            if (this.checked) {
-                // 追加
-                if (!selectedItems.find(item => item.id === employeeId)) {
-                    selectedItems.push({
-                        id: employeeId,
-                        name: employeeName
-                    });
-                }
-            } else {
-                // 削除
-                selectedItems = selectedItems.filter(item => item.id !== employeeId);
-            }
-        });
-    });
-
-    // 確定ボタン
-    if (confirmBtn) {
-        confirmBtn.addEventListener('click', function() {
-            renderSelectedItems();
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        });
-    }
-
-    // キャンセルボタン
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', function() {
-            // チェックボックスの状態をリセット
-            updateCheckboxes();
-            if (modal) {
-                modal.classList.remove('active');
+            if (selectorComponent) {
+                selectorComponent.open(selectedItems, function(newSelectedItems) {
+                    selectedItems = newSelectedItems;
+                    renderSelectedItems();
+                });
             }
         });
     }

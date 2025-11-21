@@ -65,6 +65,20 @@
                                     </label>
                                 </div>
                             </div>
+
+                            <div class="search-form-group">
+                                <label for="search-engineer-representative" class="search-form-label">エンジニア担当者</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="search-engineer-representative-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-values" id="search-engineer-representative-selected" style="display: none;">
+                                        <div class="selected-values-list" id="search-engineer-representative-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="search-engineer-representative-remove-all">すべて解除</button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
 
@@ -101,6 +115,10 @@
                                         氏名
                                         <span class="sort-icon">▼</span>
                                     </th>
+                                    <th class="table-sortable" data-sort="engineer-representative">
+                                        エンジニア担当者
+                                        <span class="sort-icon">▼</span>
+                                    </th>
                                     <th class="table-sortable" data-sort="company">
                                         所属会社
                                         <span class="sort-icon">▼</span>
@@ -134,6 +152,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">山田 太郎</a>
                                     </td>
+                                    <td>鈴木一郎</td>
                                     <td>テック株式会社</td>
                                     <td>Java, Spring Boot, AWS</td>
                                     <td>5年</td>
@@ -160,6 +179,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">鈴木 一郎</a>
                                     </td>
+                                    <td>田中太郎</td>
                                     <td>システム株式会社</td>
                                     <td>React, TypeScript, Node.js</td>
                                     <td>3年</td>
@@ -186,6 +206,7 @@
                                     <td>
                                         <a href="engineer-edit.html" class="table-link">田中 花子</a>
                                     </td>
+                                    <td>高橋次郎</td>
                                     <td>システム株式会社</td>
                                     <td>Python, Django, Machine Learning</td>
                                     <td>4年</td>
@@ -227,22 +248,143 @@
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-engineer-representative-selector.js"></script>
+    <app-engineer-representative-selector></app-engineer-representative-selector>
 
     <script src="js/common.js"></script>
     <script>
-        // 簡易的な動作確認用スクリプト
+        // Engineer search page script
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Engineer search page loaded');
+            
+            // Initialize Engineer Representative selection
+            initEngineerRepresentativeSelection();
 
-            // 検索ボタンのイベントリスナー（モック）
+            // Search form submission
             const searchForm = document.getElementById('search-form');
             if (searchForm) {
                 searchForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    alert('検索機能は未実装です。');
+                    performSearch();
+                });
+            }
+
+            // Reset form
+            const resetBtn = searchForm.querySelector('.search-form-reset');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    searchForm.reset();
+                    // Clear engineer representative selection
+                    const selectedList = document.getElementById('search-engineer-representative-selected-list');
+                    if (selectedList) {
+                        selectedList.innerHTML = '';
+                        document.getElementById('search-engineer-representative-selected').style.display = 'none';
+                    }
                 });
             }
         });
+
+        /**
+         * Initialize Engineer Representative selection
+         */
+        function initEngineerRepresentativeSelection() {
+            const selectBtn = document.getElementById('search-engineer-representative-btn');
+            const selectedDiv = document.getElementById('search-engineer-representative-selected');
+            const selectedList = document.getElementById('search-engineer-representative-selected-list');
+            const removeAllBtn = document.getElementById('search-engineer-representative-remove-all');
+            const selectorComponent = document.querySelector('app-engineer-representative-selector');
+
+            let selectedItems = []; // 選択されたアイテムの配列
+
+            // 選択されたアイテムを表示
+            function renderSelectedItems() {
+                if (selectedItems.length === 0) {
+                    selectedDiv.style.display = 'none';
+                    return;
+                }
+
+                selectedDiv.style.display = 'block';
+                selectedList.innerHTML = '';
+
+                selectedItems.forEach(item => {
+                    const tag = document.createElement('div');
+                    tag.className = 'selected-value-tag';
+                    tag.innerHTML = `
+                        <span class="selected-value-text">${escapeHtml(item.name)}</span>
+                        <button type="button" class="selected-value-remove" data-item-id="${item.id}">×</button>
+                    `;
+
+                    // 個別削除ボタン
+                    const removeBtn = tag.querySelector('.selected-value-remove');
+                    removeBtn.addEventListener('click', () => {
+                        selectedItems = selectedItems.filter(i => i.id !== item.id);
+                        renderSelectedItems();
+                    });
+
+                    selectedList.appendChild(tag);
+                });
+            }
+
+            // 選択ボタンクリック
+            if (selectBtn) {
+                selectBtn.addEventListener('click', function() {
+                    if (selectorComponent) {
+                        selectorComponent.open(selectedItems, function(newSelectedItems) {
+                            selectedItems = newSelectedItems;
+                            renderSelectedItems();
+                        });
+                    }
+                });
+            }
+
+            // すべて解除ボタン
+            if (removeAllBtn) {
+                removeAllBtn.addEventListener('click', function() {
+                    selectedItems = [];
+                    renderSelectedItems();
+                });
+            }
+        }
+
+        /**
+         * Perform search
+         */
+        function performSearch() {
+            const formData = new FormData(document.getElementById('search-form'));
+            const searchParams = {};
+
+            // Get form data
+            for (const [key, value] of formData.entries()) {
+                if (value) {
+                    searchParams[key] = value;
+                }
+            }
+
+            // Get engineer representative selection
+            const selectedRepresentatives = [];
+            const selectedList = document.getElementById('search-engineer-representative-selected-list');
+            if (selectedList) {
+                const tags = selectedList.querySelectorAll('.selected-value-text');
+                tags.forEach(tag => {
+                    selectedRepresentatives.push(tag.textContent);
+                });
+            }
+            if (selectedRepresentatives.length > 0) {
+                searchParams['engineer-representative'] = selectedRepresentatives;
+            }
+
+            console.log('検索パラメータ:', searchParams);
+            alert('検索機能は未実装です。\n検索パラメータ: ' + JSON.stringify(searchParams, null, 2));
+        }
+
+        /**
+         * HTML escape utility
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
     </script>
 </body>
 

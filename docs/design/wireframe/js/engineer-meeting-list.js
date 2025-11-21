@@ -10,11 +10,84 @@ let currentSortDirection = 'asc';
  */
 document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
+    initEngineerRepresentativeSelection();
     initTableSort();
     initDeleteButtons();
     initPagination();
     initEditButtons();
 });
+
+/**
+ * エンジニア担当者選択処理（検索フォーム用）
+ */
+function initEngineerRepresentativeSelection() {
+    const selectBtn = document.getElementById('search-engineer-representative-btn');
+    const selectedDiv = document.getElementById('search-engineer-representative-selected');
+    const selectedList = document.getElementById('search-engineer-representative-selected-list');
+    const removeAllBtn = document.getElementById('search-engineer-representative-remove-all');
+    const selectorComponent = document.querySelector('app-engineer-representative-selector');
+    
+    let selectedItems = []; // 選択されたアイテムの配列
+
+    // 選択されたアイテムを表示
+    function renderSelectedItems() {
+        if (!selectedList) return;
+        
+        selectedList.innerHTML = '';
+        if (selectedItems.length === 0) {
+            selectedDiv.style.display = 'none';
+            if (selectBtn) selectBtn.style.display = 'flex';
+            return;
+        }
+
+        selectedDiv.style.display = 'block';
+        if (selectBtn) selectBtn.style.display = 'none';
+
+        selectedItems.forEach((item, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'selected-value-tag';
+            tag.innerHTML = `
+                <span class="selected-value-text">${escapeHtml(item.name)}</span>
+                <button type="button" class="selected-value-remove" data-index="${index}">×</button>
+            `;
+            selectedList.appendChild(tag);
+        });
+
+        // 個別削除ボタンのイベントリスナー
+        const removeButtons = selectedList.querySelectorAll('.selected-value-remove');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = parseInt(button.getAttribute('data-index'));
+                selectedItems.splice(index, 1);
+                renderSelectedItems();
+                
+                // 隠しフィールドがあれば更新するなどの処理が必要な場合はここに追加
+            });
+        });
+    }
+
+    // 選択ボタンクリック
+    if (selectBtn) {
+        selectBtn.addEventListener('click', function() {
+            if (selectorComponent) {
+                selectorComponent.open(selectedItems, function(newSelectedItems) {
+                    selectedItems = newSelectedItems;
+                    renderSelectedItems();
+                    
+                    // 検索実行などの処理が必要な場合はここに追加
+                });
+            }
+        });
+    }
+
+    // すべて解除ボタン
+    if (removeAllBtn) {
+        removeAllBtn.addEventListener('click', function() {
+            selectedItems = [];
+            renderSelectedItems();
+        });
+    }
+}
 
 /**
  * 検索フォームの初期化
@@ -58,6 +131,19 @@ function performSearch() {
         }
     }
     
+    // エンジニア担当者の選択状態も取得（フォームデータには含まれないため）
+    const selectedRepresentatives = [];
+    const selectedList = document.getElementById('search-engineer-representative-selected-list');
+    if (selectedList) {
+        const tags = selectedList.querySelectorAll('.selected-value-text');
+        tags.forEach(tag => {
+            selectedRepresentatives.push(tag.textContent);
+        });
+    }
+    if (selectedRepresentatives.length > 0) {
+        searchParams['engineer-representative'] = selectedRepresentatives;
+    }
+    
     console.log('検索パラメータ:', searchParams);
     
     // TODO: 実際のAPI呼び出しに置き換える
@@ -74,6 +160,13 @@ function resetSearchForm() {
     const form = document.getElementById('search-form');
     if (form) {
         form.reset();
+        
+        // エンジニア担当者の選択もリセット
+        const removeAllBtn = document.getElementById('search-engineer-representative-remove-all');
+        if (removeAllBtn) {
+            removeAllBtn.click();
+        }
+        
         // すべての検索結果を表示
         const results = getMockSearchResults();
         displaySearchResults(results);
@@ -127,6 +220,7 @@ function createTableRow(meeting) {
             <td>
                 <a href="#" class="table-link">${escapeHtml(meeting.engineerName)}</a>
             </td>
+            <td>${escapeHtml(meeting.engineerRepresentative || '-')}</td>
             <td>
                 <a href="${projectLink}" class="table-link">${ownBadge}${escapeHtml(meeting.projectName)}</a>
             </td>
@@ -199,26 +293,30 @@ function sortTable(column, direction) {
                 aValue = a.cells[1].querySelector('.table-link').textContent.trim();
                 bValue = b.cells[1].querySelector('.table-link').textContent.trim();
                 break;
+            case 'engineer-representative':
+                aValue = a.cells[2].textContent.trim();
+                bValue = b.cells[2].textContent.trim();
+                break;
             case 'project-name':
-                aValue = a.cells[2].querySelector('.table-link').textContent.trim();
-                bValue = b.cells[2].querySelector('.table-link').textContent.trim();
+                aValue = a.cells[3].querySelector('.table-link').textContent.trim();
+                bValue = b.cells[3].querySelector('.table-link').textContent.trim();
                 break;
             case 'project-company':
-                aValue = a.cells[3].textContent.trim();
-                bValue = b.cells[3].textContent.trim();
-                break;
-            case 'project-manager':
                 aValue = a.cells[4].textContent.trim();
                 bValue = b.cells[4].textContent.trim();
                 break;
-            case 'status':
+            case 'project-manager':
                 aValue = a.cells[5].textContent.trim();
                 bValue = b.cells[5].textContent.trim();
                 break;
+            case 'status':
+                aValue = a.cells[6].textContent.trim();
+                bValue = b.cells[6].textContent.trim();
+                break;
             case 'meeting-date':
                 // 日時文字列をDateオブジェクトに変換
-                const aDateStr = a.cells[6].textContent.trim();
-                const bDateStr = b.cells[6].textContent.trim();
+                const aDateStr = a.cells[7].textContent.trim();
+                const bDateStr = b.cells[7].textContent.trim();
                 aValue = parseMeetingDateTime(aDateStr);
                 bValue = parseMeetingDateTime(bDateStr);
                 break;
@@ -261,7 +359,7 @@ function initDeleteButtons() {
         button.addEventListener('click', function() {
             const meetingId = this.dataset.meetingId;
             const engineerName = this.closest('tr').cells[1].querySelector('.table-link').textContent;
-            const projectName = this.closest('tr').cells[2].querySelector('.table-link').textContent;
+            const projectName = this.closest('tr').cells[3].querySelector('.table-link').textContent;
             
             if (confirm(`「${engineerName}」と「${projectName}」の面談を削除しますか？`)) {
                 // TODO: 実際のAPI呼び出しに置き換える
@@ -316,6 +414,7 @@ function getMockSearchResults() {
         {
             id: 1,
             engineerName: '田中太郎',
+            engineerRepresentative: '鈴木一郎',
             projectName: 'フルスタックエンジニア募集',
             projectCompany: 'サンプル株式会社',
             projectManager: '山田太郎',
@@ -327,6 +426,7 @@ function getMockSearchResults() {
         {
             id: 2,
             engineerName: '佐藤次郎',
+            engineerRepresentative: '高橋次郎',
             projectName: 'フルスタックエンジニア募集',
             projectCompany: 'サンプル株式会社',
             projectManager: '山田太郎',
@@ -338,6 +438,7 @@ function getMockSearchResults() {
         {
             id: 3,
             engineerName: '佐藤次郎',
+            engineerRepresentative: '高橋次郎',
             projectName: 'バックエンドエンジニア募集',
             projectCompany: 'テック株式会社',
             projectManager: '佐藤花子',
@@ -349,6 +450,7 @@ function getMockSearchResults() {
         {
             id: 4,
             engineerName: '鈴木花子',
+            engineerRepresentative: '鈴木一郎',
             projectName: 'フロントエンドエンジニア募集',
             projectCompany: 'デザイン株式会社',
             projectManager: '鈴木一郎',
