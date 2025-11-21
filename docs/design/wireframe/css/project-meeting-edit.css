@@ -1,0 +1,292 @@
+/* ========================================
+   面談編集モーダル固有スタイルシート
+   ======================================== */
+
+/* モーダル基本スタイルはcommon.cssに移動 */
+
+
+/* 面談編集モーダル固有スタイル */
+.meeting-edit-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.meeting-edit-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.meeting-edit-modal .modal-content,
+.meeting-edit-modal-content {
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+}
+
+.meeting-edit-modal .modal-body,
+.meeting-edit-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.meeting-edit-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 20px 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* 案件・エンジニア情報セクション */
+.meeting-info-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.meeting-info-section:last-of-type {
+    border-bottom: none;
+}
+
+.meeting-info-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.meeting-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.meeting-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.meeting-info-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.meeting-info-value {
+    font-size: 14px;
+    color: #333;
+}
+
+/* フォームセクションはcommon.cssに移動 */
+
+
+/* メッセージ一覧セクション */
+.message-list-section {
+    margin-bottom: 24px;
+}
+
+.message-list-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.message-list {
+    list-style: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+
+.message-list-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.message-list-item:last-child {
+    border-bottom: none;
+}
+
+.message-list-item:hover {
+    background-color: #f5f5f5;
+}
+
+.message-list-item.active {
+    background-color: #e6f2ff;
+    border-left: 3px solid #0066cc;
+}
+
+.message-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.message-list-title-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.message-list-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.message-list-from {
+    font-size: 12px;
+    color: #666;
+}
+
+/* メッセージ内容表示エリア */
+.message-content-area {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    padding: 16px;
+    margin-top: 12px;
+}
+
+.message-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.message-content-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.message-content-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.message-content-close:hover {
+    background-color: #e0e0e0;
+}
+
+.message-content-body {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+/* メール送信プレビューモーダル固有スタイル */
+.email-preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.email-preview-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.email-preview-modal .modal-content,
+.email-preview-modal-content {
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+}
+
+.email-preview-modal .modal-body,
+.email-preview-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.email-preview-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 20px 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* メールプレビュー内容表示 */
+.email-preview-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.email-preview-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.email-preview-item-full {
+    grid-column: 1 / -1;
+}
+
+.email-preview-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.email-preview-value {
+    font-size: 14px;
+    color: #333;
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    word-break: break-all;
+}
+
+.email-preview-body {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+

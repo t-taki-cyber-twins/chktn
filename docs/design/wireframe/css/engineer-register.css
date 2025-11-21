@@ -1,0 +1,548 @@
+/* ========================================
+   エンジニア登録画面固有スタイルシート
+   ======================================== */
+
+/* フォーム */
+.engineer-register-form {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 32px;
+}
+
+.form-section {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.form-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* フォーム共通スタイルはcommon.cssに移動 */
+
+
+.form-select-wrapper {
+    position: relative;
+}
+
+.form-select-btn {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.2s;
+}
+
+.form-select-btn:hover {
+    border-color: #0066cc;
+}
+
+.form-select-text {
+    flex: 1;
+    text-align: left;
+}
+
+.form-select-arrow {
+    color: #666;
+    margin-left: 8px;
+}
+
+.form-selected-value {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    background-color: #e6f2ff;
+    margin-top: 8px;
+}
+
+.selected-value-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+.selected-value-remove {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.selected-value-remove:hover {
+    color: #e74c3c;
+}
+
+/* スキル選択 */
+.skill-selector {
+    width: 100%;
+}
+
+.skill-select-header {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.skill-select-header .form-select {
+    flex: 1;
+}
+
+.skill-custom-input {
+    flex: 1;
+}
+
+.skill-add-btn {
+    flex-shrink: 0;
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: #e6f2ff;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.skill-item-name {
+    margin-right: 8px;
+}
+
+.skill-item-level {
+    margin-left: 8px;
+    color: #666;
+    font-size: 12px;
+}
+
+.skill-item-remove {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.skill-item-remove:hover {
+    color: #e74c3c;
+}
+
+/* ラジオボタン・チェックボックス */
+/* ラジオボタン・チェックボックスはcommon.cssに移動 */
+
+
+/* モーダル */
+/* モーダル共通スタイルはcommon.cssに移動 */
+
+
+.modal-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.employee-list {
+    list-style: none;
+}
+
+.employee-list-item {
+    margin-bottom: 8px;
+}
+
+.employee-list-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.employee-list-checkbox-label:hover {
+    background-color: #f5f5f5;
+    border-color: #0066cc;
+}
+
+.employee-list-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.employee-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.employee-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.employee-department {
+    font-size: 12px;
+    color: #666;
+}
+
+.employee-list-checkbox-label input[type="checkbox"]:checked + .employee-info .employee-name {
+    color: #0066cc;
+    font-weight: 600;
+}
+
+/* フォーム行・列レイアウト */
+/* フォーム行・列レイアウトはcommon.cssに移動 */
+
+
+/* 複数選択値の表示 */
+.form-selected-values {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.selected-values-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selected-value-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background-color: #e6f2ff;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.selected-value-tag .selected-value-text {
+    color: #0066cc;
+    font-weight: 500;
+}
+
+.selected-value-tag .selected-value-remove {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: background-color 0.2s;
+}
+
+.selected-value-tag .selected-value-remove:hover {
+    background-color: #0066cc;
+    color: #fff;
+}
+
+.selected-value-tag-like {
+    background-color: #fff4e6;
+    border-color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-text {
+    color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-remove {
+    color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-remove:hover {
+    background-color: #ff8800;
+    color: #fff;
+}
+
+.selected-value-remove-all {
+    align-self: flex-start;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #666;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.selected-value-remove-all:hover {
+    color: #0066cc;
+}
+
+/* モーダルフッター */
+/* モーダルフッターはcommon.cssに移動 */
+
+
+/* スキルシートアップロード */
+.skill-sheet-status {
+    padding: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.skill-sheet-status-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.skill-sheet-upload-section {
+    margin-top: 12px;
+}
+
+.skill-sheet-upload-btn {
+    width: auto;
+}
+
+/* タブUI */
+.tab-container {
+    margin-top: 32px;
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 24px;
+}
+
+.tab-button {
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-button:hover {
+    color: #0066cc;
+}
+
+.tab-button.active {
+    color: #0066cc;
+    border-bottom-color: #0066cc;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.form-subsection-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+    margin-top: 24px;
+}
+
+/* スキルシートダウンロード */
+.skill-sheet-download-section {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.skill-sheet-download-btn {
+    width: auto;
+}
+
+/* スキル一覧テーブル */
+.skill-list-table-section {
+    margin-bottom: 32px;
+}
+
+.skill-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.skill-list-table thead {
+    background-color: #f5f5f5;
+}
+
+.skill-list-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.skill-list-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+    font-size: 14px;
+}
+
+.skill-list-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.skill-add-form-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.skill-name-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-name-input-group .form-select {
+    flex: 1;
+}
+
+.skill-name-separator {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+}
+
+.skill-name-input-group .form-input {
+    flex: 1;
+}
+
+/* 案件一覧テーブル */
+.project-list-table-section {
+    margin-bottom: 24px;
+}
+
+.project-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.project-list-table thead {
+    background-color: #f5f5f5;
+}
+
+.project-list-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.project-list-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+    font-size: 14px;
+}
+
+.project-list-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.project-list-table .table-link {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.project-list-table .table-link:hover {
+    text-decoration: underline;
+}
+
+.project-list-actions {
+    margin-top: 16px;
+}
+
+.project-add-btn {
+    width: auto;
+}
+
+/* モーダルコンテンツ（大サイズ） */
+.modal-content-large {
+    max-width: 900px;
+}
+
+/* テーブルラッパー */
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 16px;
+}
+

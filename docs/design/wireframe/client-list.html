@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>取引先管理 - CHKTN</title>
+  <link rel="stylesheet" href="css/client-list.css">
+  <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-company-edit-modal.js" type="module"></script>
+  <script src="components/app-official-company-search-modal.js" type="module"></script>
+</head>
+<body>
+  <div class="container">
+    <app-header></app-header>
+
+    <div class="main-layout">
+      
+      <main class="content-area">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">取引先会社一覧</h2>
+            <button class="btn btn-primary" id="add-client-btn">＋ 取引先会社追加</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="common-table">
+              <thead>
+                <tr>
+                  <th>会社名</th>
+                  <th>法人番号</th>
+                  <th>住所</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>株式会社パートナーズ</td>
+                  <td>1111222233334</td>
+                  <td>神奈川県横浜市...</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">編集</button>
+                    <button class="btn btn-secondary btn-sm" style="color: #cc0000; background-color: #ffe6e6;">削除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>グローバルシステム株式会社</td>
+                  <td>5555666677778</td>
+                  <td>福岡県福岡市...</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">編集</button>
+                    <button class="btn btn-secondary btn-sm" style="color: #cc0000; background-color: #ffe6e6;">削除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <app-company-edit-modal id="company-edit-modal"></app-company-edit-modal>
+  <app-official-company-search-modal id="official-company-search-modal"></app-official-company-search-modal>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addClientBtn = document.getElementById('add-client-btn');
+      const companyEditModal = document.getElementById('company-edit-modal');
+      const officialCompanySearchModal = document.getElementById('official-company-search-modal');
+
+      addClientBtn.addEventListener('click', () => {
+        companyEditModal.open();
+      });
+
+      // モーダル間の連携設定
+      companyEditModal.setSearchModal(officialCompanySearchModal);
+
+      // 編集ボタンのイベントリスナー設定
+      const editBtns = document.querySelectorAll('.btn-secondary.btn-sm');
+      editBtns.forEach(btn => {
+        if (btn.textContent.trim() === '編集') {
+          btn.addEventListener('click', (e) => {
+            // モックデータを作成してフォームにセット
+            const row = e.target.closest('tr');
+            const cells = row.querySelectorAll('td');
+            const mockData = {
+              name: cells[0].textContent,
+              number: cells[1].textContent,
+            };
+            companyEditModal.fillForm(mockData);
+            companyEditModal.open();
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

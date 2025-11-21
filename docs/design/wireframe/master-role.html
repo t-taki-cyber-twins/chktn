@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マスタロール管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/master-role.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="master-role-management">
+                    <div class="page-header">
+                        <h1 class="page-title">マスタロール管理</h1>
+                    </div>
+
+                    <!-- タブナビゲーション -->
+                    <div class="tab-navigation">
+                        <button class="tab-button active" data-tab="role">マスタロール管理</button>
+                        <button class="tab-button" data-tab="role-group">マスタロールグループ管理</button>
+                        <button class="tab-button" data-tab="role-group-role">マスタロールグループロール管理</button>
+                    </div>
+
+                    <!-- タブ1: マスタロール管理 -->
+                    <div class="tab-content active" id="tab-role">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">マスタロール管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-role-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="role-search" class="search-input" placeholder="ロール名で検索...">
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="role-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>ロール名</th>
+                                        <th>説明</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="role-table-body">
+                                    <tr data-role-id="101">
+                                        <td>101</td>
+                                        <td>エンジニア管理者</td>
+                                        <td>エンジニア情報の全権限を持つロール</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-edit-btn" data-role-id="101">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-delete-btn" data-role-id="101">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-id="102">
+                                        <td>102</td>
+                                        <td>エンジニア編集者</td>
+                                        <td>エンジニア情報の編集権限を持つロール</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-edit-btn" data-role-id="102">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-delete-btn" data-role-id="102">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-id="103">
+                                        <td>103</td>
+                                        <td>エンジニア閲覧者</td>
+                                        <td>エンジニア情報の閲覧権限を持つロール</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-edit-btn" data-role-id="103">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-delete-btn" data-role-id="103">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-id="201">
+                                        <td>201</td>
+                                        <td>会社管理者</td>
+                                        <td>会社情報の全権限を持つロール</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-edit-btn" data-role-id="201">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-delete-btn" data-role-id="201">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-id="202">
+                                        <td>202</td>
+                                        <td>会社編集者</td>
+                                        <td>会社情報の編集権限を持つロール</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-edit-btn" data-role-id="202">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-delete-btn" data-role-id="202">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-id="203">
+                                        <td>203</td>
+                                        <td>会社閲覧者</td>
+                                        <td>会社情報の閲覧権限を持つロール</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-edit-btn" data-role-id="203">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-delete-btn" data-role-id="203">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- タブ2: マスタロールグループ管理 -->
+                    <div class="tab-content" id="tab-role-group">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">マスタロールグループ管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-role-group-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="role-group-search" class="search-input" placeholder="ロールグループ名で検索...">
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="role-group-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>ロールグループ名</th>
+                                        <th>説明</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="role-group-table-body">
+                                    <tr data-role-group-id="10">
+                                        <td>10</td>
+                                        <td>管理者</td>
+                                        <td>全権限を持つロールグループ</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-edit-btn" data-role-group-id="10">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-delete-btn" data-role-group-id="10">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-group-id="20">
+                                        <td>20</td>
+                                        <td>エンジニア管理者</td>
+                                        <td>エンジニア情報の編集（個人情報除く）と会社情報閲覧の権限を持つロールグループ</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-edit-btn" data-role-group-id="20">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-delete-btn" data-role-group-id="20">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-group-id="30">
+                                        <td>30</td>
+                                        <td>バックオフィス</td>
+                                        <td>エンジニア情報の編集（個人情報含む）と会社情報の編集権限を持つロールグループ</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-edit-btn" data-role-group-id="30">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-delete-btn" data-role-group-id="30">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- タブ3: マスタロールグループロール管理 -->
+                    <div class="tab-content" id="tab-role-group-role">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">マスタロールグループロール管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-role-group-role-btn">新規紐づけ</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <select id="role-group-role-filter" class="search-select">
+                                <option value="">すべてのロールグループ</option>
+                                <option value="10">管理者</option>
+                                <option value="20">エンジニア管理者</option>
+                                <option value="30">バックオフィス</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="role-group-role-table">
+                                <thead>
+                                    <tr>
+                                        <th>ロールグループID</th>
+                                        <th>ロールグループ名</th>
+                                        <th>ロールID</th>
+                                        <th>ロール名</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="role-group-role-table-body">
+                                    <!-- 管理者ロールグループ -->
+                                    <tr data-role-group-id="10" data-role-id="101">
+                                        <td>10</td>
+                                        <td>管理者</td>
+                                        <td>101</td>
+                                        <td>エンジニア管理者</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-role-delete-btn" data-role-group-id="10" data-role-id="101">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-group-id="10" data-role-id="201">
+                                        <td>10</td>
+                                        <td>管理者</td>
+                                        <td>201</td>
+                                        <td>会社管理者</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-role-delete-btn" data-role-group-id="10" data-role-id="201">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- エンジニア管理者ロールグループ -->
+                                    <tr data-role-group-id="20" data-role-id="102">
+                                        <td>20</td>
+                                        <td>エンジニア管理者</td>
+                                        <td>102</td>
+                                        <td>エンジニア編集者</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-role-delete-btn" data-role-group-id="20" data-role-id="102">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-group-id="20" data-role-id="203">
+                                        <td>20</td>
+                                        <td>エンジニア管理者</td>
+                                        <td>203</td>
+                                        <td>会社閲覧者</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-role-delete-btn" data-role-group-id="20" data-role-id="203">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- バックオフィスロールグループ -->
+                                    <tr data-role-group-id="30" data-role-id="101">
+                                        <td>30</td>
+                                        <td>バックオフィス</td>
+                                        <td>101</td>
+                                        <td>エンジニア管理者</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-role-delete-btn" data-role-group-id="30" data-role-id="101">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-role-group-id="30" data-role-id="202">
+                                        <td>30</td>
+                                        <td>バックオフィス</td>
+                                        <td>202</td>
+                                        <td>会社編集者</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm role-group-role-delete-btn" data-role-group-id="30" data-role-id="202">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/master-role.js"></script>
+</body>
+</html>

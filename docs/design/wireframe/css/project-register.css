@@ -1,0 +1,451 @@
+/* ========================================
+   案件登録画面固有スタイルシート
+   ======================================== */
+
+/* フォーム */
+.project-register-form {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 32px;
+}
+
+.form-section {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.form-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* フォーム共通スタイルはcommon.cssに移動 */
+
+
+.form-select-wrapper {
+    position: relative;
+}
+
+.form-select-btn {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.2s;
+}
+
+.form-select-btn:hover {
+    border-color: #0066cc;
+}
+
+.form-select-text {
+    flex: 1;
+    text-align: left;
+}
+
+.form-select-arrow {
+    color: #666;
+    margin-left: 8px;
+}
+
+.form-selected-value {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    background-color: #e6f2ff;
+    margin-top: 8px;
+}
+
+.selected-value-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+.selected-value-remove {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.selected-value-remove:hover {
+    color: #e74c3c;
+}
+
+/* スキル選択 */
+.skill-selector {
+    width: 100%;
+}
+
+.skill-select-header {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.skill-select-header .form-select {
+    flex: 1;
+}
+
+.skill-custom-input {
+    flex: 1;
+}
+
+.skill-add-btn {
+    flex-shrink: 0;
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: #e6f2ff;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.skill-item-name {
+    margin-right: 8px;
+}
+
+.skill-item-level {
+    margin-left: 8px;
+    color: #666;
+    font-size: 12px;
+}
+
+.skill-item-remove {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.skill-item-remove:hover {
+    color: #e74c3c;
+}
+
+/* ラジオボタン・チェックボックス */
+/* ラジオボタン・チェックボックスはcommon.cssに移動 */
+
+
+/* モーダル */
+/* モーダル共通スタイルはcommon.cssに移動 */
+
+
+.modal-actions {
+    margin-bottom: 16px;
+}
+
+.modal-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.company-list,
+.employee-list,
+.engineer-list {
+    list-style: none;
+}
+
+.company-list-item,
+.employee-list-item,
+.engineer-list-item {
+    margin-bottom: 8px;
+}
+
+.company-list-btn,
+.employee-list-btn,
+.engineer-list-btn {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.company-list-btn:hover,
+.employee-list-btn:hover,
+.engineer-list-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #0066cc;
+}
+
+.company-name,
+.employee-name,
+.engineer-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.company-code,
+.employee-department,
+.engineer-skills {
+    font-size: 12px;
+    color: #666;
+}
+
+/* フォーム行・列レイアウト */
+/* フォーム行・列レイアウトはcommon.cssに移動 */
+
+
+/* 複数選択値の表示 */
+.form-selected-values {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.selected-values-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selected-value-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background-color: #e6f2ff;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.selected-value-tag .selected-value-text {
+    color: #0066cc;
+    font-weight: 500;
+}
+
+.selected-value-tag .selected-value-remove {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: background-color 0.2s;
+}
+
+.selected-value-tag .selected-value-remove:hover {
+    background-color: #0066cc;
+    color: #fff;
+}
+
+.selected-value-tag-like {
+    background-color: #fff4e6;
+    border-color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-text {
+    color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-remove {
+    color: #ff8800;
+}
+
+.selected-value-tag-like .selected-value-remove:hover {
+    background-color: #ff8800;
+    color: #fff;
+}
+
+.selected-value-remove-all {
+    align-self: flex-start;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #666;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.selected-value-remove-all:hover {
+    color: #0066cc;
+}
+
+/* チェックボックス付きリスト */
+.company-list-checkbox-label,
+.mailing-list-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.company-list-checkbox-label:hover,
+.mailing-list-checkbox-label:hover {
+    background-color: #f5f5f5;
+    border-color: #0066cc;
+}
+
+.company-list-checkbox-label input[type="checkbox"],
+.mailing-list-checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.company-list-checkbox-label input[type="checkbox"]:checked + .company-name,
+.mailing-list-checkbox-label input[type="checkbox"]:checked + .mailing-list-name {
+    color: #0066cc;
+    font-weight: 600;
+}
+
+.mailing-list {
+    list-style: none;
+}
+
+.mailing-list-item {
+    margin-bottom: 8px;
+}
+
+.mailing-list-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.mailing-list-description {
+    font-size: 12px;
+    color: #666;
+}
+
+/* モーダルフッター */
+/* モーダルフッターはcommon.cssに移動 */
+
+
+/* ブラックリストLIKEパターンセクション */
+.blacklist-like-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.blacklist-like-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.blacklist-like-input {
+    flex: 1;
+}
+
+.blacklist-like-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.blacklist-like-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background-color: #fff4e6;
+    border: 1px solid #ff8800;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.blacklist-like-pattern {
+    color: #ff8800;
+    font-weight: 500;
+}
+
+.blacklist-like-remove {
+    background: none;
+    border: none;
+    color: #ff8800;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: background-color 0.2s;
+}
+
+.blacklist-like-remove:hover {
+    background-color: #ff8800;
+    color: #fff;
+}
+

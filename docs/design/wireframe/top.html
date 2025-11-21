@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トップ画面 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/top.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="dashboard">
+                    <h1 class="dashboard-title">ダッシュボード</h1>
+
+                    <!-- 最近のメッセージセクション -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">最近のメッセージ</h2>
+                            <a href="#" class="btn btn-secondary">すべて見る</a>
+                        </div>
+                        <ul class="common-list">
+                            <li class="common-list-item">
+                                <div class="message-header">
+                                    <div class="message-project">案件: フルスタックエンジニア募集</div>
+                                    <div class="message-date">2024年11月15日 14:30</div>
+                                </div>
+                                <div class="message-content">面談の日程調整についてご相談があります。</div>
+                                <div class="message-from">送信者: 株式会社サンプル</div>
+                            </li>
+                            <li class="common-list-item">
+                                <div class="message-header">
+                                    <div class="message-project">案件: バックエンドエンジニア募集</div>
+                                    <div class="message-date">2024年11月14日 10:15</div>
+                                </div>
+                                <div class="message-content">エンジニアのスキルシートを確認させていただきました。</div>
+                                <div class="message-from">送信者: 株式会社テック</div>
+                            </li>
+                            <li class="common-list-item">
+                                <div class="message-header">
+                                    <div class="message-project">案件: フロントエンドエンジニア募集</div>
+                                    <div class="message-date">2024年11月13日 16:45</div>
+                                </div>
+                                <div class="message-content">面談の結果についてご連絡いたします。</div>
+                                <div class="message-from">送信者: 株式会社デザイン</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- レコメンドマッチングセクション -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">レコメンドマッチング</h2>
+                            <a href="#" class="btn btn-secondary">すべて見る</a>
+                        </div>
+                        <ul class="common-list">
+                            <li class="common-list-item">
+                                <div class="matching-header">
+                                    <div class="matching-project">案件: フルスタックエンジニア募集</div>
+                                    <div class="matching-score">マッチング度: 95%</div>
+                                </div>
+                                <div class="matching-engineer">エンジニア: 田中太郎</div>
+                                <div class="matching-skills">スキル: Java, Spring Boot, React, PostgreSQL</div>
+                                <div class="matching-actions">
+                                    <a href="#" class="btn btn-primary">詳細を見る</a>
+                                    <a href="#" class="btn btn-secondary">面談を申し込む</a>
+                                </div>
+                            </li>
+                            <li class="common-list-item">
+                                <div class="matching-header">
+                                    <div class="matching-project">案件: バックエンドエンジニア募集</div>
+                                    <div class="matching-score">マッチング度: 88%</div>
+                                </div>
+                                <div class="matching-engineer">エンジニア: 佐藤花子</div>
+                                <div class="matching-skills">スキル: Python, Django, PostgreSQL, AWS</div>
+                                <div class="matching-actions">
+                                    <a href="#" class="btn btn-primary">詳細を見る</a>
+                                    <a href="#" class="btn btn-secondary">面談を申し込む</a>
+                                </div>
+                            </li>
+                            <li class="common-list-item">
+                                <div class="matching-header">
+                                    <div class="matching-project">案件: フロントエンドエンジニア募集</div>
+                                    <div class="matching-score">マッチング度: 82%</div>
+                                </div>
+                                <div class="matching-engineer">エンジニア: 鈴木一郎</div>
+                                <div class="matching-skills">スキル: TypeScript, React, Next.js, Tailwind CSS</div>
+                                <div class="matching-actions">
+                                    <a href="#" class="btn btn-primary">詳細を見る</a>
+                                    <a href="#" class="btn btn-secondary">面談を申し込む</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- お知らせセクション -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="section-title">お知らせ</h2>
+                            <a href="#" class="btn btn-secondary">すべて見る</a>
+                        </div>
+                        <ul class="common-list">
+                            <li class="common-list-item">
+                                <div class="announcement-date">2024年11月15日</div>
+                                <div class="announcement-title">システムメンテナンスのお知らせ</div>
+                            </li>
+                            <li class="common-list-item">
+                                <div class="announcement-date">2024年11月10日</div>
+                                <div class="announcement-title">新機能「レコメンドマッチング」が追加されました</div>
+                            </li>
+                            <li class="common-list-item">
+                                <div class="announcement-date">2024年11月5日</div>
+                                <div class="announcement-title">エンジニア管理機能の改善について</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/top.js"></script>
+</body>
+</html>
+

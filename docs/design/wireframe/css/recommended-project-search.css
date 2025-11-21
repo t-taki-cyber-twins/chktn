@@ -1,0 +1,338 @@
+/* ========================================
+   おすすめ案件検索画面固有スタイルシート
+   ======================================== */
+
+/* サイドメニュー検索フォームはcommon.cssに移動 */
+
+
+.search-form-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.search-form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.search-form-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0066cc;
+}
+
+/* フォームグループ、ラベル、入力欄、ヘルプテキスト、アクションはcommon.cssに移動 */
+
+
+/* 検索結果エリア */
+.project-search-results {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    gap: 24px;
+}
+
+.search-results-header-left {
+    flex: 1;
+}
+
+.search-results-header-right {
+    flex-shrink: 0;
+}
+
+.search-results-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.search-results-count {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 並び順フォーム */
+.sort-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+}
+
+.sort-form-select {
+    padding: 6px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    cursor: pointer;
+    min-width: 200px;
+}
+
+.sort-form-select:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+/* マッチングリスト */
+.matching-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+/* マッチングカード */
+.matching-card {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.2s;
+}
+
+.matching-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.matching-card-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.matching-score-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.matching-score {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.matching-reason {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 4px;
+}
+
+.matching-reason-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.matching-reason-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.matching-score-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+}
+
+.matching-score-value {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 4px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.matching-score-high {
+    background-color: #e6ffe6;
+    color: #00aa00;
+}
+
+.matching-score-medium {
+    background-color: #fff4e6;
+    color: #ff8800;
+}
+
+.matching-score-low {
+    background-color: #ffe6e6;
+    color: #cc0000;
+}
+
+.matching-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.matching-card-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.matching-card-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.matching-card-item {
+    flex: 1;
+}
+
+.matching-card-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.matching-card-link {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.matching-card-link:hover {
+    color: #0066cc;
+}
+
+.matching-card-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.matching-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.matching-card-detail-item {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    gap: 8px;
+}
+
+.matching-card-detail-item .detail-label {
+    font-weight: 500;
+    color: #333;
+    min-width: 60px;
+}
+
+.matching-card-detail-item .detail-value {
+    color: #666;
+}
+
+.matching-card-footer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 12px;
+}
+
+.matching-card-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* 検索結果なし */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* ページネーション */
+/* ページネーションはcommon.cssに移動 */
+
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .matching-card-body {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .search-results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .search-results-header-right {
+        width: 100%;
+    }
+    
+    .sort-form {
+        width: 100%;
+    }
+    
+    .sort-form-select {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .matching-score-section {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .matching-reason {
+        padding-top: 0;
+    }
+}
+

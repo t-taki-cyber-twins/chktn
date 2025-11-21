@@ -1,0 +1,22 @@
+/* アカウント管理画面固有のスタイル */
+
+/* 注意メッセージ */
+.search-info-notice {
+    padding: 12px 16px;
+    background-color: #fef3c7;
+    border: 1px solid #fbbf24;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #78350f;
+}
+
+.search-info-notice strong {
+    font-weight: 600;
+}
+
+/* ロールグループバッジ */
+.badge-danger {
+    background-color: #dc2626;
+    color: white;
+}

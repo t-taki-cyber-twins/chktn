@@ -1,0 +1,33 @@
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Other
+src-backup/
+*.log
+.env
+.env.local
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+

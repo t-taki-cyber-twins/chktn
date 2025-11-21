@@ -1,0 +1,21 @@
+@charset "UTF-8";
+@import "common.css";
+
+/* 管理者用法人マスタ管理画面固有のスタイル */
+
+.search-section {
+  margin-bottom: 24px;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.search-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}

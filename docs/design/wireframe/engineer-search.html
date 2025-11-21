@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エンジニア検索 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/project-search.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 検索フォーム -->
+                    <div class="sidebar-search-form">
+                        <div class="sidebar-title">検索条件</div>
+                        <form id="search-form" class="search-form">
+                            <div class="search-form-actions">
+                                <button type="submit" class="btn btn-primary search-form-submit">検索</button>
+                                <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
+                                <input type="text" id="search-engineer-name" name="engineer-name"
+                                    class="search-form-input" placeholder="エンジニア名で検索">
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-skill" class="search-form-label">スキル</label>
+                                <input type="text" id="search-skill" name="skill" class="search-form-input"
+                                    placeholder="Java, AWSなど">
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-status" class="search-form-label">稼働ステータス</label>
+                                <select id="search-status" name="status" class="search-form-select">
+                                    <option value="">すべて</option>
+                                    <option value="available">即日可能</option>
+                                    <option value="working">稼働中</option>
+                                    <option value="leaving">離任予定</option>
+                                </select>
+                            </div>
+
+                            <div class="search-form-group">
+                                <label class="search-form-label">公開設定</label>
+                                <div class="search-form-checkbox-group">
+                                    <label class="search-form-checkbox-label">
+                                        <input type="checkbox" id="search-is-public" name="is-public"
+                                            class="search-form-checkbox" value="true">
+                                        <span>公開のみ</span>
+                                    </label>
+                                    <label class="search-form-checkbox-label">
+                                        <input type="checkbox" id="search-is-private" name="is-private"
+                                            class="search-form-checkbox" value="true">
+                                        <span>非公開のみ</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="project-search-results">
+                    <div class="search-results-header">
+                        <h1 class="search-results-title">エンジニア検索 - 自社のエンジニアを検索</h1>
+                        <div class="search-results-actions">
+                            <a href="engineer-register.html" class="btn btn-primary">新規登録</a>
+                        </div>
+                    </div>
+
+                    <div class="search-results-info">
+                        <div class="search-results-count">
+                            <span id="results-count">24件</span>のエンジニアが見つかりました
+                        </div>
+                    </div>
+
+                    <!-- 検索結果テーブル -->
+                    <div class="table-wrapper">
+                        <table class="common-table" id="engineer-table">
+                            <thead>
+                                <tr>
+                                    <th class="table-checkbox">
+                                        <input type="checkbox" id="table-select-all" class="table-select-checkbox">
+                                    </th>
+                                    <th class="table-sortable" data-sort="name">
+                                        氏名
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th class="table-sortable" data-sort="company">
+                                        所属会社
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th>スキル</th>
+                                    <th class="table-sortable" data-sort="experience">
+                                        経験年数
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th class="table-sortable" data-sort="price">
+                                        単価
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th class="table-sortable" data-sort="status">
+                                        ステータス
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th class="table-sortable" data-sort="available-date">
+                                        稼働可能日
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th>公開設定</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody id="engineer-table-body">
+                                <tr data-engineer-id="1">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="1">
+                                    </td>
+                                    <td>
+                                        <a href="engineer-edit.html" class="table-link">山田 太郎</a>
+                                    </td>
+                                    <td>テック株式会社</td>
+                                    <td>Java, Spring Boot, AWS</td>
+                                    <td>5年</td>
+                                    <td>80万円</td>
+                                    <td>
+                                        <span class="badge badge-status-recruiting">即日可能</span>
+                                    </td>
+                                    <td>2024/12/01</td>
+                                    <td>
+                                        <span class="badge badge-public">公開</span>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
+                                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
+                                                data-engineer-id="1">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-engineer-id="2">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="2">
+                                    </td>
+                                    <td>
+                                        <a href="engineer-edit.html" class="table-link">鈴木 一郎</a>
+                                    </td>
+                                    <td>システム株式会社</td>
+                                    <td>React, TypeScript, Node.js</td>
+                                    <td>3年</td>
+                                    <td>70万円</td>
+                                    <td>
+                                        <span class="badge badge-status-interviewing">稼働中</span>
+                                    </td>
+                                    <td>2025/04/01</td>
+                                    <td>
+                                        <span class="badge badge-private">非公開</span>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
+                                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
+                                                data-engineer-id="2">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-engineer-id="3">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="3">
+                                    </td>
+                                    <td>
+                                        <a href="engineer-edit.html" class="table-link">田中 花子</a>
+                                    </td>
+                                    <td>システム株式会社</td>
+                                    <td>Python, Django, Machine Learning</td>
+                                    <td>4年</td>
+                                    <td>75万円</td>
+                                    <td>
+                                        <span class="badge badge-status-leaving">離任予定</span>
+                                    </td>
+                                    <td>2025/01/15</td>
+                                    <td>
+                                        <span class="badge badge-public">公開</span>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="engineer-edit.html" class="btn btn-secondary btn-sm">編集</a>
+                                            <button type="button" class="btn btn-secondary btn-sm engineer-delete-btn"
+                                                data-engineer-id="3">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ページネーション -->
+                    <div class="pagination">
+                        <button type="button" class="pagination-btn pagination-btn-prev" disabled>前へ</button>
+                        <div class="pagination-pages">
+                            <button type="button" class="pagination-page active">1</button>
+                            <button type="button" class="pagination-page">2</button>
+                            <button type="button" class="pagination-page">3</button>
+                        </div>
+                        <button type="button" class="pagination-btn pagination-btn-next">次へ</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+
+    <script src="js/common.js"></script>
+    <script>
+        // 簡易的な動作確認用スクリプト
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Engineer search page loaded');
+
+            // 検索ボタンのイベントリスナー（モック）
+            const searchForm = document.getElementById('search-form');
+            if (searchForm) {
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('検索機能は未実装です。');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

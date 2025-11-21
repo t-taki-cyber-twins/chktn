@@ -1,0 +1,89 @@
+/* ========================================
+   スキルシートアップロードコンポーネント専用スタイル
+   ======================================== */
+
+/* モーダル基本スタイルはcommon.cssの.modalを使用 */
+
+
+.skill-sheet-upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.skill-sheet-file-info {
+    padding: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.file-info-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.file-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.file-info-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    min-width: 80px;
+}
+
+.file-info-value {
+    font-size: 14px;
+    color: #333;
+}
+
+.skill-sheet-upload-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.skill-sheet-upload-submit-btn,
+.skill-sheet-ai-analyze-btn {
+    flex: 1;
+}
+
+.skill-sheet-analysis-progress {
+    margin-top: 16px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #0066cc;
+    border-radius: 12px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+#analysis-progress-text {
+    font-weight: 500;
+}
+
+#analysis-progress-percent {
+    font-weight: 600;
+    color: #0066cc;
+}
+

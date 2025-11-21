@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    # Spring Cloud 2025.0では新しいプロパティプレフィックスを使用
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: core-service
+              uri: ${CORE_SERVICE_URI:http://localhost:8081}
+              predicates:
+                - Path=/api/v1/**
+          # X-Forwarded-*ヘッダーが必要な場合は trusted-proxies を設定
+          # trusted-proxies: 10\.0\.0\..*
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
+

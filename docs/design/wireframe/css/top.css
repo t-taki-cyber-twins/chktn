@@ -1,0 +1,128 @@
+/* ========================================
+   トップ画面固有スタイルシート
+   ======================================== */
+
+/* ダッシュボード */
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+
+/* お知らせセクション */
+/* お知らせセクション */
+/* common.cssの.section-cardを使用 */
+
+
+/* common.cssの.common-list-itemを使用 */
+
+
+.announcement-date {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.announcement-title {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.announcement-title:hover {
+    color: #0066cc;
+    cursor: pointer;
+}
+
+/* 最近のメッセージセクション */
+/* 最近のメッセージセクション */
+/* common.cssの.section-cardを使用 */
+
+
+/* common.cssの.common-list-itemを使用 */
+
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.message-project {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.message-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.message-content {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.message-from {
+    font-size: 12px;
+    color: #666;
+}
+
+/* レコメンドマッチングセクション */
+/* レコメンドマッチングセクション */
+/* common.cssの.section-cardを使用 */
+
+
+/* common.cssの.common-list-itemを使用 */
+
+
+.matching-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.matching-project {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.matching-score {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0066cc;
+    padding: 4px 12px;
+    background-color: #e6f2ff;
+    border-radius: 4px;
+}
+
+.matching-engineer {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.matching-skills {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.matching-actions {
+    display: flex;
+    gap: 8px;
+}
+

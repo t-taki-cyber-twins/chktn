@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エンジニア登録 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/engineer-register.css">
+    <link rel="stylesheet" href="css/skill-sheet-uploader.css">
+    <link rel="stylesheet" href="css/project-selector.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 画面固有のコンテンツ（アクションボタン） -->
+                    <div class="sidebar-actions">
+                        <button class="btn btn-primary sidebar-save-btn">登録</button>
+                        <button class="btn btn-secondary sidebar-cancel-btn">キャンセル</button>
+                    </div>
+                    
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="engineer-register-form">
+                    <h1 class="form-title">エンジニア登録 -自社の新規エンジニアを登録</h1>
+
+                    <!-- 基本情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">基本情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <label for="engineer-name" class="form-label">エンジニア名 <span class="form-required">*</span></label>
+                                <input type="text" id="engineer-name" name="engineer-name" class="form-input" placeholder="エンジニア名を入力してください">
+                            </div>
+                            <div class="form-group form-group-full">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label">公開設定</label>
+                                        <div class="form-checkbox-group">
+                                            <label class="form-checkbox-label">
+                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
+                                                <span>公開する</span>
+                                            </label>
+                                        </div>
+                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこのエンジニアを検索できるようになります。</p>
+                                    </div>
+                                    <div class="form-col">
+                                        <label for="blacklist" class="form-label">エンジニア公開ブラックリスト</label>
+                                        <div class="form-select-wrapper">
+                                            <button type="button" class="form-select-btn" id="blacklist-btn">
+                                                <span class="form-select-text">選択してください</span>
+                                                <span class="form-select-arrow">▼</span>
+                                            </button>
+                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
+                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
+                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
+                                            </div>
+                                        </div>
+                                        <p class="form-help-text">このエンジニアを検索対象から除外する会社を選択します。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label class="form-label">スキルシートアップロード状況</label>
+                                <div id="skill-sheet-status" class="skill-sheet-status">
+                                    <span class="skill-sheet-status-text">未アップロード</span>
+                                </div>
+                                <div class="skill-sheet-upload-section">
+                                    <button type="button" class="btn btn-primary skill-sheet-upload-btn" id="skill-sheet-upload-btn">スキルシートアップロード</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- タブUI -->
+                    <div class="tab-container">
+                        <div class="tab-buttons">
+                            <button type="button" class="tab-button active" data-tab="employee-info">社員情報</button>
+                            <button type="button" class="tab-button" data-tab="engineer-basic">エンジニア基本情報</button>
+                            <button type="button" class="tab-button" data-tab="skill-sheet">スキルシート</button>
+                            <button type="button" class="tab-button" data-tab="projects">案件</button>
+                        </div>
+
+                        <!-- 社員情報タブ -->
+                        <div class="tab-content active" id="tab-employee-info">
+                            <div class="form-section">
+                                <h2 class="form-section-title">社員情報</h2>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="birth-date" class="form-label">生年月日</label>
+                                        <input type="date" id="birth-date" name="birth-date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nearest-station" class="form-label">最寄駅</label>
+                                        <input type="text" id="nearest-station" name="nearest-station" class="form-input" placeholder="例: 東京駅">
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="address" class="form-label">住所</label>
+                                        <input type="text" id="address" name="address" class="form-input" placeholder="例: 東京都千代田区">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">電話番号</label>
+                                        <input type="text" id="phone" name="phone" class="form-input" placeholder="例: 03-1234-5678">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">メールアドレス</label>
+                                        <input type="email" id="email" name="email" class="form-input" placeholder="example@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company" class="form-label">所属会社</label>
+                                        <input type="text" id="company" name="company" class="form-input" placeholder="所属会社名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="department" class="form-label">所属部署</label>
+                                        <input type="text" id="department" name="department" class="form-input" placeholder="所属部署名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="position" class="form-label">所属役職</label>
+                                        <input type="text" id="position" name="position" class="form-input" placeholder="所属役職名">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- エンジニア基本情報タブ -->
+                        <div class="tab-content" id="tab-engineer-basic">
+                            <div class="form-section">
+                                <h2 class="form-section-title">エンジニア基本情報</h2>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="engineer-status" class="form-label">エンジニアステータス</label>
+                                        <select id="engineer-status" name="engineer-status" class="form-select">
+                                            <option value="">選択してください</option>
+                                            <option value="available">即日可能</option>
+                                            <option value="working">稼働中</option>
+                                            <option value="leaving">離任予定</option>
+                                            <option value="on-leave">休職中</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="available-date" class="form-label">稼働可能日</label>
+                                        <input type="date" id="available-date" name="available-date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="experience-years" class="form-label">経験年数</label>
+                                        <input type="number" id="experience-years" name="experience-years" class="form-input" placeholder="年" min="0" step="0.5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="desired-price" class="form-label">希望単価</label>
+                                        <input type="number" id="desired-price" name="desired-price" class="form-input" placeholder="万円" min="0">
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="engineer-managers" class="form-label">エンジニア担当者</label>
+                                        <div class="form-select-wrapper">
+                                            <button type="button" class="form-select-btn" id="engineer-managers-btn">
+                                                <span class="form-select-text">選択してください</span>
+                                                <span class="form-select-arrow">▼</span>
+                                            </button>
+                                            <div class="form-selected-values" id="engineer-managers-selected" style="display: none;">
+                                                <div class="selected-values-list" id="engineer-managers-selected-list"></div>
+                                                <button type="button" class="selected-value-remove-all" id="engineer-managers-remove-all">すべて解除</button>
+                                            </div>
+                                        </div>
+                                        <p class="form-help-text">エンジニアの担当者を選択します（複数選択可）。営業担当者、エンジニア担当者など、役割を問わず選択できます。</p>
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="engineer-memo" class="form-label">メモ</label>
+                                        <textarea id="engineer-memo" name="engineer-memo" class="form-textarea" rows="3" placeholder="メモを入力してください"></textarea>
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="engineer-note" class="form-label">備考</label>
+                                        <textarea id="engineer-note" name="engineer-note" class="form-textarea" rows="5" placeholder="エンジニアに関する備考を入力してください"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- スキルシートタブ -->
+                        <div class="tab-content" id="tab-skill-sheet">
+                            <div class="form-section">
+                                <h2 class="form-section-title">スキルシート</h2>
+                                
+                                <!-- スキルシートダウンロード -->
+                                <div class="skill-sheet-download-section">
+                                    <button type="button" class="btn btn-secondary skill-sheet-download-btn" id="skill-sheet-download-original">原本ダウンロード</button>
+                                    <button type="button" class="btn btn-secondary skill-sheet-download-btn" id="skill-sheet-download-generated">本システム生成ダウンロード</button>
+                                </div>
+
+                                <!-- スキル一覧テーブル -->
+                                <div class="skill-list-table-section">
+                                    <div class="table-wrapper">
+                                        <table class="skill-list-table" id="skill-list-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>スキル名</th>
+                                                    <th>スキルカテゴリ</th>
+                                                    <th>スキルレベル</th>
+                                                    <th>メモ</th>
+                                                    <th>アクション</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="skill-list-table-body">
+                                                <!-- スキルがここに動的に追加される -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- スキル追加フォーム -->
+                                <div class="skill-add-form-section">
+                                    <h3 class="form-subsection-title">スキル追加</h3>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="skill-category" class="form-label">スキルカテゴリ</label>
+                                            <select id="skill-category" class="form-select">
+                                                <option value="">選択してください</option>
+                                                <option value="language">プログラミング言語</option>
+                                                <option value="framework">フレームワーク</option>
+                                                <option value="database">データベース</option>
+                                                <option value="cloud">クラウド</option>
+                                                <option value="tool">ツール</option>
+                                                <option value="other">その他</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="skill-name" class="form-label">スキル名</label>
+                                            <div class="skill-name-input-group">
+                                                <select id="skill-master" class="form-select">
+                                                    <option value="">マスタから選択</option>
+                                                    <option value="1">Java</option>
+                                                    <option value="2">Spring Boot</option>
+                                                    <option value="3">React</option>
+                                                    <option value="4">PostgreSQL</option>
+                                                    <option value="5">AWS</option>
+                                                    <option value="6">Python</option>
+                                                    <option value="7">TypeScript</option>
+                                                    <option value="8">Docker</option>
+                                                </select>
+                                                <span class="skill-name-separator">または</span>
+                                                <input type="text" id="skill-name-custom" class="form-input" placeholder="マスタにない場合は新規追加">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="skill-level" class="form-label">スキルレベル</label>
+                                            <select id="skill-level" class="form-select">
+                                                <option value="">選択してください</option>
+                                                <option value="1">1（初級）</option>
+                                                <option value="2">2（中級）</option>
+                                                <option value="3">3（上級）</option>
+                                                <option value="4">4（エキスパート）</option>
+                                                <option value="5">5（マスター）</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-group-full">
+                                            <label for="skill-memo" class="form-label">メモ</label>
+                                            <textarea id="skill-memo" class="form-textarea" rows="2" placeholder="スキルに関するメモを入力してください"></textarea>
+                                        </div>
+                                        <div class="form-group form-group-full">
+                                            <button type="button" class="btn btn-primary skill-add-btn" id="skill-add-btn">追加</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 案件タブ -->
+                        <div class="tab-content" id="tab-projects">
+                            <div class="form-section">
+                                <h2 class="form-section-title">案件</h2>
+                                
+                                <!-- 案件一覧テーブル -->
+                                <div class="project-list-table-section">
+                                    <div class="table-wrapper">
+                                        <table class="project-list-table" id="project-list-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>案件名</th>
+                                                    <th>開始日</th>
+                                                    <th>終了日</th>
+                                                    <th>単価</th>
+                                                    <th>アクション</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="project-list-table-body">
+                                                <!-- 案件がここに動的に追加される -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="project-list-actions">
+                                        <button type="button" class="btn btn-primary project-add-btn" id="project-add-btn">案件追加</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- エンジニア担当者選択モーダル -->
+    <div class="modal" id="engineer-managers-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">エンジニア担当者を選択</h3>
+                <button type="button" class="modal-close" data-modal="engineer-managers-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-search">
+                    <input type="text" class="form-input modal-search-input" placeholder="担当者名で検索">
+                    <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                </div>
+                <div class="modal-list">
+                    <ul class="employee-list">
+                        <li class="employee-list-item">
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="1" data-employee-name="田中太郎">
+                                <div class="employee-info">
+                                    <span class="employee-name">田中太郎</span>
+                                    <span class="employee-department">営業部</span>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="employee-list-item">
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="2" data-employee-name="佐藤花子">
+                                <div class="employee-info">
+                                    <span class="employee-name">佐藤花子</span>
+                                    <span class="employee-department">営業部</span>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="employee-list-item">
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="3" data-employee-name="鈴木一郎">
+                                <div class="employee-info">
+                                    <span class="employee-name">鈴木一郎</span>
+                                    <span class="employee-department">技術部</span>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="employee-list-item">
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-list-checkbox" data-employee-id="4" data-employee-name="高橋次郎">
+                                <div class="employee-info">
+                                    <span class="employee-name">高橋次郎</span>
+                                    <span class="employee-department">技術部</span>
+                                </div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary engineer-managers-cancel-btn">キャンセル</button>
+                <button type="button" class="btn btn-primary engineer-managers-confirm-btn">選択を確定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 案件追加フォームモーダル -->
+    <div class="modal" id="project-add-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-content-large">
+            <div class="modal-header">
+                <h3 class="modal-title">案件追加</h3>
+                <button type="button" class="modal-close" data-modal="project-add-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group form-group-full">
+                        <label for="project-select" class="form-label">案件選択</label>
+                        <div class="form-select-wrapper">
+                            <button type="button" class="form-select-btn" id="project-select-btn">
+                                <span class="form-select-text">選択してください</span>
+                                <span class="form-select-arrow">▼</span>
+                            </button>
+                            <div class="form-selected-value" id="project-selected" style="display: none;">
+                                <span class="selected-value-text"></span>
+                                <button type="button" class="selected-value-remove">×</button>
+                            </div>
+                        </div>
+                        <p class="form-help-text">本システムの案件と紐づける場合は選択してください。紐づけない場合は空欄のまま入力してください。</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-start-date" class="form-label">開始日</label>
+                        <input type="date" id="project-start-date" name="project-start-date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-end-date" class="form-label">終了日</label>
+                        <input type="date" id="project-end-date" name="project-end-date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-price" class="form-label">単価</label>
+                        <input type="number" id="project-price" name="project-price" class="form-input" placeholder="万円" min="0">
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="project-work-content" class="form-label">業務内容</label>
+                        <textarea id="project-work-content" name="project-work-content" class="form-textarea" rows="3" placeholder="業務内容を入力してください"></textarea>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="project-languages-tools" class="form-label">言語・ツール</label>
+                        <textarea id="project-languages-tools" name="project-languages-tools" class="form-textarea" rows="2" placeholder="使用した言語・ツールを入力してください"></textarea>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="project-role-process" class="form-label">役割・工程</label>
+                        <textarea id="project-role-process" name="project-role-process" class="form-textarea" rows="2" placeholder="役割・工程を入力してください"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary project-add-cancel-btn">キャンセル</button>
+                <button type="button" class="btn btn-primary project-add-confirm-btn">追加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ブラックリスト選択モーダルコンポーネント -->
+    <app-blacklist-selector></app-blacklist-selector>
+
+    <!-- スキルシートアップロードコンポーネント -->
+    <app-skill-sheet-uploader></app-skill-sheet-uploader>
+
+    <!-- 案件選択コンポーネント -->
+    <app-project-selector></app-project-selector>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-blacklist-selector.js"></script>
+    <script type="module" src="components/app-skill-sheet-uploader.js"></script>
+    <script type="module" src="components/app-project-selector.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/engineer-register.js"></script>
+</body>
+</html>

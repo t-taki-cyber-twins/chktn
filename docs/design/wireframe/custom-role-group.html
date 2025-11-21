@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カスタムロールグループ管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/custom-role-group.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="custom-role-group-management">
+                    <div class="page-header">
+                        <h1 class="page-title">カスタムロールグループ管理</h1>
+                        <p class="page-description">テナントごとにカスタマイズ可能なロールグループと権限の設定を行います</p>
+                    </div>
+
+                    <!-- タブナビゲーション -->
+                    <div class="tab-navigation">
+                        <button class="tab-button active" data-tab="custom-role-group">カスタムロールグループ管理</button>
+                        <button class="tab-button" data-tab="custom-role-group-permission">カスタムロールグループ権限管理</button>
+                    </div>
+
+                    <!-- タブ1: カスタムロールグループ管理 -->
+                    <div class="tab-content active" id="tab-custom-role-group">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">カスタムロールグループ管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-custom-role-group-btn">新規作成</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <input type="text" id="custom-role-group-search" class="search-input" placeholder="カスタムロールグループ名で検索...">
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="custom-role-group-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>カスタムロールグループ名</th>
+                                        <th>説明</th>
+                                        <th>作成日</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="custom-role-group-table-body">
+                                    <tr data-custom-role-group-id="1">
+                                        <td>1</td>
+                                        <td>個人情報閲覧できるエンジニア管理者</td>
+                                        <td>エンジニア情報の編集権限と個人情報閲覧権限を持つカスタムロールグループ</td>
+                                        <td>2024/11/01</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-edit-btn" data-custom-role-group-id="1">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-delete-btn" data-custom-role-group-id="1">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="2">
+                                        <td>2</td>
+                                        <td>案件担当者</td>
+                                        <td>案件情報の編集と面談管理の権限を持つカスタムロールグループ</td>
+                                        <td>2024/11/05</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-edit-btn" data-custom-role-group-id="2">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-delete-btn" data-custom-role-group-id="2">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="3">
+                                        <td>3</td>
+                                        <td>営業担当</td>
+                                        <td>公開案件とエンジニアの閲覧権限を持つカスタムロールグループ</td>
+                                        <td>2024/11/10</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-edit-btn" data-custom-role-group-id="3">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-delete-btn" data-custom-role-group-id="3">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="4">
+                                        <td>4</td>
+                                        <td>経理担当</td>
+                                        <td>案件の単価情報と支払い管理の権限を持つカスタムロールグループ</td>
+                                        <td>2024/11/15</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-edit-btn" data-custom-role-group-id="4">編集</button>
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-delete-btn" data-custom-role-group-id="4">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- タブ2: カスタムロールグループ権限管理 -->
+                    <div class="tab-content" id="tab-custom-role-group-permission">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">カスタムロールグループ権限管理</h2>
+                            <div class="tab-content-actions">
+                                <button type="button" class="btn btn-primary" id="create-custom-role-group-permission-btn">新規紐づけ</button>
+                                <button type="button" class="btn btn-secondary" id="add-from-role-btn">ロールから追加</button>
+                                <button type="button" class="btn btn-secondary" id="add-from-role-group-btn">ロールグループから追加</button>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-bar">
+                            <select id="custom-role-group-permission-filter" class="search-select">
+                                <option value="">すべてのカスタムロールグループ</option>
+                                <option value="1">個人情報閲覧できるエンジニア管理者</option>
+                                <option value="2">案件担当者</option>
+                                <option value="3">営業担当</option>
+                                <option value="4">経理担当</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="common-table" id="custom-role-group-permission-table">
+                                <thead>
+                                    <tr>
+                                        <th>カスタムロールグループID</th>
+                                        <th>カスタムロールグループ名</th>
+                                        <th>権限ID</th>
+                                        <th>権限名</th>
+                                        <th>権限コード</th>
+                                        <th>アクション</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="custom-role-group-permission-table-body">
+                                    <!-- 個人情報閲覧できるエンジニア管理者 -->
+                                    <tr data-custom-role-group-id="1" data-permission-id="1001">
+                                        <td>1</td>
+                                        <td>個人情報閲覧できるエンジニア管理者</td>
+                                        <td>1001</td>
+                                        <td>エンジニア情報閲覧</td>
+                                        <td>engineer.show</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="1" data-permission-id="1001">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="1" data-permission-id="1002">
+                                        <td>1</td>
+                                        <td>個人情報閲覧できるエンジニア管理者</td>
+                                        <td>1002</td>
+                                        <td>エンジニア個人情報閲覧</td>
+                                        <td>engineer.personal_info_show</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="1" data-permission-id="1002">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="1" data-permission-id="1004">
+                                        <td>1</td>
+                                        <td>個人情報閲覧できるエンジニア管理者</td>
+                                        <td>1004</td>
+                                        <td>エンジニア編集</td>
+                                        <td>engineer.edit</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="1" data-permission-id="1004">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- 案件担当者 -->
+                                    <tr data-custom-role-group-id="2" data-permission-id="2001">
+                                        <td>2</td>
+                                        <td>案件担当者</td>
+                                        <td>2001</td>
+                                        <td>案件情報閲覧</td>
+                                        <td>project.show</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="2" data-permission-id="2001">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="2" data-permission-id="2002">
+                                        <td>2</td>
+                                        <td>案件担当者</td>
+                                        <td>2002</td>
+                                        <td>案件編集</td>
+                                        <td>project.edit</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="2" data-permission-id="2002">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- 営業担当 -->
+                                    <tr data-custom-role-group-id="3" data-permission-id="1001">
+                                        <td>3</td>
+                                        <td>営業担当</td>
+                                        <td>1001</td>
+                                        <td>エンジニア情報閲覧</td>
+                                        <td>engineer.show</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="3" data-permission-id="1001">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr data-custom-role-group-id="3" data-permission-id="2001">
+                                        <td>3</td>
+                                        <td>営業担当</td>
+                                        <td>2001</td>
+                                        <td>案件情報閲覧</td>
+                                        <td>project.show</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="3" data-permission-id="2001">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- 経理担当 -->
+                                    <tr data-custom-role-group-id="4" data-permission-id="2003">
+                                        <td>4</td>
+                                        <td>経理担当</td>
+                                        <td>2003</td>
+                                        <td>案件単価閲覧</td>
+                                        <td>project.price_show</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button type="button" class="btn btn-secondary btn-sm custom-role-group-permission-delete-btn" data-custom-role-group-id="4" data-permission-id="2003">削除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/custom-role-group.js"></script>
+</body>
+</html>

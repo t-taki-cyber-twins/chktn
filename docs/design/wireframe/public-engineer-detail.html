@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公開エンジニア詳細 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/public-engineer-detail.css">
+    <link rel="stylesheet" href="css/project-meeting-edit.css">
+    <link rel="stylesheet" href="css/project-selector.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 案件選択 -->
+                    <div class="sidebar-project-selector">
+                        <div class="sidebar-title">スカウト案件選択</div>
+                        <div class="sidebar-project-selected" id="sidebar-project-selected">
+                            <div class="sidebar-project-selected-none">
+                                <p class="sidebar-project-selected-text">案件が選択されていません</p>
+                                <button type="button" class="btn btn-secondary btn-sm sidebar-project-select-btn" id="project-select-btn">案件を選択</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- アクションボタン -->
+                    <div class="sidebar-actions">
+                        <button type="button" class="btn btn-primary sidebar-scout-btn" id="scout-btn" disabled>スカウトを送る</button>
+                        <button type="button" class="btn btn-secondary sidebar-inquiry-btn" id="inquiry-btn">問い合わせ</button>
+                    </div>
+                    
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <!-- マッチング案件セクション -->
+                <div class="project-list-section">
+                    <h2 class="project-list-title">マッチング案件（自社の案件のみ表示）</h2>
+                    <div class="table-wrapper">
+                        <table class="common-table" id="project-table">
+                            <thead>
+                                <tr>
+                                    <th>案件名</th>
+                                    <th>必須スキル</th>
+                                    <th>マッチングスコア</th>
+                                    <th>スカウトステータス</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody id="project-table-body">
+                                <tr data-project-id="1">
+                                    <td>フルスタックエンジニア募集</td>
+                                    <td>
+                                        <span class="skill-tag">Java</span>
+                                        <span class="skill-tag">React</span>
+                                    </td>
+                                    <td>
+                                        <span class="matching-score-badge matching-score-high">90%</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-pending">未スカウト</span>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-primary btn-sm scout-send-btn" data-project-id="1">スカウト</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-project-id="2">
+                                    <td>バックエンドエンジニア募集</td>
+                                    <td>
+                                        <span class="skill-tag">Python</span>
+                                        <span class="skill-tag">AWS</span>
+                                    </td>
+                                    <td>
+                                        <span class="matching-score-badge matching-score-medium">75%</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-completed">スカウト済</span>
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm" disabled>送信済</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 問い合わせメッセージ一覧セクション -->
+                <div class="inquiry-message-list-section">
+                    <h2 class="inquiry-message-list-title">問い合わせメッセージ一覧</h2>
+                    <div class="message-list-section">
+                        <ul class="message-thread-list" id="inquiry-message-list">
+                            <!-- スレッド構造はJavaScriptで動的に生成 -->
+                        </ul>
+                        <!-- メッセージ内容表示エリア -->
+                        <div class="message-content-area" id="inquiry-message-content-area" style="display: none;">
+                            <div class="message-content-header">
+                                <h5 class="message-content-title" id="inquiry-message-content-title"></h5>
+                                <button type="button" class="message-content-close" id="inquiry-message-content-close">×</button>
+                            </div>
+                            <div class="message-content-body" id="inquiry-message-content-body"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- エンジニア詳細表示 -->
+                <div class="engineer-detail-form">
+                    <h1 class="form-title">公開エンジニア詳細</h1>
+
+                    <!-- 基本情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">基本情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <label class="form-label">エンジニア名</label>
+                                <div class="form-display-value">山田 太郎</div>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label class="form-label">自己紹介</label>
+                                <div class="form-display-value">Java, Spring Bootを中心としたバックエンド開発が得意です。要件定義から設計、実装、テストまで一通り経験があります。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 詳細情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">詳細情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">稼働開始可能日</label>
+                                <div class="form-display-value">2024年12月1日</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">経験年数</label>
+                                <div class="form-display-value">5年</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">希望単価</label>
+                                <div class="form-display-value">80万円〜</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">希望契約形態</label>
+                                <div class="form-display-value">フリーランス</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">希望勤務地</label>
+                                <div class="form-display-value">東京都（リモート可）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- スキル情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">スキル</h2>
+                        <div class="form-group form-group-full">
+                            <div class="skill-list-display">
+                                <span class="skill-tag">Java (5年)</span>
+                                <span class="skill-tag">Spring Boot (3年)</span>
+                                <span class="skill-tag">MySQL (4年)</span>
+                                <span class="skill-tag">AWS (2年)</span>
+                                <span class="skill-tag">Docker (2年)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 経歴セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">経歴</h2>
+                        <div class="table-wrapper">
+                            <table class="common-table">
+                                <thead>
+                                    <tr>
+                                        <th>期間</th>
+                                        <th>案件名</th>
+                                        <th>役割</th>
+                                        <th>使用技術</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2023/04 〜 2024/03</td>
+                                        <td>ECサイトリニューアル開発</td>
+                                        <td>バックエンドエンジニア</td>
+                                        <td>Java, Spring Boot, MySQL, AWS</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2022/01 〜 2023/03</td>
+                                        <td>社内業務システム開発</td>
+                                        <td>フルスタックエンジニア</td>
+                                        <td>Java, Spring Boot, React, PostgreSQL</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 案件選択モーダルコンポーネント (エンジニア選択モーダルを流用・改造するか、新規作成) -->
+    <!-- ここでは簡易的にapp-project-selectorを使用する想定だが、サイドバー用とは別かも -->
+    <app-project-selector></app-project-selector>
+
+    <!-- メッセージ返信フォームモーダルコンポーネント -->
+    <app-message-reply></app-message-reply>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-project-selector.js"></script>
+    <script type="module" src="components/app-message-reply.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/public-engineer-detail.js"></script>
+</body>
+</html>

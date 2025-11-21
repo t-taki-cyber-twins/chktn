@@ -1,0 +1,46 @@
+/* テナント・会社管理画面特有のスタイル */
+@import "common.css";
+
+.tenant-info-section {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.tenant-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tenant-info-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.tenant-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.tenant-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tenant-info-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.tenant-info-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}

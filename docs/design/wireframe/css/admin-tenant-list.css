@@ -1,0 +1,39 @@
+@charset "UTF-8";
+@import "common.css";
+
+/* 管理者用テナント管理画面固有のスタイル */
+
+.search-section {
+  margin-bottom: 24px;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.search-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.status-badge-active {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge-inactive {
+  background-color: #fce8e6;
+  color: #c5221f;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}

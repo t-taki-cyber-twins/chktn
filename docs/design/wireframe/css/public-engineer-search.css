@@ -1,0 +1,184 @@
+/* ========================================
+   公開エンジニア検索画面固有スタイルシート
+   ======================================== */
+
+/* サイドメニュー検索フォームはcommon.cssに移動 */
+
+
+.search-form-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-form-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.search-form-radio {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* チェックボックスグループ、アクションはcommon.cssに移動 */
+
+
+/* 検索結果エリア */
+.engineer-search-results {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.search-results-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.search-results-count {
+    font-size: 14px;
+    color: #666;
+}
+
+/* エンジニアリスト */
+.engineer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+/* エンジニアカード */
+.engineer-card {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.2s;
+}
+
+.engineer-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.engineer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.engineer-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+}
+
+.engineer-card-link {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.engineer-card-link:hover {
+    color: #0066cc;
+}
+
+.engineer-card-badge {
+    margin-left: 12px;
+}
+
+/* バッジはcommon.cssに移動 */
+
+
+.engineer-card-body {
+    margin-bottom: 16px;
+}
+
+.engineer-card-description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.engineer-card-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.engineer-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.engineer-card-detail-item {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    gap: 8px;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #333;
+    min-width: 80px;
+}
+
+.detail-value {
+    color: #666;
+}
+
+.engineer-card-footer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 12px;
+}
+
+.engineer-card-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* 検索結果なし */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* ページネーション */
+/* ページネーションはcommon.cssに移動 */

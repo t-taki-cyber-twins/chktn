@@ -1,0 +1,132 @@
+/* ========================================
+   案件選択コンポーネント専用スタイル
+   ======================================== */
+
+/* モーダル基本スタイルはcommon.cssの.modalを使用 */
+
+
+.project-selector-modal-content {
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+}
+
+.project-selector-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.project-selector-search {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.project-selector-search-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-selector-search-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* フォーム入力スタイルはcommon.cssの.form-inputを使用 */
+
+
+.project-selector-search-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.project-selector-search-btn,
+.project-selector-reset-btn {
+    flex: 1;
+}
+
+.project-selector-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.project-selector-list-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-selector-item {
+    margin-bottom: 8px;
+}
+
+.project-selector-item-btn {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-selector-item-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #0066cc;
+}
+
+.project-selector-item.selected .project-selector-item-btn {
+    background-color: #e6f2ff;
+    border-color: #0066cc;
+}
+
+.project-selector-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.project-selector-item-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.project-selector-item.selected .project-selector-item-name {
+    color: #0066cc;
+    font-weight: 600;
+}
+
+.project-selector-item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-selector-item-end-company {
+    font-size: 12px;
+    color: #666;
+}
+
+.project-selector-item-status {
+    margin-left: auto;
+}
+
+.project-selector-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 20px 24px;
+    border-top: 1px solid #e0e0e0;
+}
+

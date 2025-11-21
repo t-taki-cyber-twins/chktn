@@ -1,0 +1,39 @@
+# Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
+
+# ビルド成果物
+build/
+bin/
+.gradle/
+
+# コンパイル済みファイル
+*.class
+*.jar
+*.war
+
+# IDE設定ファイル
+.idea/
+.vscode/
+.settings/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+
+# 生成されたソース
+generated/
+generated-sources/
+.apt_generated/
+
+# ログ・一時ファイル
+*.log
+tmp/
+*.tmp
+
+# 環境変数ファイル
+.env*
+
+# その他
+out/
+.springBeans
+.sts4-cache/

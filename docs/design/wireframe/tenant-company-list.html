@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テナント・会社管理 - CHKTN</title>
+  <link rel="stylesheet" href="css/tenant-company-list.css">
+  <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-company-edit-modal.js" type="module"></script>
+  <script src="components/app-official-company-search-modal.js" type="module"></script>
+  <script src="components/app-tenant-edit-modal.js" type="module"></script>
+</head>
+<body>
+  <div class="container">
+    <app-header></app-header>
+
+    <div class="main-layout">
+      
+      <main class="content-area">
+        <div class="tenant-info-section">
+          <div class="tenant-info-header">
+            <h2 class="tenant-info-title">テナント情報</h2>
+            <button class="btn btn-secondary btn-sm" id="tenant-edit-btn">編集</button>
+          </div>
+          <div class="tenant-info-grid">
+            <div class="tenant-info-item">
+              <span class="tenant-info-label">テナント名</span>
+              <span class="tenant-info-value">株式会社CHKTNホールディングス</span>
+            </div>
+            <div class="tenant-info-item">
+              <span class="tenant-info-label">テナントID</span>
+              <span class="tenant-info-value">TNT-12345678</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">会社一覧</h2>
+            <button class="btn btn-primary" id="add-company-btn">＋ 会社追加</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="common-table">
+              <thead>
+                <tr>
+                  <th>会社名</th>
+                  <th>法人番号</th>
+                  <th>住所</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    株式会社CHKTNホールディングス
+                    <span class="badge badge-public" style="margin-left: 8px;">テナント</span>
+                  </td>
+                  <td>1000000000001</td>
+                  <td>東京都港区...</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">編集</button>
+                    <!-- テナント会社は削除できない想定 -->
+                  </td>
+                </tr>
+                <tr>
+                  <td>株式会社CHKTNテクノロジー</td>
+                  <td>1234567890123</td>
+                  <td>東京都渋谷区...</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">編集</button>
+                    <button class="btn btn-secondary btn-sm" style="color: #cc0000; background-color: #ffe6e6;">削除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>CHKTNソリューションズ株式会社</td>
+                  <td>9876543210987</td>
+                  <td>大阪府大阪市...</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">編集</button>
+                    <button class="btn btn-secondary btn-sm" style="color: #cc0000; background-color: #ffe6e6;">削除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <app-company-edit-modal id="company-edit-modal"></app-company-edit-modal>
+  <app-official-company-search-modal id="official-company-search-modal"></app-official-company-search-modal>
+  <app-tenant-edit-modal id="tenant-edit-modal"></app-tenant-edit-modal>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addCompanyBtn = document.getElementById('add-company-btn');
+      const tenantEditBtn = document.getElementById('tenant-edit-btn');
+      const companyEditModal = document.getElementById('company-edit-modal');
+      const officialCompanySearchModal = document.getElementById('official-company-search-modal');
+      const tenantEditModal = document.getElementById('tenant-edit-modal');
+
+      addCompanyBtn.addEventListener('click', () => {
+        companyEditModal.open();
+      });
+
+      tenantEditBtn.addEventListener('click', () => {
+        tenantEditModal.open();
+      });
+
+      // モーダル間の連携設定
+      companyEditModal.setSearchModal(officialCompanySearchModal);
+
+      // 編集ボタンのイベントリスナー設定
+      const editBtns = document.querySelectorAll('.btn-secondary.btn-sm');
+      editBtns.forEach(btn => {
+        if (btn.textContent.trim() === '編集' && btn.id !== 'tenant-edit-btn') {
+          btn.addEventListener('click', (e) => {
+            // モックデータを作成してフォームにセット（実際は行のデータやIDから取得する）
+            const row = e.target.closest('tr');
+            const cells = row.querySelectorAll('td');
+            // テナントバッジがある場合は会社名から除去
+            let companyName = cells[0].textContent.trim();
+            const badge = cells[0].querySelector('.badge');
+            if (badge) {
+              companyName = companyName.replace(badge.textContent, '').trim();
+            }
+
+            const mockData = {
+              name: companyName,
+              number: cells[1].textContent,
+            };
+            companyEditModal.fillForm(mockData);
+            companyEditModal.open();
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

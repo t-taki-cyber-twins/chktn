@@ -1,0 +1,270 @@
+---
+description: Spring Boot REST API Controller実装時の注意点とベストプラクティス
+globs: ["**/*Controller.java"]
+alwaysApply: false
+---
+
+# Controller実装の注意点
+
+## OpenAPI仕様と実装の一致（必須）
+
+### 基本原則
+
+- `@ApiResponses`で想定されるすべてのエラーレスポンスを定義する（必須）
+- エラーレスポンス（400, 404など）には`ErrorResponse`スキーマを明示的に指定する（必須）
+  - ApidogなどのAPIテストツールで正しく認識されるため
+  - `content = @Content(schema = @Schema(implementation = ErrorResponse.class))`の形式で指定
+- 実装で返されるHTTPステータスコードとOpenAPI仕様を一致させる（必須）
+- パス変数を含むエンドポイントでは、型変換エラー（400）を定義する（必須）
+- リソースが見つからない場合（404）を定義する（必須）
+
+### 実装例
+
+参照: `core-service/src/main/java/jp/chokutuna/core/company/controller/CompanyController.java`
+
+```java
+@GetMapping("/{id}")
+@Operation(summary = "会社取得", description = "IDを指定して会社情報を取得します")
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "取得成功"),
+    @ApiResponse(responseCode = "400", description = "リクエストパラメータエラー（IDが数値でない場合など）", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    @ApiResponse(responseCode = "404", description = "会社が見つかりません", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
+public ResponseEntity<CompanyResponse> findById(
+        @Parameter(description = "会社ID", required = true, example = "1")
+        @PathVariable Long id) {
+    CompanyResponse company = companyService.findById(id);
+    return ResponseEntity.ok(company);
+}
+```
+
+## エラーレスポンスの定義（必須）
+
+### エラーレスポンススキーマの指定（必須）
+
+エラーレスポンス（400, 404など）を定義する際は、必ず`ErrorResponse`スキーマを明示的に指定する（必須）。
+
+**理由**: ApidogなどのAPIテストツールがOpenAPI仕様を読み込む際に、エラーレスポンスが正しく認識されるため。
+
+**実装形式**:
+```java
+@ApiResponse(responseCode = "404", description = "会社が見つかりません", 
+    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+```
+
+**誤った実装例**（スキーマが指定されていない）:
+```java
+@ApiResponse(responseCode = "404", description = "会社が見つかりません", content = @Content)  // ❌ 誤り
+```
+
+### パス変数を含むエンドポイント
+
+`GET /{id}`, `PUT /{id}`, `DELETE /{id}`などのパス変数を含むエンドポイントでは、以下を定義する（必須）:
+
+- **400**: リクエストパラメータエラー（IDが数値でない場合など）
+- **404**: リソースが見つからない
+
+### リクエストボディを含むエンドポイント
+
+`POST`, `PUT`などリクエストボディを含むエンドポイントでは、以下を定義する（必須）:
+
+- **400**: バリデーションエラー
+
+### 実装例
+
+#### GET /{id} エンドポイント
+
+```java
+@GetMapping("/{id}")
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "取得成功"),
+    @ApiResponse(responseCode = "400", description = "リクエストパラメータエラー（IDが数値でない場合など）", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    @ApiResponse(responseCode = "404", description = "会社が見つかりません", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
+```
+
+#### PUT /{id} エンドポイント
+
+```java
+@PutMapping("/{id}")
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "更新成功"),
+    @ApiResponse(responseCode = "400", description = "バリデーションエラーまたはリクエストパラメータエラー（IDが数値でない場合など）", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    @ApiResponse(responseCode = "404", description = "会社が見つかりません", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
+```
+
+#### DELETE /{id} エンドポイント
+
+```java
+@DeleteMapping("/{id}")
+@ApiResponses({
+    @ApiResponse(responseCode = "204", description = "削除成功"),
+    @ApiResponse(responseCode = "400", description = "リクエストパラメータエラー（IDが数値でない場合など）", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    @ApiResponse(responseCode = "404", description = "会社が見つかりません", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
+```
+
+#### POST エンドポイント
+
+```java
+@PostMapping
+@ApiResponses({
+    @ApiResponse(responseCode = "201", description = "作成成功"),
+    @ApiResponse(responseCode = "400", description = "バリデーションエラー", 
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
+```
+
+## グローバル例外ハンドラーの活用（必須）
+
+### 基本原則
+
+- Controller層で例外を直接ハンドリングしない（必須）
+- Service層で適切な例外をスローし、`GlobalExceptionHandler`に委譲する（必須）
+
+### 例外とHTTPステータスコードの対応
+
+参照: `core-service/src/main/java/jp/chokutuna/core/common/exception/GlobalExceptionHandler.java`
+
+| 例外 | HTTPステータスコード | 説明 |
+|------|---------------------|------|
+| `EntityNotFoundException` | 404 Not Found | リソースが見つからない場合 |
+| `IllegalStateException` | 400 Bad Request | テナントID未設定などの業務ロジックエラー |
+| `MethodArgumentNotValidException` | 400 Bad Request | リクエストボディのバリデーションエラー |
+| `ConstraintViolationException` | 400 Bad Request | バリデーション制約違反 |
+| `MethodArgumentTypeMismatchException` | 400 Bad Request | パス変数やリクエストパラメータの型変換エラー |
+| `Exception`（その他） | 500 Internal Server Error | 予期しない例外 |
+
+### Service層での例外スロー例
+
+```java
+// リソースが見つからない場合
+Company company = companyRepository.findByIdAndTenantId(id, tenantId)
+    .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("会社が見つかりません: id=" + id));
+
+// テナントID未設定などの業務ロジックエラー
+String tenantId = TenantContext.getTenantId();
+if (tenantId == null) {
+    throw new IllegalStateException("テナントIDが設定されていません");
+}
+```
+
+### Controller層での実装
+
+Controller層では例外をキャッチせず、Service層の例外をそのままスローする。
+
+```java
+// 正しい実装
+@GetMapping("/{id}")
+public ResponseEntity<CompanyResponse> findById(@PathVariable Long id) {
+    CompanyResponse company = companyService.findById(id);  // 例外はそのままスロー
+    return ResponseEntity.ok(company);
+}
+
+// 誤った実装（例外を直接ハンドリングしない）
+@GetMapping("/{id}")
+public ResponseEntity<CompanyResponse> findById(@PathVariable Long id) {
+    try {
+        CompanyResponse company = companyService.findById(id);
+        return ResponseEntity.ok(company);
+    } catch (EntityNotFoundException e) {
+        return ResponseEntity.notFound().build();  // これは不要
+    }
+}
+```
+
+## HTTPステータスコードの適切な使用（必須）
+
+### 標準的なHTTPステータスコード
+
+| ステータスコード | 使用場面 | 必須/任意 |
+|----------------|---------|---------|
+| 200 OK | 正常な取得・更新 | 必須 |
+| 201 Created | リソースの作成成功 | 必須 |
+| 204 No Content | リソースの削除成功 | 必須 |
+| 400 Bad Request | リクエストエラー（バリデーション、型変換エラーなど） | 必須 |
+| 404 Not Found | リソースが見つからない | 必須 |
+| 500 Internal Server Error | サーバー内部エラー（予期しない例外） | グローバル例外ハンドラーで自動処理 |
+
+### 実装例
+
+```java
+// GET: 200 OK
+@GetMapping("/{id}")
+public ResponseEntity<CompanyResponse> findById(@PathVariable Long id) {
+    CompanyResponse company = companyService.findById(id);
+    return ResponseEntity.ok(company);  // 200 OK
+}
+
+// POST: 201 Created
+@PostMapping
+public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest request) {
+    CompanyResponse company = companyService.create(request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(company);  // 201 Created
+}
+
+// PUT: 200 OK
+@PutMapping("/{id}")
+public ResponseEntity<CompanyResponse> update(@PathVariable Long id, @Valid @RequestBody CompanyRequest request) {
+    CompanyResponse company = companyService.update(id, request);
+    return ResponseEntity.ok(company);  // 200 OK
+}
+
+// DELETE: 204 No Content
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> delete(@PathVariable Long id) {
+    companyService.delete(id);
+    return ResponseEntity.noContent().build();  // 204 No Content
+}
+```
+
+## バリデーション（必須）
+
+### リクエストボディのバリデーション
+
+- `@Valid`アノテーションを使用してリクエストボディをバリデーションする（必須）
+- DTOクラスに`@NotBlank`, `@Size`, `@Email`などのバリデーションアノテーションを付与する（必須）
+
+### 実装例
+
+```java
+@PostMapping
+public ResponseEntity<CompanyResponse> create(
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                description = "会社情報",
+                required = true,
+                content = @Content(schema = @Schema(implementation = CompanyRequest.class))
+        )
+        @Valid @RequestBody CompanyRequest request) {  // @Valid必須
+    CompanyResponse company = companyService.create(request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(company);
+}
+```
+
+## チェックリスト
+
+新しいControllerメソッドを実装する際は、以下を確認する（必須）:
+
+- [ ] `@ApiResponses`で想定されるすべてのエラーレスポンス（400, 404など）を定義した
+- [ ] エラーレスポンスに`ErrorResponse`スキーマを明示的に指定した（`content = @Content(schema = @Schema(implementation = ErrorResponse.class))`）
+- [ ] パス変数を含むエンドポイントでは、型変換エラー（400）を定義した
+- [ ] リソースが見つからない場合（404）を定義した
+- [ ] リクエストボディを含むエンドポイントでは、バリデーションエラー（400）を定義した
+- [ ] Controller層で例外を直接ハンドリングしていない
+- [ ] 適切なHTTPステータスコード（200, 201, 204など）を返している
+- [ ] リクエストボディには`@Valid`アノテーションを付与している
+
+## 参照ファイル
+
+- `core-service/src/main/java/jp/chokutuna/core/company/controller/CompanyController.java` - 実装例
+- `core-service/src/main/java/jp/chokutuna/core/common/exception/GlobalExceptionHandler.java` - グローバル例外ハンドラー
+- `core-service/src/main/java/jp/chokutuna/core/common/dto/ErrorResponse.java` - エラーレスポンスDTO

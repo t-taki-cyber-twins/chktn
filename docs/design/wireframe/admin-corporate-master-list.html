@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法人マスタ管理 - CHKTN</title>
+  <link rel="stylesheet" href="css/admin-corporate-master-list.css">
+  <script src="components/app-header.js" type="module"></script>
+</head>
+<body>
+  <div class="container">
+    <app-header></app-header>
+
+    <div class="main-layout">
+      
+      <main class="content-area">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">法人マスタ管理</h2>
+          </div>
+
+          <div class="search-section">
+            <div class="form-group">
+              <div class="search-form">
+                <div class="form-group">
+                  <label class="form-label">法人番号</label>
+                  <input type="text" class="form-input" placeholder="法人番号を入力">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">会社名</label>
+                  <input type="text" class="form-input" placeholder="会社名を入力">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">都道府県</label>
+                  <select class="form-select">
+                    <option value="">すべて</option>
+                    <option value="tokyo">東京都</option>
+                    <option value="osaka">大阪府</option>
+                    <!-- 他の都道府県は省略 -->
+                  </select>
+                </div>
+                <div class="search-actions">
+                  <button class="btn btn-primary">検索</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="common-table">
+              <thead>
+                <tr>
+                  <th>法人番号</th>
+                  <th>会社名</th>
+                  <th>所在地</th>
+                  <th>登録日</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1000000000001</td>
+                  <td>株式会社CHKTNホールディングス</td>
+                  <td>東京都港区六本木...</td>
+                  <td>2023/01/15</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>1234567890123</td>
+                  <td>株式会社CHKTNテクノロジー</td>
+                  <td>東京都渋谷区神南...</td>
+                  <td>2023/02/01</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>9876543210987</td>
+                  <td>CHKTNソリューションズ株式会社</td>
+                  <td>大阪府大阪市北区...</td>
+                  <td>2023/02/15</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5555555555555</td>
+                  <td>グローバルイノベーション株式会社</td>
+                  <td>東京都千代田区丸の内...</td>
+                  <td>2023/04/10</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="pagination">
+            <a href="#" class="pagination-link">&laquo;</a>
+            <a href="#" class="pagination-link active">1</a>
+            <a href="#" class="pagination-link">2</a>
+            <a href="#" class="pagination-link">3</a>
+            <a href="#" class="pagination-link">&raquo;</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // モックのイベントリスナー
+      const buttons = document.querySelectorAll('.btn-secondary.btn-sm');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          alert('法人詳細画面を開きます（未実装）');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

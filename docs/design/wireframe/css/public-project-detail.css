@@ -1,0 +1,563 @@
+/* ========================================
+   公開案件詳細画面固有スタイルシート
+   ======================================== */
+
+/* サイドメニュー */
+.sidebar-engineer-selector {
+    margin-bottom: 16px;
+    padding: 0 24px;
+}
+
+.sidebar-engineer-selected {
+    margin-top: 12px;
+}
+
+.sidebar-engineer-selected-none {
+    text-align: center;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.sidebar-engineer-selected-text {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.sidebar-engineer-selected-item {
+    padding: 12px;
+    background-color: #e6f2ff;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.sidebar-engineer-selected-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.sidebar-engineer-selected-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.sidebar-engineer-selected-matching-score {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.sidebar-engineer-select-btn {
+    width: 100%;
+}
+
+.sidebar-actions {
+    padding: 0 24px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-meeting-apply-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* エンジニア一覧セクション */
+.engineer-list-section {
+    max-width: 1000px;
+    margin: 0 auto 32px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 問い合わせメッセージ一覧セクション */
+.inquiry-message-list-section {
+    max-width: 1000px;
+    margin: 0 auto 32px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.inquiry-message-list-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.engineer-list-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* エンジニア一覧テーブル */
+/* テーブルラッパーはcommon.cssに移動 */
+/* テーブル基本スタイルはcommon.cssの.common-tableを使用 */
+
+
+/* skill-tagはcommon.cssに移動 */
+
+
+.matching-score-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.matching-score-high {
+    background-color: #e6ffe6;
+    color: #00aa00;
+}
+
+.matching-score-medium {
+    background-color: #fff4e6;
+    color: #ff8800;
+}
+
+.matching-score-low {
+    background-color: #ffe6e6;
+    color: #cc0000;
+}
+
+/* バッジはcommon.cssに移動 */
+
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* btn-smはcommon.cssに移動 */
+
+
+/* 案件詳細表示フォーム */
+.project-detail-form {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 32px;
+}
+
+/* フォームセクション、グリッド、グループ、ラベルはcommon.cssに移動 */
+
+
+.form-display-value {
+    font-size: 14px;
+    color: #333;
+    padding: 8px 0;
+    line-height: 1.6;
+}
+
+.skill-list-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* モーダル基本スタイルはcommon.cssを使用 */
+/* エンジニア選択モーダル固有スタイル */
+.engineer-selector-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.engineer-selector-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.engineer-selector-modal-content {
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 2001;
+}
+
+/* ヘッダー、タイトル、クローズボタンはcommon.cssのスタイルを継承しつつ、必要なら上書き */
+.engineer-selector-modal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.engineer-selector-modal .modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.engineer-selector-modal .modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+.engineer-selector-modal .modal-close:hover {
+    background-color: #f5f5f5;
+}
+
+.engineer-selector-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.engineer-selector-search {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.engineer-selector-search-group {
+    margin-bottom: 16px;
+}
+
+.engineer-selector-search-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.engineer-selector-search-input,
+.engineer-selector-search-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+}
+
+.engineer-selector-search-input:focus,
+.engineer-selector-search-select:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+.engineer-selector-search-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.engineer-selector-search-btn,
+.engineer-selector-reset-btn {
+    flex: 1;
+}
+
+.engineer-selector-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.engineer-selector-list-ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.engineer-selector-item {
+    margin-bottom: 8px;
+}
+
+.engineer-selector-item.selected .engineer-selector-item-btn {
+    background-color: #e6f2ff;
+    border-color: #0066cc;
+}
+
+.engineer-selector-item-btn {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.engineer-selector-item-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #0066cc;
+}
+
+.engineer-selector-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.engineer-selector-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.engineer-selector-matching-score {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.engineer-selector-matching-score-label {
+    font-size: 11px;
+    color: #666;
+}
+
+.engineer-selector-matching-score-value {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.engineer-selector-matching-score-value.matching-score-high {
+    background-color: #e6ffe6;
+    color: #00aa00;
+}
+
+.engineer-selector-matching-score-value.matching-score-medium {
+    background-color: #fff4e6;
+    color: #ff8800;
+}
+
+.engineer-selector-matching-score-value.matching-score-low {
+    background-color: #ffe6e6;
+    color: #cc0000;
+}
+
+.engineer-selector-item-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.engineer-selector-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 20px 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* メッセージスレッド構造のスタイル */
+.message-thread-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.message-thread-item {
+    margin-bottom: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.message-thread-parent {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.message-thread-parent:hover {
+    background-color: #f5f5f5;
+}
+
+.message-thread-parent.active {
+    background-color: #e6f2ff;
+    border-left: 3px solid #0066cc;
+}
+
+.message-thread-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.message-thread-latest-child {
+    padding: 12px 16px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.message-thread-child-item {
+    padding: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.message-thread-child-item:hover {
+    background-color: #f0f0f0;
+}
+
+.message-thread-child-item.active {
+    background-color: #e6f2ff;
+}
+
+.message-thread-child-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-thread-child-from {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+}
+
+.message-thread-child-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.message-thread-children {
+    padding: 8px 16px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+}
+
+.message-thread-children .message-thread-child-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.message-thread-children .message-thread-child-item:last-child {
+    border-bottom: none;
+}
+
+/* 返信フォームモーダルのスタイル */
+.message-reply-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.message-reply-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message-reply-modal-content {
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 2001;
+}
+
+.message-reply-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* フォームスタイルはcommon.cssを使用 */
+.message-reply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.message-reply-form .form-textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+
+.message-reply-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 20px 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .engineer-selector-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .message-reply-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+}
+

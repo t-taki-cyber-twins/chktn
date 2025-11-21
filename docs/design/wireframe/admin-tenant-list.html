@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テナント管理 - CHKTN</title>
+  <link rel="stylesheet" href="css/admin-tenant-list.css">
+  <script src="components/app-header.js" type="module"></script>
+</head>
+<body>
+  <div class="container">
+    <app-header></app-header>
+
+    <div class="main-layout">
+      
+      <main class="content-area">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">テナント管理</h2>
+          </div>
+
+          <div class="search-section">
+            <div class="form-group">
+              <div class="search-form">
+                <div class="form-group">
+                  <label class="form-label">テナント名</label>
+                  <input type="text" class="form-input" placeholder="テナント名を入力">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">テナントID</label>
+                  <input type="text" class="form-input" placeholder="テナントIDを入力">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">ステータス</label>
+                  <select class="form-select">
+                    <option value="">すべて</option>
+                    <option value="active">利用中</option>
+                    <option value="inactive">停止中</option>
+                  </select>
+                </div>
+                <div class="search-actions">
+                  <button class="btn btn-primary">検索</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="common-table">
+              <thead>
+                <tr>
+                  <th>テナント名</th>
+                  <th>テナントID</th>
+                  <th>プラン</th>
+                  <th>ステータス</th>
+                  <th>作成日</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>株式会社CHKTNホールディングス</td>
+                  <td>TNT-12345678</td>
+                  <td>スタンダードプラン</td>
+                  <td><span class="status-badge-active">利用中</span></td>
+                  <td>2023/01/15</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細/編集</button>
+                    <button class="btn btn-secondary btn-sm" style="color: #cc0000; background-color: #ffe6e6;">停止</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>株式会社サンプルテック</td>
+                  <td>TNT-87654321</td>
+                  <td>エンタープライズプラン</td>
+                  <td><span class="status-badge-active">利用中</span></td>
+                  <td>2023/03/20</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細/編集</button>
+                    <button class="btn btn-secondary btn-sm" style="color: #cc0000; background-color: #ffe6e6;">停止</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>合同会社テスト開発</td>
+                  <td>TNT-11223344</td>
+                  <td>ライトプラン</td>
+                  <td><span class="status-badge-inactive">停止中</span></td>
+                  <td>2023/05/10</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm">詳細/編集</button>
+                    <button class="btn btn-secondary btn-sm">再開</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="pagination">
+            <a href="#" class="pagination-link">&laquo;</a>
+            <a href="#" class="pagination-link active">1</a>
+            <a href="#" class="pagination-link">2</a>
+            <a href="#" class="pagination-link">3</a>
+            <a href="#" class="pagination-link">&raquo;</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // モックのイベントリスナー
+      const buttons = document.querySelectorAll('.btn-secondary.btn-sm');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const action = e.target.textContent.trim();
+          if (action === '詳細/編集') {
+            alert('テナント詳細・編集画面（またはモーダル）を開きます（未実装）');
+          } else if (action === '停止') {
+            if(confirm('このテナントを停止しますか？')) {
+              alert('テナントを停止しました');
+            }
+          } else if (action === '再開') {
+            if(confirm('このテナントを再開しますか？')) {
+              alert('テナントを再開しました');
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

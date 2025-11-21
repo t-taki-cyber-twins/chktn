@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: chktn-postgres
+    environment:
+      POSTGRES_DB: chktn_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - chktn-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  core-service:
+    build:
+      context: .
+      dockerfile: core-service/Dockerfile
+    container_name: chktn-core-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/chktn_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres}
+      DEFAULT_TENANT_ID: ${DEFAULT_TENANT_ID:-tenant-001}
+    ports:
+      - "8081:8081"
+    networks:
+      - chktn-network
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 8081 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    container_name: chktn-api-gateway
+    depends_on:
+      core-service:
+        condition: service_healthy
+    environment:
+      CORE_SERVICE_URI: http://core-service:8081
+    ports:
+      - "8080:8080"
+    networks:
+      - chktn-network
+
+networks:
+  chktn-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
+

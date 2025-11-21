@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社員管理 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/employee-list.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 検索フォーム -->
+                    <div class="sidebar-search-form">
+                        <div class="sidebar-title">検索条件</div>
+                        <form id="search-form" class="search-form">
+                            <div class="search-form-actions">
+                                <button type="submit" class="btn btn-primary search-form-submit">検索</button>
+                                <button type="button" class="btn btn-secondary search-form-reset">リセット</button>
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-employee-name" class="search-form-label">社員名</label>
+                                <input type="text" id="search-employee-name" name="employee-name"
+                                    class="search-form-input" placeholder="社員名で検索">
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-email" class="search-form-label">メールアドレス</label>
+                                <input type="text" id="search-email" name="email" class="search-form-input"
+                                    placeholder="メールアドレスで検索">
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-department" class="search-form-label">所属部署</label>
+                                <input type="text" id="search-department" name="department" class="search-form-input"
+                                    placeholder="所属部署で検索">
+                            </div>
+
+                            <div class="search-form-group">
+                                <label for="search-status" class="search-form-label">ステータス</label>
+                                <select id="search-status" name="status" class="search-form-select">
+                                    <option value="">すべて</option>
+                                    <option value="active">在籍中</option>
+                                    <option value="inactive">退職済み</option>
+                                    <option value="suspended">休職中</option>
+                                </select>
+                            </div>
+
+                            <div class="search-form-group">
+                                <label class="search-form-label">社員属性</label>
+                                <div class="search-form-checkbox-group">
+                                    <label class="search-form-checkbox-label">
+                                        <input type="checkbox" id="search-is-engineer" name="is-engineer"
+                                            class="search-form-checkbox" value="true">
+                                        <span>エンジニア</span>
+                                    </label>
+                                    <label class="search-form-checkbox-label">
+                                        <input type="checkbox" id="search-is-pm" name="is-pm"
+                                            class="search-form-checkbox" value="true">
+                                        <span>案件担当</span>
+                                    </label>
+                                    <label class="search-form-checkbox-label">
+                                        <input type="checkbox" id="search-is-tech-manager" name="is-tech-manager"
+                                            class="search-form-checkbox" value="true">
+                                        <span>技術者管理</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="project-search-results">
+                    <div class="search-results-header">
+                        <h1 class="search-results-title">社員管理</h1>
+                        <div class="search-results-actions">
+                            <button type="button" class="btn btn-primary" id="new-employee-btn">新規社員登録</button>
+                        </div>
+                    </div>
+
+                    <div class="search-results-info">
+                        <div class="search-results-count">
+                            <span id="results-count">12件</span>の社員が見つかりました
+                        </div>
+                    </div>
+
+                    <!-- 検索結果テーブル -->
+                    <div class="table-wrapper">
+                        <table class="common-table" id="employee-table">
+                            <thead>
+                                <tr>
+                                    <th class="table-checkbox">
+                                        <input type="checkbox" id="table-select-all" class="table-select-checkbox">
+                                    </th>
+                                    <th class="table-sortable" data-sort="name">
+                                        氏名
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th>メールアドレス</th>
+                                    <th class="table-sortable" data-sort="department">
+                                        所属部署
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th>属性</th>
+                                    <th class="table-sortable" data-sort="status">
+                                        ステータス
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th class="table-sortable" data-sort="joined-date">
+                                        入社日
+                                        <span class="sort-icon">▼</span>
+                                    </th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employee-table-body">
+                                <tr data-employee-id="1">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="1">
+                                    </td>
+                                    <td>山田 太郎</td>
+                                    <td>yamada@example.com</td>
+                                    <td>開発部</td>
+                                    <td>
+                                        <span class="badge badge-primary">エンジニア</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-recruiting">在籍中</span>
+                                    </td>
+                                    <td>2020/04/01</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm employee-edit-btn"
+                                                data-employee-id="1">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm employee-delete-btn"
+                                                data-employee-id="1">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-employee-id="2">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="2">
+                                    </td>
+                                    <td>鈴木 一郎</td>
+                                    <td>suzuki@example.com</td>
+                                    <td>営業部</td>
+                                    <td>
+                                        <span class="badge badge-secondary">案件担当</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-recruiting">在籍中</span>
+                                    </td>
+                                    <td>2019/07/15</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm employee-edit-btn"
+                                                data-employee-id="2">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm employee-delete-btn"
+                                                data-employee-id="2">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-employee-id="3">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="3">
+                                    </td>
+                                    <td>田中 花子</td>
+                                    <td>tanaka@example.com</td>
+                                    <td>開発部</td>
+                                    <td>
+                                        <span class="badge badge-primary">エンジニア</span>
+                                        <span class="badge badge-info">技術者管理</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-recruiting">在籍中</span>
+                                    </td>
+                                    <td>2018/10/01</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm employee-edit-btn"
+                                                data-employee-id="3">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm employee-delete-btn"
+                                                data-employee-id="3">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-employee-id="4">
+                                    <td class="table-checkbox">
+                                        <input type="checkbox" class="row-select-checkbox" value="4">
+                                    </td>
+                                    <td>佐藤 次郎</td>
+                                    <td>sato@example.com</td>
+                                    <td>総務部</td>
+                                    <td>
+                                        <span class="badge badge-secondary">バックオフィス</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-suspended">休職中</span>
+                                    </td>
+                                    <td>2021/01/10</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm employee-edit-btn"
+                                                data-employee-id="4">編集</button>
+                                            <button type="button" class="btn btn-secondary btn-sm employee-delete-btn"
+                                                data-employee-id="4">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ページネーション -->
+                    <div class="pagination">
+                        <button type="button" class="pagination-btn pagination-btn-prev" disabled>前へ</button>
+                        <div class="pagination-pages">
+                            <button type="button" class="pagination-page active">1</button>
+                            <button type="button" class="pagination-page">2</button>
+                            <button type="button" class="pagination-page">3</button>
+                        </div>
+                        <button type="button" class="pagination-btn pagination-btn-next">次へ</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 社員編集モーダル -->
+    <app-employee-edit-modal id="employee-edit-modal"></app-employee-edit-modal>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-employee-edit-modal.js"></script>
+
+    <script src="js/common.js"></script>
+    <script>
+        // 簡易的な動作確認用スクリプト
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Employee list page loaded');
+
+            const modal = document.getElementById('employee-edit-modal');
+
+            // 新規登録ボタン
+            const newEmployeeBtn = document.getElementById('new-employee-btn');
+            if (newEmployeeBtn) {
+                newEmployeeBtn.addEventListener('click', () => {
+                    modal.show();
+                });
+            }
+
+            // 編集ボタン
+            const editButtons = document.querySelectorAll('.employee-edit-btn');
+            editButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const employeeId = btn.getAttribute('data-employee-id');
+                    // モックデータ
+                    const mockData = {
+                        id: employeeId,
+                        name: '山田 太郎',
+                        email: 'yamada@example.com',
+                        department: '開発部',
+                        isEngineer: true,
+                        isPM: false,
+                        isTechManager: false,
+                        status: 'active',
+                        joinedDate: '2020-04-01'
+                    };
+                    modal.show(mockData);
+                });
+            });
+
+            // 検索フォーム
+            const searchForm = document.getElementById('search-form');
+            if (searchForm) {
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('検索機能は未実装です。');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

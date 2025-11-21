@@ -1,0 +1,13 @@
+/* 社員管理画面固有のスタイル */
+
+/* ステータスバッジの追加スタイル */
+.badge-status-suspended {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* 属性バッジのスタイル */
+.badge-info {
+  background-color: #3b82f6;
+  color: white;
+}

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案件登録 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/project-register.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 画面固有のコンテンツ（アクションボタン） -->
+                    <div class="sidebar-actions">
+                        <button class="btn btn-primary sidebar-save-btn">登録</button>
+                    </div>
+                    
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="project-register-form">
+                    <h1 class="form-title">案件登録 -自社の新規案件を登録</h1>
+
+                    <!-- 基本情報セクション -->
+                    <div class="form-section">
+                        <h2 class="section-title">基本情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label">公開設定</label>
+                                        <div class="form-checkbox-group">
+                                            <label class="form-checkbox-label">
+                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
+                                                <span>公開する</span>
+                                            </label>
+                                        </div>
+                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこの案件を検索できるようになります。</p>
+                                    </div>
+                                    <div class="form-col">
+                                        <label for="blacklist" class="form-label">ブラックリスト</label>
+                                        <div class="form-select-wrapper">
+                                            <button type="button" class="form-select-btn" id="blacklist-btn">
+                                                <span class="form-select-text">選択してください</span>
+                                                <span class="form-select-arrow">▼</span>
+                                            </button>
+                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
+                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
+                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
+                                            </div>
+                                        </div>
+                                        <p class="form-help-text">この案件を検索対象から除外する会社を選択します。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label for="project-name" class="form-label">案件名 <span class="form-required">*</span></label>
+                                <input type="text" id="project-name" name="project-name" class="form-input" placeholder="案件名を入力してください">
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label for="project-description" class="form-label">案件概要</label>
+                                <textarea id="project-description" name="project-description" class="form-textarea" rows="5" placeholder="案件概要を入力してください"></textarea>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label for="mailing-list" class="form-label">メーリングリスト</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="mailing-list-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-values" id="mailing-list-selected" style="display: none;">
+                                        <div class="selected-values-list" id="mailing-list-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="mailing-list-remove-all">すべて解除</button>
+                                    </div>
+                                </div>
+                                <p class="form-help-text">案件情報を通知するメーリングリストを選択します（複数選択可）。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 関連情報セクション -->
+                    <div class="form-section">
+                        <h2 class="section-title">関連情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="end-company" class="form-label">案件エンド会社 <span class="form-required">*</span></label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="end-company-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-value" id="end-company-selected" style="display: none;">
+                                        <span class="selected-value-text"></span>
+                                        <button type="button" class="selected-value-remove">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-manager" class="form-label">案件担当者</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="project-manager-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-value" id="project-manager-selected" style="display: none;">
+                                        <span class="selected-value-text"></span>
+                                        <button type="button" class="selected-value-remove">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="engineer" class="form-label">エンジニア</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="engineer-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-value" id="engineer-selected" style="display: none;">
+                                        <span class="selected-value-text"></span>
+                                        <button type="button" class="selected-value-remove">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- スキル情報セクション -->
+                    <div class="form-section">
+                        <h2 class="section-title">案件スキル</h2>
+                        <div class="form-group form-group-full">
+                            <div class="skill-selector">
+                                <div class="skill-select-header">
+                                    <select id="skill-master" class="form-select">
+                                        <option value="">スキルを選択してください</option>
+                                        <option value="1">Java</option>
+                                        <option value="2">Spring Boot</option>
+                                        <option value="3">React</option>
+                                        <option value="4">PostgreSQL</option>
+                                        <option value="5">AWS</option>
+                                    </select>
+                                    <input type="text" id="skill-custom" class="form-input skill-custom-input" placeholder="マスタにない場合は新規追加">
+                                    <button type="button" class="btn btn-secondary skill-add-btn">追加</button>
+                                </div>
+                                <div class="skill-list" id="skill-list">
+                                    <!-- 選択されたスキルがここに表示される -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 詳細情報セクション -->
+                    <div class="form-section">
+                        <h2 class="section-title">詳細情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="start-date" class="form-label">開始日</label>
+                                <input type="date" id="start-date" name="start-date" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="end-date" class="form-label">終了日</label>
+                                <input type="date" id="end-date" name="end-date" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="form-label">単価</label>
+                                <input type="number" id="price" name="price" class="form-input" placeholder="円">
+                            </div>
+                            <div class="form-group">
+                                <label for="age-range" class="form-label">希望年齢幅</label>
+                                <input type="text" id="age-range" name="age-range" class="form-input" placeholder="例: 25-35">
+                            </div>
+                            <div class="form-group">
+                                <label for="contract-type" class="form-label">契約形態</label>
+                                <select id="contract-type" name="contract-type" class="form-select">
+                                    <option value="">選択してください</option>
+                                    <option value="contract">契約社員</option>
+                                    <option value="employee">正社員</option>
+                                    <option value="freelance">フリーランス</option>
+                                    <option value="part-time">パートタイム</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="member-number" class="form-label">募集人数</label>
+                                <input type="number" id="member-number" name="member-number" class="form-input" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="work-location" class="form-label">勤務地</label>
+                                <input type="text" id="work-location" name="work-location" class="form-input" placeholder="例: 東京都千代田区">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">リモートワーク</label>
+                                <div class="form-radio-group">
+                                    <label class="form-radio-label">
+                                        <input type="radio" name="remote-work" value="yes" class="form-radio">
+                                        <span>可</span>
+                                    </label>
+                                    <label class="form-radio-label">
+                                        <input type="radio" name="remote-work" value="no" class="form-radio">
+                                        <span>不可</span>
+                                    </label>
+                                    <label class="form-radio-label">
+                                        <input type="radio" name="remote-work" value="partial" class="form-radio">
+                                        <span>一部可</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 取引先会社選択モーダル -->
+    <div class="modal" id="end-company-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">取引先会社を選択</h3>
+                <button type="button" class="modal-close" data-modal="end-company-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-search">
+                    <input type="text" class="form-input modal-search-input" placeholder="会社名で検索">
+                    <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-new-btn">新規取引先登録</button>
+                </div>
+                <div class="modal-list">
+                    <ul class="company-list">
+                        <li class="company-list-item">
+                            <button type="button" class="company-list-btn" data-company-id="1" data-company-name="サンプル株式会社">
+                                <span class="company-name">サンプル株式会社</span>
+                                <span class="company-code">法人番号: 1234567890123</span>
+                            </button>
+                        </li>
+                        <li class="company-list-item">
+                            <button type="button" class="company-list-btn" data-company-id="2" data-company-name="テック株式会社">
+                                <span class="company-name">テック株式会社</span>
+                                <span class="company-code">法人番号: 2345678901234</span>
+                            </button>
+                        </li>
+                        <li class="company-list-item">
+                            <button type="button" class="company-list-btn" data-company-id="3" data-company-name="デザイン株式会社">
+                                <span class="company-name">デザイン株式会社</span>
+                                <span class="company-code">法人番号: 3456789012345</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 案件担当者選択モーダル -->
+    <div class="modal" id="project-manager-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">案件担当者を選択</h3>
+                <button type="button" class="modal-close" data-modal="project-manager-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-search">
+                    <input type="text" class="form-input modal-search-input" placeholder="担当者名で検索">
+                    <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                </div>
+                <div class="modal-list">
+                    <ul class="employee-list">
+                        <li class="employee-list-item">
+                            <button type="button" class="employee-list-btn" data-employee-id="1" data-employee-name="田中太郎">
+                                <span class="employee-name">田中太郎</span>
+                                <span class="employee-department">営業部</span>
+                            </button>
+                        </li>
+                        <li class="employee-list-item">
+                            <button type="button" class="employee-list-btn" data-employee-id="2" data-employee-name="佐藤花子">
+                                <span class="employee-name">佐藤花子</span>
+                                <span class="employee-department">営業部</span>
+                            </button>
+                        </li>
+                        <li class="employee-list-item">
+                            <button type="button" class="employee-list-btn" data-employee-id="3" data-employee-name="鈴木一郎">
+                                <span class="employee-name">鈴木一郎</span>
+                                <span class="employee-department">営業部</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- エンジニア選択モーダル -->
+    <div class="modal" id="engineer-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">エンジニアを選択</h3>
+                <button type="button" class="modal-close" data-modal="engineer-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-search">
+                    <input type="text" class="form-input modal-search-input" placeholder="エンジニア名で検索">
+                    <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                </div>
+                <div class="modal-list">
+                    <ul class="engineer-list">
+                        <li class="engineer-list-item">
+                            <button type="button" class="engineer-list-btn" data-engineer-id="1" data-engineer-name="山田次郎">
+                                <span class="engineer-name">山田次郎</span>
+                                <span class="engineer-skills">Java, Spring Boot, React</span>
+                            </button>
+                        </li>
+                        <li class="engineer-list-item">
+                            <button type="button" class="engineer-list-btn" data-engineer-id="2" data-engineer-name="中村三郎">
+                                <span class="engineer-name">中村三郎</span>
+                                <span class="engineer-skills">Python, Django, PostgreSQL</span>
+                            </button>
+                        </li>
+                        <li class="engineer-list-item">
+                            <button type="button" class="engineer-list-btn" data-engineer-id="3" data-engineer-name="高橋四郎">
+                                <span class="engineer-name">高橋四郎</span>
+                                <span class="engineer-skills">TypeScript, React, Next.js</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ブラックリスト選択モーダルコンポーネント -->
+    <app-blacklist-selector></app-blacklist-selector>
+
+    <!-- メーリングリスト選択モーダルコンポーネント -->
+    <app-mailing-list-selector></app-mailing-list-selector>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-blacklist-selector.js"></script>
+    <script type="module" src="components/app-mailing-list-selector.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/project-register.js"></script>
+</body>
+</html>
+

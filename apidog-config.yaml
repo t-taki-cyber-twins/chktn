@@ -1,0 +1,21 @@
+# Apidog設定ファイル
+# エンジニア・案件マッチングシステム API設定
+
+environments:
+  - name: local
+    baseUrl: http://localhost:8080  # API Gateway経由
+    variables:
+      tenantId: tenant-001
+  - name: core-service-direct
+    baseUrl: http://localhost:8081  # Core Service直接アクセス
+    variables:
+      tenantId: tenant-001
+  - name: staging
+    baseUrl: https://api-staging.example.com
+    variables:
+      tenantId: tenant-001
+
+headers:
+  X-Tenant-ID: ${tenantId}
+  Content-Type: application/json
+

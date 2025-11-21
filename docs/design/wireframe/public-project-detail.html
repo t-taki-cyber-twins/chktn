@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公開案件詳細 - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/public-project-detail.css">
+    <link rel="stylesheet" href="css/project-meeting-edit.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- エンジニア選択 -->
+                    <div class="sidebar-engineer-selector">
+                        <div class="sidebar-title">エンジニア選択</div>
+                        <div class="sidebar-engineer-selected" id="sidebar-engineer-selected">
+                            <div class="sidebar-engineer-selected-none">
+                                <p class="sidebar-engineer-selected-text">エンジニアが選択されていません</p>
+                                <button type="button" class="btn btn-secondary btn-sm sidebar-engineer-select-btn" id="engineer-select-btn">エンジニアを選択</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- アクションボタン -->
+                    <div class="sidebar-actions">
+                        <button type="button" class="btn btn-primary sidebar-meeting-apply-btn" id="meeting-apply-btn" disabled>面談申込</button>
+                        <button type="button" class="btn btn-secondary sidebar-inquiry-btn" id="inquiry-btn">問い合わせ</button>
+                    </div>
+                    
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <!-- 関連エンジニアセクション -->
+                <div class="engineer-list-section">
+                    <h2 class="engineer-list-title">関連エンジニア（自社のエンジニアのみ表示）</h2>
+                    <div class="table-wrapper">
+                        <table class="common-table" id="engineer-table">
+                            <thead>
+                                <tr>
+                                    <th>エンジニア名</th>
+                                    <th>スキル</th>
+                                    <th>マッチングスコア</th>
+                                    <th>面談ステータス</th>
+                                    <th>面談日時</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody id="engineer-table-body">
+                                <tr data-engineer-id="1">
+                                    <td>山田太郎</td>
+                                    <td>
+                                        <span class="skill-tag">Java</span>
+                                        <span class="skill-tag">Spring Boot</span>
+                                        <span class="skill-tag">React</span>
+                                    </td>
+                                    <td>
+                                        <span class="matching-score-badge matching-score-high">85%</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-pending">面談予定</span>
+                                    </td>
+                                    <td>2024/12/15 14:00</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm meeting-edit-btn" data-meeting-id="1">編集</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-engineer-id="2">
+                                    <td>佐藤花子</td>
+                                    <td>
+                                        <span class="skill-tag">Python</span>
+                                        <span class="skill-tag">Django</span>
+                                    </td>
+                                    <td>
+                                        <span class="matching-score-badge matching-score-medium">72%</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-status-completed">面談完了</span>
+                                    </td>
+                                    <td>2024/12/10 10:00</td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button type="button" class="btn btn-secondary btn-sm meeting-edit-btn" data-meeting-id="2">編集</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 問い合わせメッセージ一覧セクション -->
+                <div class="inquiry-message-list-section">
+                    <h2 class="inquiry-message-list-title">問い合わせメッセージ一覧</h2>
+                    <div class="message-list-section">
+                        <ul class="message-thread-list" id="inquiry-message-list">
+                            <!-- スレッド構造はJavaScriptで動的に生成 -->
+                        </ul>
+                        <!-- メッセージ内容表示エリア -->
+                        <div class="message-content-area" id="inquiry-message-content-area" style="display: none;">
+                            <div class="message-content-header">
+                                <h5 class="message-content-title" id="inquiry-message-content-title"></h5>
+                                <button type="button" class="message-content-close" id="inquiry-message-content-close">×</button>
+                            </div>
+                            <div class="message-content-body" id="inquiry-message-content-body"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 案件詳細表示 -->
+                <div class="project-detail-form">
+                    <h1 class="form-title">公開案件詳細</h1>
+
+                    <!-- 基本情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">基本情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <label class="form-label">案件名</label>
+                                <div class="form-display-value">フルスタックエンジニア募集</div>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label class="form-label">案件概要</label>
+                                <div class="form-display-value">Webアプリケーション開発の案件です。フロントエンドとバックエンドの両方を担当していただきます。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 関連情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">関連情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">案件エンド会社</label>
+                                <div class="form-display-value">サンプル株式会社</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">案件担当者</label>
+                                <div class="form-display-value">田中太郎</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- スキル情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">案件スキル</h2>
+                        <div class="form-group form-group-full">
+                            <div class="skill-list-display">
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">Spring Boot</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 詳細情報セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">詳細情報</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">開始日</label>
+                                <div class="form-display-value">2024年12月1日</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">終了日</label>
+                                <div class="form-display-value">2025年3月31日</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">単価</label>
+                                <div class="form-display-value">60万円〜80万円</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">希望年齢幅</label>
+                                <div class="form-display-value">25-35</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">契約形態</label>
+                                <div class="form-display-value">契約社員</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">募集人数</label>
+                                <div class="form-display-value">2名</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">勤務地</label>
+                                <div class="form-display-value">東京都千代田区</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">リモートワーク</label>
+                                <div class="form-display-value">可</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- エンジニア選択モーダルコンポーネント -->
+    <app-engineer-selector></app-engineer-selector>
+
+    <!-- 面談編集モーダルコンポーネント -->
+    <app-project-meeting-edit></app-project-meeting-edit>
+
+    <!-- メッセージ返信フォームモーダルコンポーネント -->
+    <app-message-reply></app-message-reply>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-engineer-selector.js"></script>
+    <script type="module" src="components/app-project-meeting-edit.js"></script>
+    <script type="module" src="components/app-message-reply.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/public-project-detail.js"></script>
+    <script src="js/project-meeting-edit.js"></script>
+</body>
+</html>
+
