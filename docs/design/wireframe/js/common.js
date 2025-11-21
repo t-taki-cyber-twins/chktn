@@ -63,7 +63,7 @@ function initLogoutLink() {
                 // TODO: ログアウト処理を実装
                 if (confirm('ログアウトしますか？')) {
                     console.log('ログアウト処理を実行');
-                    // window.location.href = '/logout';
+                    window.location.href = 'index.html';
                 }
             });
         }
