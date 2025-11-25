@@ -120,8 +120,8 @@ function createTableRow(account) {
             <td>${escapeHtml(account.lastLogin.replace(/-/g, '/'))}</td>
             <td>
                 <div class="table-actions">
-                    <button type="button" class="btn btn-secondary btn-sm account-edit-btn" data-account-id="${account.id}">編集</button>
-                    <button type="button" class="btn btn-secondary btn-sm account-delete-btn" data-account-id="${account.id}">削除</button>
+                    <button type="button" class="btn btn-primary btn-sm account-edit-btn" data-account-id="${account.id}">編集</button>
+                    <button type="button" class="btn btn-danger btn-sm account-delete-btn" data-account-id="${account.id}">削除</button>
                 </div>
             </td>
         </tr>

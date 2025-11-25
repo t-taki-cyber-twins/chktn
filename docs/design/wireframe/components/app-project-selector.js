@@ -53,7 +53,7 @@ class AppProjectSelector extends HTMLElement {
                                 </select>
                             </div>
                             <div class="project-selector-search-actions">
-                                <button type="button" class="btn btn-primary project-selector-search-btn">検索</button>
+                                <button type="button" class="btn btn-info project-selector-search-btn">検索</button>
                                 <button type="button" class="btn btn-secondary project-selector-reset-btn">リセット</button>
                             </div>
                         </div>
@@ -66,7 +66,7 @@ class AppProjectSelector extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer project-selector-modal-footer">
-                        <button type="button" class="btn btn-secondary project-selector-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning project-selector-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary project-selector-select-btn" disabled>選択</button>
                     </div>
                 </div>

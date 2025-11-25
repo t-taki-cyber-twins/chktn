@@ -26,7 +26,7 @@ class AppEngineerRepresentativeSelector extends HTMLElement {
                     <div class="modal-body">
                         <div class="modal-search">
                             <input type="text" class="form-input modal-search-input" placeholder="担当者名で検索">
-                            <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                            <button type="button" class="btn btn-info modal-search-btn">検索</button>
                         </div>
                         <div class="modal-list">
                             <ul class="employee-list">
@@ -70,7 +70,7 @@ class AppEngineerRepresentativeSelector extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary engineer-representative-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning engineer-representative-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary engineer-representative-confirm-btn">選択を確定</button>
                     </div>
                 </div>

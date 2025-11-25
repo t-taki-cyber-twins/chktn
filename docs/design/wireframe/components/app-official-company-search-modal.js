@@ -94,7 +94,7 @@ class AppOfficialCompanySearchModal extends HTMLElement {
                 <label class="form-label">法人番号</label>
                 <div class="form-row">
                   <input type="text" class="form-input" placeholder="13桁の法人番号を入力" id="input-number">
-                  <button class="btn btn-primary" id="search-number-btn">検索</button>
+                  <button class="btn btn-info" id="search-number-btn">検索</button>
                 </div>
               </div>
             </div>
@@ -116,7 +116,7 @@ class AppOfficialCompanySearchModal extends HTMLElement {
                   </select>
                 </div>
                 <div class="form-group-full">
-                  <button class="btn btn-primary" style="width: 100%;" id="search-name-btn">検索</button>
+                  <button class="btn btn-info" style="width: 100%;" id="search-name-btn">検索</button>
                 </div>
               </div>
             </div>

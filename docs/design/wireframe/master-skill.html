@@ -45,6 +45,12 @@
                                 <option value="3">データベース</option>
                                 <option value="4">クラウド</option>
                             </select>
+                            <select id="status-filter" class="search-select">
+                                <option value="">すべてのステータス</option>
+                                <option value="public">公開</option>
+                                <option value="private">非公開</option>
+                                <option value="request">リクエスト</option>
+                            </select>
                         </div>
 
                         <div class="table-wrapper">
@@ -55,7 +61,7 @@
                                         <th>スキル名</th>
                                         <th>カテゴリ</th>
                                         <th>説明</th>
-                                        <th>公開状況</th>
+                                        <th>ステータス</th>
                                         <th>アクション</th>
                                     </tr>
                                 </thead>
@@ -78,7 +84,7 @@
                                         <td>Python</td>
                                         <td>プログラミング言語</td>
                                         <td>汎用プログラミング言語</td>
-                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td><span class="badge badge-private">非公開</span></td>
                                         <td>
                                             <div class="table-actions">
                                                 <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="2">編集</button>
@@ -91,7 +97,7 @@
                                         <td>Spring Boot</td>
                                         <td>フレームワーク</td>
                                         <td>Javaフレームワーク</td>
-                                        <td><span class="badge badge-public">公開</span></td>
+                                        <td><span class="badge badge-request">リクエスト</span></td>
                                         <td>
                                             <div class="table-actions">
                                                 <button type="button" class="btn btn-secondary btn-sm skill-edit-btn" data-skill-id="3">編集</button>
@@ -141,6 +147,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        
+                        <!-- ページネーション -->
+                        <app-pagination></app-pagination>
                     </div>
 
                     <!-- タブ2: スキルカテゴリ管理 -->
@@ -214,6 +223,9 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- ページネーション -->
+                        <app-pagination></app-pagination>
                     </div>
                 </div>
             </main>
@@ -222,6 +234,7 @@
 
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/master-skill.js"></script>

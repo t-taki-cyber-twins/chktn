@@ -122,7 +122,7 @@ function createTableRow(message) {
     const isInquiry = message.messageType === 100;
     const actionButton = isInquiry
         ? `<button type="button" class="btn btn-secondary btn-sm message-detail-btn" data-message-id="${message.id}">詳細</button>`
-        : `<button type="button" class="btn btn-secondary btn-sm meeting-edit-btn" data-meeting-id="${message.meetingId || message.id}">面談編集</button>`;
+        : `<button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="${message.meetingId || message.id}">面談編集</button>`;
     
     return `
         <tr data-message-id="${message.id}">

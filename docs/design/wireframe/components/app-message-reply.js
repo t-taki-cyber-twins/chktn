@@ -30,7 +30,7 @@ class AppMessageReply extends HTMLElement {
                         </form>
                     </div>
                     <div class="modal-footer message-reply-modal-footer">
-                        <button type="button" class="btn btn-secondary message-reply-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning message-reply-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary message-reply-submit-btn">送信</button>
                     </div>
                 </div>

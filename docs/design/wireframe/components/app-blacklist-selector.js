@@ -40,7 +40,7 @@ class AppBlacklistSelector extends HTMLElement {
                         
                         <div class="modal-search">
                             <input type="text" class="form-input modal-search-input" placeholder="会社名で検索">
-                            <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                            <button type="button" class="btn btn-info modal-search-btn">検索</button>
                         </div>
                         <div class="modal-list">
                             <ul class="company-list">
@@ -69,7 +69,7 @@ class AppBlacklistSelector extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary blacklist-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning blacklist-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary blacklist-confirm-btn">選択を確定</button>
                     </div>
                 </div>

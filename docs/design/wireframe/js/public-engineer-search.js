@@ -156,7 +156,7 @@ function createEngineerCard(engineer) {
             </div>
             <div class="engineer-card-footer">
                 <div class="engineer-card-actions">
-                    <a href="public-engineer-detail.html?engineerId=${engineer.id}" class="btn btn-secondary btn-sm">詳細を見る</a>
+                    <a href="public-engineer-detail.html?engineerId=${engineer.id}" class="btn btn-info btn-sm">詳細を見る</a>
                 </div>
             </div>
         </div>

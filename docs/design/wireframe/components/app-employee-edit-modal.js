@@ -89,7 +89,7 @@ class AppEmployeeEditModal extends HTMLElement {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="employee-modal-cancel">キャンセル</button>
+                        <button type="button" class="btn btn-warning" id="employee-modal-cancel">キャンセル</button>
                         <button type="submit" form="employee-edit-form" class="btn btn-primary" id="employee-modal-save">保存</button>
                     </div>
                 </div>

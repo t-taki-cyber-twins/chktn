@@ -62,7 +62,7 @@ class AppSkillSheetUploader extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary skill-sheet-uploader-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning skill-sheet-uploader-cancel-btn">キャンセル</button>
                     </div>
                 </div>
             </div>

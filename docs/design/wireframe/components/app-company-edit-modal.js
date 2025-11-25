@@ -84,7 +84,7 @@ class AppCompanyEditModal extends HTMLElement {
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" id="cancel-btn">キャンセル</button>
+            <button class="btn btn-warning" id="cancel-btn">キャンセル</button>
             <button class="btn btn-primary" id="save-btn">保存</button>
           </div>
         </div>

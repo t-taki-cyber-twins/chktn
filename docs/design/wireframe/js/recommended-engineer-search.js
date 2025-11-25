@@ -254,9 +254,9 @@ function createMatchingCard(matching) {
             </div>
             <div class="matching-card-footer">
                 <div class="matching-card-actions">
-                    <button type="button" class="btn btn-primary btn-sm matching-apply-btn" data-matching-id="${matching.id}">面談申込</button>
-                    <button type="button" class="btn btn-secondary btn-sm matching-inquiry-btn" data-matching-id="${matching.id}">問い合わせ</button>
-                    <a href="public-engineer-detail.html" class="btn btn-secondary btn-sm">詳細</a>
+                    <button type="button" class="btn btn-success btn-sm matching-apply-btn" data-matching-id="${matching.id}">面談申込</button>
+                    <button type="button" class="btn btn-warning btn-sm matching-inquiry-btn" data-matching-id="${matching.id}">問い合わせ</button>
+                    <a href="public-engineer-detail.html" class="btn btn-info btn-sm">詳細</a>
                 </div>
             </div>
         </div>

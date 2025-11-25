@@ -26,7 +26,7 @@ class AppMailingListSelector extends HTMLElement {
                     <div class="modal-body">
                         <div class="modal-search">
                             <input type="text" class="form-input modal-search-input" placeholder="メーリングリスト名で検索">
-                            <button type="button" class="btn btn-primary modal-search-btn">検索</button>
+                            <button type="button" class="btn btn-info modal-search-btn">検索</button>
                         </div>
                         <div class="modal-list">
                             <ul class="mailing-list">
@@ -62,7 +62,7 @@ class AppMailingListSelector extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary mailing-list-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning mailing-list-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary mailing-list-confirm-btn">選択を確定</button>
                     </div>
                 </div>

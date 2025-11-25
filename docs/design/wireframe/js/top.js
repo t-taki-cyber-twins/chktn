@@ -190,8 +190,8 @@ function createMatchingCard(matching) {
             </div>
             <div class="matching-card-footer">
                 <div class="matching-card-actions">
-                    <a href="recommended-project-search.html" class="btn btn-primary btn-sm">詳細を見る</a>
-                    <a href="#" class="btn btn-secondary btn-sm">面談を申し込む</a>
+                    <a href="recommended-project-search.html" class="btn btn-info btn-sm">詳細を見る</a>
+                    <a href="#" class="btn btn-success btn-sm">面談申込</a>
                 </div>
             </div>
         </div>

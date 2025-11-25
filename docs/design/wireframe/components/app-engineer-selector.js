@@ -51,7 +51,7 @@ class AppEngineerSelector extends HTMLElement {
                                 <p class="form-help-text">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
                             </div>
                             <div class="engineer-selector-search-actions">
-                                <button type="button" class="btn btn-primary engineer-selector-search-btn">検索</button>
+                                <button type="button" class="btn btn-info engineer-selector-search-btn">検索</button>
                                 <button type="button" class="btn btn-secondary engineer-selector-reset-btn">リセット</button>
                             </div>
                         </div>
@@ -64,7 +64,7 @@ class AppEngineerSelector extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer engineer-selector-modal-footer">
-                        <button type="button" class="btn btn-secondary engineer-selector-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-warning engineer-selector-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary engineer-selector-select-btn" disabled>選択</button>
                     </div>
                 </div>

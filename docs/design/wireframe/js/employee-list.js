@@ -134,8 +134,8 @@ function createTableRow(employee) {
             <td>${escapeHtml(employee.joinedDate.replace(/-/g, '/'))}</td>
             <td>
                 <div class="table-actions">
-                    <button type="button" class="btn btn-secondary btn-sm employee-edit-btn" data-employee-id="${employee.id}">編集</button>
-                    <button type="button" class="btn btn-secondary btn-sm employee-delete-btn" data-employee-id="${employee.id}">削除</button>
+                    <button type="button" class="btn btn-primary btn-sm employee-edit-btn" data-employee-id="${employee.id}">編集</button>
+                    <button type="button" class="btn btn-danger btn-sm employee-delete-btn" data-employee-id="${employee.id}">削除</button>
                 </div>
             </td>
         </tr>

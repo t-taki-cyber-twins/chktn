@@ -131,8 +131,8 @@ class AppEngineerMeetingEdit extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer meeting-edit-modal-footer">
-                        <button type="button" class="btn btn-secondary meeting-edit-cancel-btn">キャンセル</button>
-                        <button type="button" class="btn btn-primary meeting-edit-update-btn">更新</button>
+                        <button type="button" class="btn btn-warning meeting-edit-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-success meeting-edit-update-btn">更新</button>
                     </div>
                 </div>
             </div>

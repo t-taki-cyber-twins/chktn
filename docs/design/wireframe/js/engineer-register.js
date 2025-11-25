@@ -419,7 +419,7 @@ function initProjectListTable() {
                     <td>
                         <div class="table-actions">
                             <button type="button" class="btn btn-secondary btn-sm project-edit-btn" data-index="${index}">編集</button>
-                            <button type="button" class="btn btn-secondary btn-sm project-delete-btn" data-index="${index}">削除</button>
+                            <button type="button" class="btn btn-danger btn-sm project-delete-btn" data-index="${index}">削除</button>
                         </div>
                     </td>
                 </tr>
@@ -502,7 +502,7 @@ function initProjectListTable() {
         // モーダルタイトルを変更
         const modalTitle = projectAddModal.querySelector('.modal-title');
         if (modalTitle) {
-            modalTitle.textContent = '案件追加';
+            modalTitle.textContent = '追加';
         }
 
         // モーダルを開く

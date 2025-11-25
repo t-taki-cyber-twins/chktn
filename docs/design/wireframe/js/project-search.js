@@ -155,8 +155,8 @@ function createTableRow(project) {
             </td>
             <td>
                 <div class="table-actions">
-                    <a href="project-register.html" class="btn btn-secondary btn-sm">編集</a>
-                    <button type="button" class="btn btn-secondary btn-sm project-delete-btn" data-project-id="${project.id}">削除</button>
+                    <a href="project-register.html" class="btn btn-primary btn-sm">編集</a>
+                    <button type="button" class="btn btn-danger btn-sm project-delete-btn" data-project-id="${project.id}">削除</button>
                 </div>
             </td>
         </tr>

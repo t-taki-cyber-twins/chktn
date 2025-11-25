@@ -206,8 +206,8 @@ class AppProjectRegisterModal extends HTMLElement {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary project-register-cancel-btn">キャンセル</button>
-                        <button type="button" class="btn btn-primary project-register-save-btn">登録</button>
+                        <button type="button" class="btn btn-warning project-register-cancel-btn">キャンセル</button>
+                        <button type="button" class="btn btn-success project-register-save-btn">登録</button>
                     </div>
                 </div>
             </div>

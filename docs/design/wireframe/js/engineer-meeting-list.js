@@ -237,8 +237,8 @@ function createTableRow(meeting) {
             <td>${escapeHtml(meetingDateTime)}</td>
             <td>
                 <div class="table-actions">
-                    <button type="button" class="btn btn-secondary btn-sm meeting-edit-btn" data-meeting-id="${meeting.id}">編集</button>
-                    <button type="button" class="btn btn-secondary btn-sm meeting-delete-btn" data-meeting-id="${meeting.id}">削除</button>
+                    <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="${meeting.id}">編集</button>
+                    <button type="button" class="btn btn-danger btn-sm meeting-delete-btn" data-meeting-id="${meeting.id}">削除</button>
                 </div>
             </td>
         </tr>

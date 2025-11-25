@@ -108,7 +108,7 @@ class AppAccountEditModal extends HTMLElement {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="account-modal-cancel">キャンセル</button>
+                        <button type="button" class="btn btn-warning" id="account-modal-cancel">キャンセル</button>
                         <button type="submit" form="account-edit-form" class="btn btn-primary" id="account-modal-save">保存</button>
                     </div>
                 </div>
