@@ -28,6 +28,20 @@
                         </div>
 
                         <div class="search-form-group">
+                            <label for="search-engineer-representative" class="search-form-label">担当者</label>
+                            <div class="form-select-wrapper">
+                                <button type="button" class="form-select-btn" id="search-engineer-representative-btn">
+                                    <span class="form-select-text">選択してください</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                                <div class="form-selected-values" id="search-engineer-representative-selected" style="display: none;">
+                                    <div class="selected-values-list" id="search-engineer-representative-selected-list"></div>
+                                    <button type="button" class="selected-value-remove-all" id="search-engineer-representative-remove-all">すべて解除</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="search-form-group">
                             <label for="search-engineer-name" class="search-form-label">エンジニア名</label>
                             <input type="text" id="search-engineer-name" name="engineer-name"
                                 class="search-form-input" placeholder="エンジニア名で検索">
@@ -65,19 +79,6 @@
                             </div>
                         </div>
 
-                        <div class="search-form-group">
-                            <label for="search-engineer-representative" class="search-form-label">エンジニア担当者</label>
-                            <div class="form-select-wrapper">
-                                <button type="button" class="form-select-btn" id="search-engineer-representative-btn">
-                                    <span class="form-select-text">選択してください</span>
-                                    <span class="form-select-arrow">▼</span>
-                                </button>
-                                <div class="form-selected-values" id="search-engineer-representative-selected" style="display: none;">
-                                    <div class="selected-values-list" id="search-engineer-representative-selected-list"></div>
-                                    <button type="button" class="selected-value-remove-all" id="search-engineer-representative-remove-all">すべて解除</button>
-                                </div>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </app-sidebar>
@@ -94,7 +95,7 @@
 
                     <div class="search-results-info">
                         <div class="search-results-count">
-                            <span id="results-count">24件</span>のエンジニアが見つかりました
+                            <span id="results-count">◯件</span>のエンジニアが見つかりました
                         </div>
                     </div>
 
@@ -111,7 +112,7 @@
                                         <span class="sort-icon">▼</span>
                                     </th>
                                     <th class="table-sortable" data-sort="engineer-representative">
-                                        エンジニア担当者
+                                        担当者
                                         <span class="sort-icon">▼</span>
                                     </th>
                                     <th class="table-sortable" data-sort="company">

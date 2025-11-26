@@ -27,6 +27,18 @@
                                 <button type="button" class="btn btn-warning search-form-reset">リセット</button>
                             </div>
                             
+                            <!-- 未読・既読フィルター -->
+                            <div class="search-form-section">
+                                <div class="search-form-section-title">状態</div>
+                                <div class="search-form-group">
+                                    <select id="search-read-status" name="read-status" class="search-form-select">
+                                        <option value="all">全て</option>
+                                        <option value="unread">未読</option>
+                                        <option value="read">既読</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <!-- 案件検索条件 -->
                             <div class="search-form-section">
                                 <div class="search-form-section-title">案件</div>
@@ -40,12 +52,6 @@
                                     <input type="text" id="search-project-skill" name="project-skill" class="search-form-input" placeholder="スキルで検索">
                                 </div>
                                 
-                                <div class="search-form-group">
-                                    <label class="search-form-checkbox-label">
-                                        <input type="checkbox" id="search-project-my-assign" name="project-my-assign" class="search-form-checkbox" value="true">
-                                        <span>自分が担当</span>
-                                    </label>
-                                </div>
                             </div>
                             
                             <!-- エンジニア検索条件 -->
@@ -61,12 +67,6 @@
                                     <input type="text" id="search-engineer-skill" name="engineer-skill" class="search-form-input" placeholder="スキルで検索">
                                 </div>
                                 
-                                <div class="search-form-group">
-                                    <label class="search-form-checkbox-label">
-                                        <input type="checkbox" id="search-engineer-my-assign" name="engineer-my-assign" class="search-form-checkbox" value="true">
-                                        <span>自分が担当</span>
-                                    </label>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -80,12 +80,12 @@
             <main class="content-area">
                 <div class="message-search-results">
                     <div class="search-results-header">
-                        <h1 class="search-results-title">メッセージ検索</h1>
+                        <h1 class="search-results-title">メッセージ検索 - 日々の確認が必要なメッセージを表示する</h1>
                     </div>
                     
                     <div class="search-results-info">
                         <div class="search-results-count">
-                            <span id="results-count">12件</span>のメッセージが見つかりました
+                            <span id="results-count">◯件</span>のメッセージが見つかりました
                         </div>
                     </div>
 
@@ -98,10 +98,7 @@
                                         メッセージタイプ
                                         <span class="sort-icon">▼</span>
                                     </th>
-                                    <th class="table-sortable" data-sort="message-name">
-                                        メッセージ名
-                                        <span class="sort-icon">▼</span>
-                                    </th>
+
                                     <th class="table-sortable" data-sort="sender">
                                         送信者
                                         <span class="sort-icon">▼</span>
@@ -122,13 +119,11 @@
                                 </tr>
                             </thead>
                             <tbody id="message-table-body">
-                                <tr data-message-id="1">
+                                <tr data-message-id="1" class="unread">
                                     <td>
                                         <span class="badge badge-message-type-1">面談依頼</span>
                                     </td>
-                                    <td>
-                                        <a href="#" class="table-link">面談依頼: フルスタックエンジニア募集</a>
-                                    </td>
+
                                     <td>山田太郎（サンプル株式会社）</td>
                                     <td>2024/12/15 14:30</td>
                                     <td>
@@ -137,17 +132,16 @@
                                     <td>佐藤一郎</td>
                                     <td>
                                         <div class="table-actions">
+                                            <button type="button" class="btn btn-warning btn-sm read-status-btn" data-message-id="1" data-is-read="false">未読</button>
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="1">面談編集</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-message-id="2">
+                                <tr data-message-id="2" class="read">
                                     <td>
                                         <span class="badge badge-message-type-2">面談依頼</span>
                                     </td>
-                                    <td>
-                                        <a href="#" class="table-link">面談依頼: バックエンドエンジニア募集</a>
-                                    </td>
+
                                     <td>鈴木花子（テック株式会社）</td>
                                     <td>2024/12/14 10:15</td>
                                     <td>
@@ -156,17 +150,16 @@
                                     <td>田中次郎</td>
                                     <td>
                                         <div class="table-actions">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm read-status-btn" data-message-id="2" data-is-read="true">既読</button>
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="2">面談編集</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-message-id="3">
+                                <tr data-message-id="3" class="unread">
                                     <td>
                                         <span class="badge badge-message-type-3">ステータス変化</span>
                                     </td>
-                                    <td>
-                                        <a href="#" class="table-link">ステータス変更: 面談確定</a>
-                                    </td>
+
                                     <td>システム</td>
                                     <td>2024/12/13 16:45</td>
                                     <td>
@@ -175,17 +168,16 @@
                                     <td>伊藤三郎</td>
                                     <td>
                                         <div class="table-actions">
+                                            <button type="button" class="btn btn-warning btn-sm read-status-btn" data-message-id="3" data-is-read="false">未読</button>
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="3">面談編集</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-message-id="4">
+                                <tr data-message-id="4" class="read">
                                     <td>
                                         <span class="badge badge-message-type-4">社内メッセージ通知</span>
                                     </td>
-                                    <td>
-                                        <a href="#" class="table-link">社内通知: 面談確定</a>
-                                    </td>
+
                                     <td>システム</td>
                                     <td>2024/12/13 16:45</td>
                                     <td>
@@ -194,17 +186,16 @@
                                     <td>伊藤三郎</td>
                                     <td>
                                         <div class="table-actions">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm read-status-btn" data-message-id="4" data-is-read="true">既読</button>
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="3">面談編集</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-message-id="5">
+                                <tr data-message-id="5" class="unread">
                                     <td>
                                         <span class="badge badge-message-type-100">質問・問い合わせ</span>
                                     </td>
-                                    <td>
-                                        <a href="#" class="table-link">案件についての質問</a>
-                                    </td>
+
                                     <td>高橋四郎（デザイン株式会社）</td>
                                     <td>2024/12/12 09:20</td>
                                     <td>
@@ -213,6 +204,7 @@
                                     <td>—</td>
                                     <td>
                                         <div class="table-actions">
+                                            <button type="button" class="btn btn-warning btn-sm read-status-btn" data-message-id="5" data-is-read="false">未読</button>
                                             <button type="button" class="btn btn-info btn-sm message-detail-btn" data-message-id="5">詳細</button>
                                         </div>
                                     </td>

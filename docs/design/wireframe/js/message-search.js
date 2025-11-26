@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
     initTableSort();
     initDetailButtons();
+    initReadStatusButtons();
     initPagination();
 });
 
@@ -59,9 +60,17 @@ function performSearch() {
     
     console.log('検索パラメータ:', searchParams);
     
-    // TODO: 実際のAPI呼び出しに置き換える
     // モックデータで検索結果を表示
-    const results = getMockSearchResults();
+    let results = getMockSearchResults();
+    
+    // 未読・既読フィルタリング
+    const readStatus = searchParams['read-status'];
+    if (readStatus === 'unread') {
+        results = results.filter(m => !m.isRead);
+    } else if (readStatus === 'read') {
+        results = results.filter(m => m.isRead);
+    }
+
     displaySearchResults(results);
     updateResultsCount(results.length);
 }
@@ -97,6 +106,7 @@ function displaySearchResults(results) {
     
     // イベントリスナーを再設定
     initDetailButtons();
+    initReadStatusButtons();
 }
 
 /**
@@ -124,13 +134,13 @@ function createTableRow(message) {
         ? `<button type="button" class="btn btn-secondary btn-sm message-detail-btn" data-message-id="${message.id}">詳細</button>`
         : `<button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="${message.meetingId || message.id}">面談編集</button>`;
     
+    // 未読・既読ボタン
+    const readStatusBtn = `<button type="button" class="btn btn-sm ${message.isRead ? 'btn-outline-secondary' : 'btn-warning'} read-status-btn" data-message-id="${message.id}" data-is-read="${message.isRead}">${message.isRead ? '既読' : '未読'}</button>`;
+
     return `
-        <tr data-message-id="${message.id}">
+        <tr data-message-id="${message.id}" class="${message.isRead ? 'read' : 'unread'}">
             <td>
                 ${messageTypeBadge}
-            </td>
-            <td>
-                <a href="#" class="table-link">${escapeHtml(message.messageName)}</a>
             </td>
             <td>${escapeHtml(message.sender)}</td>
             <td>${sentDateTime}</td>
@@ -140,6 +150,7 @@ function createTableRow(message) {
             <td>${escapeHtml(engineerName)}</td>
             <td>
                 <div class="table-actions">
+                    ${readStatusBtn}
                     ${actionButton}
                 </div>
             </td>
@@ -152,10 +163,10 @@ function createTableRow(message) {
  */
 function getMessageTypeBadge(messageType) {
     const badges = {
-        1: '<span class="badge badge-message-type-1">エンジニア提供会社から面談依頼</span>',
-        2: '<span class="badge badge-message-type-2">案件提供会社から面談依頼</span>',
-        3: '<span class="badge badge-message-type-3">面談依頼のステータス変化</span>',
-        4: '<span class="badge badge-message-type-4">ステータス変化社内メッセージ通知</span>',
+        1: '<span class="badge badge-message-type-1">面談依頼</span>',
+        2: '<span class="badge badge-message-type-2">面談依頼</span>',
+        3: '<span class="badge badge-message-type-3">ステータス変化</span>',
+        4: '<span class="badge badge-message-type-4">社内メッセージ通知</span>',
         100: '<span class="badge badge-message-type-100">質問・問い合わせ</span>'
     };
     return badges[messageType] || badges[100];
@@ -214,25 +225,21 @@ function sortTable(column, direction) {
                 aValue = a.cells[0].textContent.trim();
                 bValue = b.cells[0].textContent.trim();
                 break;
-            case 'message-name':
-                aValue = a.cells[1].querySelector('.table-link').textContent.trim();
-                bValue = b.cells[1].querySelector('.table-link').textContent.trim();
-                break;
             case 'sender':
-                aValue = a.cells[2].textContent.trim();
-                bValue = b.cells[2].textContent.trim();
+                aValue = a.cells[1].textContent.trim();
+                bValue = b.cells[1].textContent.trim();
                 break;
             case 'sent-date':
-                aValue = new Date(a.cells[3].textContent.trim().replace(/\//g, '-'));
-                bValue = new Date(b.cells[3].textContent.trim().replace(/\//g, '-'));
+                aValue = new Date(a.cells[2].textContent.trim().replace(/\//g, '-'));
+                bValue = new Date(b.cells[2].textContent.trim().replace(/\//g, '-'));
                 break;
             case 'project-name':
-                aValue = a.cells[4].querySelector('.table-link').textContent.trim();
-                bValue = b.cells[4].querySelector('.table-link').textContent.trim();
+                aValue = a.cells[3].querySelector('.table-link').textContent.trim();
+                bValue = b.cells[3].querySelector('.table-link').textContent.trim();
                 break;
             case 'engineer-name':
-                aValue = a.cells[5].textContent.trim();
-                bValue = b.cells[5].textContent.trim();
+                aValue = a.cells[4].textContent.trim();
+                bValue = b.cells[4].textContent.trim();
                 break;
             default:
                 return 0;
@@ -276,6 +283,33 @@ function initDetailButtons() {
     });
 }
 
+// 読み取りステータスボタンとフィルタの初期化
+function initReadStatusButtons() {
+    // フィルタの変更
+    const readStatusSelect = document.getElementById('search-read-status');
+    if (readStatusSelect) {
+        readStatusSelect.addEventListener('change', function() {
+            performSearch();
+        });
+    }
+
+    // 読み取りステータスボタンのクリックハンドラ
+    const statusButtons = document.querySelectorAll('.read-status-btn');
+    statusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const messageId = Number(this.dataset.messageId);
+            const isRead = this.dataset.isRead === 'true';
+            // Find message in mockMessages and toggle
+            const msg = mockMessages.find(m => m.id === messageId);
+            if (msg) {
+                msg.isRead = !isRead;
+            }
+            // Re-run search to refresh UI
+            performSearch();
+        });
+    });
+}
+
 /**
  * ページネーションの初期化
  */
@@ -313,63 +347,74 @@ function initPagination() {
 /**
  * モック検索結果データを取得
  */
+// モックデータ（グローバル変数として保持して状態変更を維持）
+const mockMessages = [
+    {
+        id: 1,
+        messageType: 1,
+        messageName: '面談依頼: フルスタックエンジニア募集',
+        sender: '山田太郎（サンプル株式会社）',
+        sentDate: '2024-12-15T14:30:00',
+        projectName: 'フルスタックエンジニア募集',
+        engineerName: '佐藤一郎',
+        isOwnProject: true,
+        meetingId: 1,
+        isRead: false
+    },
+    {
+        id: 2,
+        messageType: 2,
+        messageName: '面談依頼: バックエンドエンジニア募集',
+        sender: '鈴木花子（テック株式会社）',
+        sentDate: '2024-12-14T10:15:00',
+        projectName: 'バックエンドエンジニア募集',
+        engineerName: '田中次郎',
+        isOwnProject: false,
+        meetingId: 2,
+        isRead: true
+    },
+    {
+        id: 3,
+        messageType: 3,
+        messageName: 'ステータス変更: 面談確定',
+        sender: 'システム',
+        sentDate: '2024-12-13T16:45:00',
+        projectName: 'フロントエンドエンジニア募集',
+        engineerName: '伊藤三郎',
+        isOwnProject: true,
+        meetingId: 3,
+        isRead: false
+    },
+    {
+        id: 4,
+        messageType: 4,
+        messageName: '社内通知: 面談確定',
+        sender: 'システム',
+        sentDate: '2024-12-13T16:45:00',
+        projectName: 'フロントエンドエンジニア募集',
+        engineerName: '伊藤三郎',
+        isOwnProject: true,
+        meetingId: 3,
+        isRead: true
+    },
+    {
+        id: 5,
+        messageType: 100,
+        messageName: '案件についての質問',
+        sender: '高橋四郎（デザイン株式会社）',
+        sentDate: '2024-12-12T09:20:00',
+        projectName: 'UI/UXデザイナー募集',
+        engineerName: null,
+        isOwnProject: false,
+        isRead: false
+    }
+];
+
+/**
+ * モック検索結果データを取得
+ */
 function getMockSearchResults() {
-    return [
-        {
-            id: 1,
-            messageType: 1,
-            messageName: '面談依頼: フルスタックエンジニア募集',
-            sender: '山田太郎（サンプル株式会社）',
-            sentDate: '2024-12-15T14:30:00',
-            projectName: 'フルスタックエンジニア募集',
-            engineerName: '佐藤一郎',
-            isOwnProject: true,  // 自社案件
-            meetingId: 1  // 面談ID
-        },
-        {
-            id: 2,
-            messageType: 2,
-            messageName: '面談依頼: バックエンドエンジニア募集',
-            sender: '鈴木花子（テック株式会社）',
-            sentDate: '2024-12-14T10:15:00',
-            projectName: 'バックエンドエンジニア募集',
-            engineerName: '田中次郎',
-            isOwnProject: false,  // 他社の公開案件
-            meetingId: 2  // 面談ID
-        },
-        {
-            id: 3,
-            messageType: 3,
-            messageName: 'ステータス変更: 面談確定',
-            sender: 'システム',
-            sentDate: '2024-12-13T16:45:00',
-            projectName: 'フロントエンドエンジニア募集',
-            engineerName: '伊藤三郎',
-            isOwnProject: true,  // 自社案件
-            meetingId: 3  // 面談ID
-        },
-        {
-            id: 4,
-            messageType: 4,
-            messageName: '社内通知: 面談確定',
-            sender: 'システム',
-            sentDate: '2024-12-13T16:45:00',
-            projectName: 'フロントエンドエンジニア募集',
-            engineerName: '伊藤三郎',
-            isOwnProject: true,  // 自社案件
-            meetingId: 3  // 面談ID（ID 3と同じ面談）
-        },
-        {
-            id: 5,
-            messageType: 100,
-            messageName: '案件についての質問',
-            sender: '高橋四郎（デザイン株式会社）',
-            sentDate: '2024-12-12T09:20:00',
-            projectName: 'UI/UXデザイナー募集',
-            engineerName: null,
-            isOwnProject: false  // 他社の公開案件（質問・問い合わせなので面談IDなし）
-        }
-    ];
+    return mockMessages;
 }
 
 /**

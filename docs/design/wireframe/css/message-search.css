@@ -151,4 +151,20 @@
 /* ページネーション */
 /* ページネーションはcommon.cssに移動 */
 
+/* 既読・未読状態のスタイル */
+.common-table tbody tr.unread {
+    background-color: #fff9e6;
+}
+
+.common-table tbody tr.unread:hover {
+    background-color: #fff4d6;
+}
+
+.common-table tbody tr.read {
+    background-color: #fff;
+}
+
+.common-table tbody tr.read:hover {
+    background-color: #f9f9f9;
+}
 

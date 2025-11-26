@@ -130,3 +130,4 @@ class AppMessageReply extends HTMLElement {
 // カスタム要素として登録
 customElements.define('app-message-reply', AppMessageReply);
 
+
