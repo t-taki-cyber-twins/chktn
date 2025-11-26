@@ -180,7 +180,11 @@
                                         <p class="form-help-text">エンジニアの担当者を選択します（複数選択可）。営業担当者、エンジニア担当者など、役割を問わず選択できます。</p>
                                     </div>
                                     <div class="form-group form-group-full">
-                                        <label for="engineer-memo" class="form-label">メモ</label>
+                                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+                                            <label for="engineer-memo" class="form-label" style="margin-bottom: 0;">スキルメモ</label>
+                                            <button type="button" class="btn btn-info btn-sm" id="extract-skill-memo-btn">スキルメモから情報抽出</button>
+                                            <button type="button" class="btn btn-success btn-sm" id="generate-skill-memo-btn">スキルメモを生成</button>
+                                        </div>
                                         <textarea id="engineer-memo" name="engineer-memo" class="form-textarea" rows="3" placeholder="メモを入力してください"></textarea>
                                     </div>
                                     <div class="form-group form-group-full">
