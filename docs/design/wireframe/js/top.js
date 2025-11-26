@@ -310,8 +310,9 @@ function createMatchingCard(matching) {
             </div>
             <div class="matching-card-footer">
                 <div class="matching-card-actions">
-                    <a href="public-project-detail.html" class="btn btn-info btn-sm">詳細を見る</a>
-                    <button type="button" class="btn btn-success btn-sm meeting-edit-btn" data-meeting-id="1">面談申込</button>
+                    <a href="public-project-detail.html?projectId=${matching.project.id}&engineerId=${matching.engineer.id}" class="btn btn-success btn-sm">面談申込</a>
+                    <a href="public-project-detail.html?projectId=${matching.project.id}#inquiry-message-list-section" class="btn btn-warning btn-sm">問い合わせ</a>
+                    <a href="public-project-detail.html?projectId=${matching.project.id}#project-detail-form" class="btn btn-info btn-sm">詳細</a>
                 </div>
             </div>
         </div>
@@ -396,24 +397,4 @@ function formatDateTime(dateTimeString) {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${year}年${month}月${day}日 ${hours}:${minutes}`;
-}
-
-/**
- * 編集ボタンの初期化
- */
-function initEditButtons() {
-    const editButtons = document.querySelectorAll('.meeting-edit-btn');
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            console.log("aaaaa")
-            const meetingId = this.dataset.meetingId;
-            // 編集モーダルを開く
-            const editModal = document.querySelector('app-engineer-meeting-edit');
-            console.log(editModal)
-            if (editModal) {
-                console.log("bbbb")
-                editModal.open(meetingId);
-            }
-        });
-    });
 }

@@ -6,7 +6,6 @@
     <title>公開案件詳細 - chktn</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/public-project-detail.css">
-    <link rel="stylesheet" href="css/project-meeting-edit.css">
 </head>
 <body>
     <div class="container">
@@ -31,7 +30,8 @@
 
                     <!-- アクションボタン -->
                     <div class="sidebar-actions">
-                        <button type="button" class="btn btn-primary sidebar-meeting-apply-btn" id="meeting-apply-btn" disabled>面談申込</button>
+                        <button type="button" class="btn btn-success sidebar-meeting-apply-btn" id="meeting-apply-btn" disabled>面談申込</button>
+                        <button type="button" class="btn btn-warning message-list-add-inquiry-btn" id="message-list-add-inquiry-btn">問い合わせ</button>
                     </div>
                     
                     <!-- 共通コンポーネント: 最近使った画面 -->
@@ -102,12 +102,12 @@
                 </div>
 
                 <!-- メッセージ一覧セクション -->
-                <div class="inquiry-message-list-section">
+                <div id="inquiry-message-list-section" class="inquiry-message-list-section">
                     <app-message-list title="問い合わせスレッド一覧" show-add-inquiry-button="true"></app-message-list>
                 </div>
 
                 <!-- 案件詳細表示 -->
-                <div class="project-detail-form">
+                <div id="project-detail-form" class="project-detail-form">
                     <h1 class="form-title">公開案件詳細</h1>
 
                     <!-- 基本情報セクション -->
