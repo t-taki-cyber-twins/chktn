@@ -1298,3 +1298,61 @@ body {
 .tab-content.active {
     display: block;
 }
+
+/* ========================================
+   面談情報コンテナ (Meeting Info Container)
+   ======================================== */
+/* エンジニア・案件情報横並びレイアウト */
+.meeting-info-container {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 24px;
+}
+
+.meeting-info-section {
+    flex: 1;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.meeting-info-container .meeting-info-section {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.meeting-info-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.meeting-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meeting-info-item {
+    display: flex;
+    gap: 8px;
+}
+
+.meeting-info-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.meeting-info-value {
+    font-size: 14px;
+    color: #333;
+}
+

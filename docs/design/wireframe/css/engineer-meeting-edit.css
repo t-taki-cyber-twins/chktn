@@ -74,45 +74,8 @@
 }
 
 /* エンジニア・案件情報セクション */
-.meeting-info-section {
-    margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
-}
+/* 横並びレイアウトはcommon.cssに移動 */
 
-.meeting-info-section:last-of-type {
-    border-bottom: none;
-}
-
-.meeting-info-section-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 12px;
-}
-
-.meeting-info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.meeting-info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.meeting-info-label {
-    font-size: 12px;
-    color: #666;
-    font-weight: 500;
-}
-
-.meeting-info-value {
-    font-size: 14px;
-    color: #333;
-}
 
 /* フォームセクションはcommon.cssに移動 */
 
