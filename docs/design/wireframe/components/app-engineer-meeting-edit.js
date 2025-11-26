@@ -61,9 +61,15 @@ class AppEngineerMeetingEdit extends HTMLElement {
                             <label for="meeting-status" class="form-label">面談ステータス <span class="form-required">*</span></label>
                             <select id="meeting-status" name="meeting-status" class="form-select">
                                 <option value="">選択してください</option>
+                                <option value="proposal">提案中</option>
                                 <option value="pending">面談予定</option>
-                                <option value="completed">面談完了</option>
-                                <option value="cancelled">キャンセル</option>
+                                <option value="canceled">面談キャンセル</option>
+                                <option value="waiting_result">結果待ち</option>
+                                <option value="passed">合格</option>
+                                <option value="failed">不合格</option>
+                                <option value="rejected">辞退</option>
+                                <option value="accepted">稼働決定</option>
+                                <option value="join">入場済み</option>
                             </select>
                         </div>
 

@@ -32,6 +32,15 @@ class AppEngineerRepresentativeSelector extends HTMLElement {
                             <ul class="employee-list">
                                 <li class="employee-list-item">
                                     <label class="employee-list-checkbox-label">
+                                        <input type="checkbox" class="employee-list-checkbox" data-employee-id="self" data-employee-name="自分">
+                                        <div class="employee-info">
+                                            <span class="employee-name">自分</span>
+                                            <span class="employee-department">-</span>
+                                        </div>
+                                    </label>
+                                </li>
+                                <li class="employee-list-item">
+                                    <label class="employee-list-checkbox-label">
                                         <input type="checkbox" class="employee-list-checkbox" data-employee-id="1" data-employee-name="田中太郎">
                                         <div class="employee-info">
                                             <span class="employee-name">田中太郎</span>

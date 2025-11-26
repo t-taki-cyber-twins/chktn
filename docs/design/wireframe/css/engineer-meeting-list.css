@@ -71,38 +71,6 @@
     margin: 0 auto;
 }
 
-.search-results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.search-results-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-}
-
-.search-results-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.search-results-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    padding: 12px 0;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.search-results-count {
-    font-size: 14px;
-    color: #666;
-}
-
 /* テーブル */
 /* テーブルラッパーはcommon.cssに移動 */
 

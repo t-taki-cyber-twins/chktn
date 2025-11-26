@@ -6,7 +6,7 @@ export const mockEngineers = [
     {
         id: 1,
         name: '山田 太郎',
-        representative: '鈴木一郎',
+        representatives: ['鈴木一郎', '田中太郎'],
         company: 'テック株式会社',
         skills: 'Java, Spring Boot, AWS',
         experience: '5年',
@@ -19,7 +19,7 @@ export const mockEngineers = [
     {
         id: 2,
         name: '鈴木 一郎',
-        representative: '田中太郎',
+        representatives: ['田中太郎'],
         company: 'システム株式会社',
         skills: 'React, TypeScript, Node.js',
         experience: '3年',
@@ -32,7 +32,7 @@ export const mockEngineers = [
     {
         id: 3,
         name: '田中 花子',
-        representative: '高橋次郎',
+        representatives: ['高橋次郎', '鈴木一郎'],
         company: 'システム株式会社',
         skills: 'Python, Django, Machine Learning',
         experience: '4年',
@@ -325,5 +325,33 @@ export const mockAnnouncements = [
         date: '2024-11-05',
         category: 'improvement'
     }
+];
+
+// マスタデータ
+export const mockCompanies = [
+    { id: 1, name: 'サンプル株式会社' },
+    { id: 2, name: 'テック株式会社' },
+    { id: 3, name: 'システム株式会社' },
+    { id: 4, name: 'デザイン株式会社' },
+    { id: 5, name: 'ウェブ株式会社' }
+];
+
+export const mockDepartments = [
+    { id: 1, name: '開発部' },
+    { id: 2, name: '営業部' },
+    { id: 3, name: '技術部' },
+    { id: 4, name: '総務部' },
+    { id: 5, name: '人事部' },
+    { id: 6, name: '経理部' }
+];
+
+export const mockPositions = [
+    { id: 1, name: 'マネージャー' },
+    { id: 2, name: 'シニアエンジニア' },
+    { id: 3, name: 'エンジニア' },
+    { id: 4, name: 'ジュニアエンジニア' },
+    { id: 5, name: 'リーダー' },
+    { id: 6, name: '主任' },
+    { id: 7, name: '一般社員' }
 ];
 

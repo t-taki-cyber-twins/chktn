@@ -113,11 +113,8 @@ function createTableRow(employee) {
     // 属性バッジの生成
     let attributeBadges = '';
     if (employee.isEngineer) attributeBadges += '<span class="badge badge-primary">エンジニア</span> ';
-    if (employee.isPM) attributeBadges += '<span class="badge badge-secondary">案件担当</span> ';
-    if (employee.isTechManager) attributeBadges += '<span class="badge badge-info">技術者管理</span> ';
-    if (!employee.isEngineer && !employee.isPM && !employee.isTechManager) {
-        attributeBadges = '<span class="badge badge-secondary">バックオフィス</span>';
-    }
+    if (employee.isPM) attributeBadges += '<span class="badge badge-success">案件担当</span> ';
+    if (employee.isTechManager) attributeBadges += '<span class="badge badge-warning">技術者管理</span> ';
     
     return `
         <tr data-employee-id="${employee.id}">

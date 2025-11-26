@@ -2,6 +2,8 @@
  * 社員編集モーダルコンポーネント
  * Web Components (Custom Elements) を使用して実装
  */
+import { mockDepartments } from '../js/mock-data.js';
+
 class AppEmployeeEditModal extends HTMLElement {
     constructor() {
         super();
@@ -30,26 +32,8 @@ class AppEmployeeEditModal extends HTMLElement {
                                 </div>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="employee-email" class="form-label required">メールアドレス</label>
-                                    <input type="email" id="employee-email" name="email" class="form-input" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="employee-department" class="form-label">所属部署</label>
-                                    <input type="text" id="employee-department" name="department" class="form-input">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="employee-joined-date" class="form-label">入社日</label>
-                                    <input type="date" id="employee-joined-date" name="joined-date" class="form-input">
-                                </div>
-                            </div>
+                            <!-- 社員情報フォームコンポーネント -->
+                            <app-employee-info-form id="employee-info-form"></app-employee-info-form>
 
                             <div class="form-row">
                                 <div class="form-group">
@@ -65,25 +49,15 @@ class AppEmployeeEditModal extends HTMLElement {
                                         </label>
                                         <label class="form-checkbox-label">
                                             <input type="checkbox" id="employee-is-tech-manager" name="is-tech-manager" class="form-checkbox">
-                                            <span>技術者管理属性</span>
+                                            <span>エンジニア管理属性</span>
                                         </label>
                                     </div>
                                     <div class="form-help-text">
                                         ※ エンジニア属性を持つ社員はエンジニア情報を入力する必要があります<br>
-                                        ※ 案件担当属性を持つ社員は案件担当情報を入力する必要があります<br>
+                                        ※ 案件担当属性を持つ社員は案件担当になれる<br>
+                                        ※ エンジニア管理属性を持つ社員は技術者管理になれる<br>
                                         ※ 一人の社員が複数の属性を持つことができます
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="employee-status" class="form-label required">ステータス</label>
-                                    <select id="employee-status" name="status" class="form-select" required>
-                                        <option value="active">在籍中</option>
-                                        <option value="suspended">休職中</option>
-                                        <option value="inactive">退職済み</option>
-                                    </select>
                                 </div>
                             </div>
                         </form>
@@ -102,12 +76,14 @@ class AppEmployeeEditModal extends HTMLElement {
         const closeBtn = this.querySelector('#employee-modal-close');
         const cancelBtn = this.querySelector('#employee-modal-cancel');
         const form = this.querySelector('#employee-edit-form');
+        const infoForm = this.querySelector('#employee-info-form');
 
         // モーダルを閉じる
         const closeModal = () => {
             overlay.classList.remove('active');
             this.employeeData = null;
             form.reset();
+            if (infoForm) infoForm.reset();
         };
 
         closeBtn.addEventListener('click', closeModal);
@@ -123,11 +99,26 @@ class AppEmployeeEditModal extends HTMLElement {
         // フォーム送信
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
             
-            console.log('Employee data to save:', data);
-            alert('保存機能は未実装です。\nデータ: ' + JSON.stringify(data, null, 2));
+            // 基本情報の取得
+            const formData = new FormData(form);
+            const basicData = Object.fromEntries(formData.entries());
+            
+            // コンポーネントからのデータ取得
+            const infoData = infoForm ? infoForm.getFormData() : {};
+            
+            // データの統合
+            const mergedData = {
+                ...basicData,
+                ...infoData,
+                // チェックボックスの状態を明示的に取得（FormDataでも取れるが念のため）
+                isEngineer: this.querySelector('#employee-is-engineer').checked,
+                isPM: this.querySelector('#employee-is-pm').checked,
+                isTechManager: this.querySelector('#employee-is-tech-manager').checked
+            };
+            
+            console.log('Employee data to save:', mergedData);
+            alert('保存機能は未実装です。\nデータ: ' + JSON.stringify(mergedData, null, 2));
             closeModal();
         });
     }
@@ -141,22 +132,36 @@ class AppEmployeeEditModal extends HTMLElement {
         const overlay = this.querySelector('#employee-edit-modal-overlay');
         const title = this.querySelector('#employee-modal-title');
         const form = this.querySelector('#employee-edit-form');
+        const infoForm = this.querySelector('#employee-info-form');
 
         if (employeeData) {
             // 編集モード
             title.textContent = '社員編集';
             this.querySelector('#employee-name').value = employeeData.name || '';
-            this.querySelector('#employee-email').value = employeeData.email || '';
-            this.querySelector('#employee-department').value = employeeData.department || '';
-            this.querySelector('#employee-joined-date').value = employeeData.joinedDate || '';
             this.querySelector('#employee-is-engineer').checked = employeeData.isEngineer || false;
             this.querySelector('#employee-is-pm').checked = employeeData.isPM || false;
             this.querySelector('#employee-is-tech-manager').checked = employeeData.isTechManager || false;
-            this.querySelector('#employee-status').value = employeeData.status || 'active';
+            
+            // コンポーネントにデータを設定
+            if (infoForm) {
+                // 部署名のID変換などのマッピング処理
+                const mappedData = { ...employeeData };
+                
+                // 部署名からIDへの変換（モックデータ用）
+                if (employeeData.department) {
+                    const dept = mockDepartments.find(d => d.name === employeeData.department);
+                    if (dept) {
+                        mappedData.department = dept.id;
+                    }
+                }
+                
+                infoForm.setFormData(mappedData);
+            }
         } else {
             // 新規モード
             title.textContent = '社員登録';
             form.reset();
+            if (infoForm) infoForm.reset();
         }
 
         overlay.classList.add('active');
@@ -170,6 +175,8 @@ class AppEmployeeEditModal extends HTMLElement {
         overlay.classList.remove('active');
         this.employeeData = null;
         this.querySelector('#employee-edit-form').reset();
+        const infoForm = this.querySelector('#employee-info-form');
+        if (infoForm) infoForm.reset();
     }
 }
 

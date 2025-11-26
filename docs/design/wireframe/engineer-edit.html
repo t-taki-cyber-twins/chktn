@@ -111,40 +111,7 @@
 
                     <!-- 基本情報セクション -->
                     <div class="form-section">
-                        <h2 class="section-title">基本情報</h2>
                         <div class="form-grid">
-                            <div class="form-group form-group-full">
-                                <label for="engineer-name" class="form-label">エンジニア名 <span class="form-required">*</span></label>
-                                <input type="text" id="engineer-name" name="engineer-name" class="form-input" placeholder="エンジニア名を入力してください">
-                            </div>
-                            <div class="form-group form-group-full">
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <label class="form-label">公開設定</label>
-                                        <div class="form-checkbox-group">
-                                            <label class="form-checkbox-label">
-                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
-                                                <span>公開する</span>
-                                            </label>
-                                        </div>
-                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこのエンジニアを検索できるようになります。</p>
-                                    </div>
-                                    <div class="form-col">
-                                        <label for="blacklist" class="form-label">エンジニア公開ブラックリスト</label>
-                                        <div class="form-select-wrapper">
-                                            <button type="button" class="form-select-btn" id="blacklist-btn">
-                                                <span class="form-select-text">選択してください</span>
-                                                <span class="form-select-arrow">▼</span>
-                                            </button>
-                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
-                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
-                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
-                                            </div>
-                                        </div>
-                                        <p class="form-help-text">このエンジニアを検索対象から除外する会社を選択します。</p>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group form-group-full">
                                 <label class="form-label">スキルシートアップロード状況</label>
                                 <div id="skill-sheet-status" class="skill-sheet-status">
@@ -168,43 +135,7 @@
 
                         <!-- 社員情報タブ -->
                         <div class="tab-content active" id="tab-employee-info">
-                            <div class="form-section">
-                                <h2 class="section-title">社員情報</h2>
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label for="birth-date" class="form-label">生年月日</label>
-                                        <input type="date" id="birth-date" name="birth-date" class="form-input">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nearest-station" class="form-label">最寄駅</label>
-                                        <input type="text" id="nearest-station" name="nearest-station" class="form-input" placeholder="例: 東京駅">
-                                    </div>
-                                    <div class="form-group form-group-full">
-                                        <label for="address" class="form-label">住所</label>
-                                        <input type="text" id="address" name="address" class="form-input" placeholder="例: 東京都千代田区">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">電話番号</label>
-                                        <input type="text" id="phone" name="phone" class="form-input" placeholder="例: 03-1234-5678">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">メールアドレス</label>
-                                        <input type="email" id="email" name="email" class="form-input" placeholder="example@example.com">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="company" class="form-label">所属会社</label>
-                                        <input type="text" id="company" name="company" class="form-input" placeholder="所属会社名">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="department" class="form-label">所属部署</label>
-                                        <input type="text" id="department" name="department" class="form-input" placeholder="所属部署名">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="position" class="form-label">所属役職</label>
-                                        <input type="text" id="position" name="position" class="form-input" placeholder="所属役職名">
-                                    </div>
-                                </div>
-                            </div>
+                            <app-employee-info-form></app-employee-info-form>
                         </div>
 
                         <!-- エンジニア基本情報タブ -->
@@ -378,6 +309,41 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 公開設定・ブラックリスト -->
+                    <div class="form-section">
+                        <h2 class="section-title">公開設定</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label">公開設定</label>
+                                        <div class="form-checkbox-group">
+                                            <label class="form-checkbox-label">
+                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
+                                                <span>公開する</span>
+                                            </label>
+                                        </div>
+                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこのエンジニアを検索できるようになります。</p>
+                                    </div>
+                                    <div class="form-col">
+                                        <label for="blacklist" class="form-label">エンジニア公開ブラックリスト</label>
+                                        <div class="form-select-wrapper">
+                                            <button type="button" class="form-select-btn" id="blacklist-btn">
+                                                <span class="form-select-text">選択してください</span>
+                                                <span class="form-select-arrow">▼</span>
+                                            </button>
+                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
+                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
+                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
+                                            </div>
+                                        </div>
+                                        <p class="form-help-text">このエンジニアを検索対象から除外する会社を選択します。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
@@ -526,7 +492,8 @@
     <script type="module" src="components/app-skill-sheet-uploader.js"></script>
     <script type="module" src="components/app-project-selector.js"></script>
     <script type="module" src="components/app-project-meeting-edit.js"></script>
-    <script type="module" src="components/app-project-register-modal.js"></script>    
+    <script type="module" src="components/app-project-register-modal.js"></script>
+    <script type="module" src="components/app-employee-info-form.js"></script>    
     <script src="js/common.js"></script>
     <script src="js/engineer-edit.js"></script>
     <script src="js/project-meeting-edit.js"></script>

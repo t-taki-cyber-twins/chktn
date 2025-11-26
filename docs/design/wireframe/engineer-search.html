@@ -216,7 +216,7 @@
                     <td>
                         <a href="engineer-edit.html" class="table-link">${escapeHtml(engineer.name)}</a>
                     </td>
-                    <td>${escapeHtml(engineer.representative)}</td>
+                    <td>${Array.isArray(engineer.representatives) ? engineer.representatives.map(r => escapeHtml(r)).join(', ') : escapeHtml(engineer.representative || '')}</td>
                     <td>${escapeHtml(engineer.company)}</td>
                     <td>${escapeHtml(engineer.skills)}</td>
                     <td>${escapeHtml(engineer.experience)}</td>
@@ -351,7 +351,20 @@
                 let match = true;
                 if (searchParams['engineer-name'] && !engineer.name.includes(searchParams['engineer-name'])) match = false;
                 if (searchParams['status'] && engineer.status !== searchParams['status']) match = false;
-                // Add more filters as needed
+                
+                // Filter by representatives (multiple representatives support)
+                if (searchParams['engineer-representative'] && searchParams['engineer-representative'].length > 0) {
+                    const engineerRepresentatives = Array.isArray(engineer.representatives) 
+                        ? engineer.representatives 
+                        : (engineer.representative ? [engineer.representative] : []);
+                    const selectedRepresentatives = searchParams['engineer-representative'];
+                    // Check if any selected representative matches any engineer representative
+                    const hasMatchingRepresentative = selectedRepresentatives.some(selected => 
+                        engineerRepresentatives.some(rep => rep === selected)
+                    );
+                    if (!hasMatchingRepresentative) match = false;
+                }
+                
                 return match;
             });
             
