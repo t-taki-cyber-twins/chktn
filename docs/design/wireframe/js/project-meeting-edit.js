@@ -83,7 +83,7 @@ function initModalOpenClose() {
         if (editBtn) {
             e.preventDefault();
             const meetingId = editBtn.getAttribute('data-meeting-id');
-            const modalComponent = document.querySelector('app-project-meeting-edit');
+            const modalComponent = document.querySelector('app-engineer-meeting-edit');
             if (modalComponent) {
                 modalComponent.open(meetingId);
             }
@@ -184,7 +184,7 @@ function updateMeetingData(formData, sendEmail = false) {
     alert(sendEmail ? '面談情報を更新し、メールを送信しました（モック）' : '面談情報を更新しました（モック）');
     
     // モーダルを閉じる
-    const modalComponent = document.querySelector('app-project-meeting-edit');
+    const modalComponent = document.querySelector('app-engineer-meeting-edit');
     if (modalComponent) {
         modalComponent.close();
     }

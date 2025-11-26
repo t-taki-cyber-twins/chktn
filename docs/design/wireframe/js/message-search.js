@@ -273,7 +273,7 @@ function initDetailButtons() {
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             const meetingId = this.dataset.meetingId;
-            const modalComponent = document.querySelector('app-project-meeting-edit');
+            const modalComponent = document.querySelector('app-engineer-meeting-edit');
             if (modalComponent) {
                 modalComponent.open(meetingId);
             } else {
