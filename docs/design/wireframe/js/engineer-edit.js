@@ -127,7 +127,7 @@ function loadMockData() {
 function initMeetingEdit() {
   const meetingEditBtns = document.querySelectorAll(".meeting-edit-btn");
   const meetingEditComponent = document.querySelector(
-    "app-project-meeting-edit"
+    "app-engineer-meeting-edit"
   );
 
   if (meetingEditComponent) {
