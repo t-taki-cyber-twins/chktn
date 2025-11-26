@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     displayRecentMessages();
     displayRecommendationMatching();
     displayAnnouncements();
+    initEditButtons();
 });
 
 /**
@@ -309,8 +310,8 @@ function createMatchingCard(matching) {
             </div>
             <div class="matching-card-footer">
                 <div class="matching-card-actions">
-                    <a href="recommended-project-search.html" class="btn btn-info btn-sm">詳細を見る</a>
-                    <a href="#" class="btn btn-success btn-sm">面談申込</a>
+                    <a href="public-project-detail.html" class="btn btn-info btn-sm">詳細を見る</a>
+                    <button type="button" class="btn btn-success btn-sm meeting-edit-btn" data-meeting-id="1">面談申込</button>
                 </div>
             </div>
         </div>
@@ -395,4 +396,21 @@ function formatDateTime(dateTimeString) {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${year}年${month}月${day}日 ${hours}:${minutes}`;
+}
+
+/**
+ * 編集ボタンの初期化
+ */
+function initEditButtons() {
+    const editButtons = document.querySelectorAll('.meeting-edit-btn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const meetingId = this.dataset.meetingId;
+            // 編集モーダルを開く
+            const editModal = document.querySelector('app-engineer-meeting-edit');
+            if (editModal) {
+                editModal.open(meetingId);
+            }
+        });
+    });
 }
