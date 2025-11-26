@@ -8,10 +8,129 @@ import { mockProjects, mockEngineers, mockMessages, mockAnnouncements } from './
  * ページ読み込み時の初期化
  */
 document.addEventListener('DOMContentLoaded', function() {
+    displayAnnouncementBanners();
     displayRecentMessages();
     displayRecommendationMatching();
     displayAnnouncements();
 });
+
+/**
+ * お知らせバナーを表示
+ */
+function displayAnnouncementBanners() {
+    const bannersContainer = document.getElementById('announcement-banners');
+    if (!bannersContainer) return;
+    
+    // モックデータ: 実際には API から取得
+    const banners = [
+        {
+            id: 'global-001',
+            type: 'global',
+            title: '【管理者からのお知らせ】',
+            message: 'システムメンテナンスのため、2025年12月1日 2:00-4:00の間サービスを停止いたします。ご不便をおかけしますがよろしくお願いいたします。',
+            icon: '📢'
+        },
+        {
+            id: 'tenant-001',
+            type: 'tenant',
+            title: '【社内からのお知らせ】',
+            message: '新しいプロジェクトが3件追加されました。エンジニアのアサインをお願いいたします。',
+            icon: '📌'
+        }
+    ];
+    
+    // 閉じられたバナーの情報を取得
+    const closedBanners = getClosedBanners();
+    
+    // 閉じられていないバナーのみ表示
+    const visibleBanners = banners.filter(banner => !closedBanners.includes(banner.id));
+    
+    if (visibleBanners.length === 0) {
+        bannersContainer.innerHTML = '';
+        return;
+    }
+    
+    bannersContainer.innerHTML = visibleBanners.map(banner => createBannerHtml(banner)).join('');
+    
+    // 閉じるボタンのイベントリスナーを追加
+    visibleBanners.forEach(banner => {
+        const closeButton = document.getElementById(`close-banner-${banner.id}`);
+        if (closeButton) {
+            closeButton.addEventListener('click', (event) => closeBanner(banner.id, event));
+        }
+    });
+}
+
+/**
+ * バナーのHTMLを生成
+ */
+function createBannerHtml(banner) {
+    const bannerClass = banner.type === 'global' ? 'announcement-banner-global' : 'announcement-banner-tenant';
+    const tabHash = banner.type === 'global' ? '#global' : '#tenant';
+    
+    return `
+        <a href="announcement.html${tabHash}" class="announcement-banner ${bannerClass}" id="banner-${banner.id}">
+            <div class="announcement-banner-content">
+                <div class="announcement-banner-icon">${banner.icon}</div>
+                <div class="announcement-banner-text">
+                    <div class="announcement-banner-title">${escapeHtml(banner.title)}</div>
+                    <div class="announcement-banner-message">${escapeHtml(banner.message)}</div>
+                </div>
+            </div>
+            <button class="announcement-banner-close" id="close-banner-${banner.id}" aria-label="閉じる">
+                ✕
+            </button>
+        </a>
+    `;
+}
+
+/**
+ * バナーを閉じる
+ */
+function closeBanner(bannerId, event) {
+    // イベントがある場合は、リンクのデフォルト動作を阻止
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    const bannerElement = document.getElementById(`banner-${bannerId}`);
+    if (bannerElement) {
+        // フェードアウトアニメーション
+        bannerElement.style.transition = 'opacity 0.3s, margin 0.3s, padding 0.3s, height 0.3s';
+        bannerElement.style.opacity = '0';
+        bannerElement.style.marginBottom = '0';
+        bannerElement.style.paddingTop = '0';
+        bannerElement.style.paddingBottom = '0';
+        bannerElement.style.height = '0';
+        
+        setTimeout(() => {
+            bannerElement.remove();
+        }, 300);
+    }
+    
+    // LocalStorage に閉じた状態を保存
+    saveClosedBanner(bannerId);
+}
+
+/**
+ * 閉じられたバナーのIDリストを取得
+ */
+function getClosedBanners() {
+    const stored = localStorage.getItem('closedAnnouncementBanners');
+    return stored ? JSON.parse(stored) : [];
+}
+
+/**
+ * バナーを閉じた状態を保存
+ */
+function saveClosedBanner(bannerId) {
+    const closedBanners = getClosedBanners();
+    if (!closedBanners.includes(bannerId)) {
+        closedBanners.push(bannerId);
+        localStorage.setItem('closedAnnouncementBanners', JSON.stringify(closedBanners));
+    }
+}
 
 /**
  * 最近のメッセージを表示

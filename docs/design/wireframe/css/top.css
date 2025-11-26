@@ -4,297 +4,369 @@
 
 /* ダッシュボード */
 .dashboard {
-    max-width: 1200px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .dashboard-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
 }
 
+/* お知らせバナー */
+.announcement-banners {
+  margin-bottom: 24px;
+}
+
+.announcement-banner {
+  position: relative;
+  display: block;
+  padding: 16px 48px 16px 20px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.announcement-banner:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.announcement-banner-global {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.announcement-banner-tenant {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+}
+
+.announcement-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.announcement-banner-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.announcement-banner-text {
+  flex: 1;
+}
+
+.announcement-banner-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.announcement-banner-message {
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.announcement-banner-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.announcement-banner-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
 
 /* お知らせセクション */
 /* お知らせセクション */
 /* common.cssの.section-cardを使用 */
 
-
 /* common.cssの.common-list-itemを使用 */
 
-
 .announcement-date {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 4px;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
 }
 
 .announcement-title {
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
 }
 
 .announcement-title:hover {
-    color: #0066cc;
-    cursor: pointer;
+  color: #0066cc;
+  cursor: pointer;
 }
 
 /* 最近のメッセージセクション */
 /* 最近のメッセージセクション */
 /* common.cssの.section-cardを使用 */
 
-
 /* common.cssの.common-list-itemを使用 */
 
-
 .message-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .message-project {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
 
 .message-date {
-    font-size: 12px;
-    color: #666;
+  font-size: 12px;
+  color: #666;
 }
 
 .message-content {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 8px;
-    line-height: 1.5;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+  line-height: 1.5;
 }
 
 .message-from {
-    font-size: 12px;
-    color: #666;
+  font-size: 12px;
+  color: #666;
 }
 
 /* レコメンドマッチングセクション */
 /* レコメンドマッチングセクション */
 /* common.cssの.section-cardを使用 */
 
-
 /* common.cssの.common-list-itemを使用 */
-
 
 /* マッチングリスト */
 .matching-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
 /* マッチングカード */
 .matching-card {
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: box-shadow 0.2s;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: box-shadow 0.2s;
 }
 
 .matching-card:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .matching-card-header {
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e0e0e0;
 }
 
 .matching-score-section {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
 }
 
 .matching-score {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .matching-reason {
-    flex: 1;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding-top: 4px;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding-top: 4px;
 }
 
 .matching-reason-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    white-space: nowrap;
-    flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .matching-reason-text {
-    font-size: 13px;
-    color: #666;
-    line-height: 1.6;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
 }
 
 .matching-score-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
 }
 
 .matching-score-value {
-    font-size: 24px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 4px;
-    min-width: 60px;
-    text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  min-width: 60px;
+  text-align: center;
 }
 
 .matching-score-high {
-    background-color: #e6ffe6;
-    color: #00aa00;
+  background-color: #e6ffe6;
+  color: #00aa00;
 }
 
 .matching-score-medium {
-    background-color: #fff4e6;
-    color: #ff8800;
+  background-color: #fff4e6;
+  color: #ff8800;
 }
 
 .matching-score-low {
-    background-color: #ffe6e6;
-    color: #cc0000;
+  background-color: #ffe6e6;
+  color: #cc0000;
 }
 
 .matching-card-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 16px;
 }
 
 .matching-card-section {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .matching-card-section-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    margin-bottom: 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e0e0e0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e0e0e0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .matching-card-item {
-    flex: 1;
+  flex: 1;
 }
 
 .matching-card-item-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
 }
 
 .matching-card-link {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.2s;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
 .matching-card-link:hover {
-    color: #0066cc;
+  color: #0066cc;
 }
 
 .matching-card-skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .skill-tag {
-    display: inline-block;
-    padding: 4px 12px;
-    background-color: #f5f5f5;
-    color: #333;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .matching-card-details {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
 }
 
 .matching-card-detail-item {
-    font-size: 13px;
-    color: #666;
-    display: flex;
-    gap: 8px;
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  gap: 8px;
 }
 
 .matching-card-detail-item .detail-label {
-    font-weight: 500;
-    color: #333;
-    min-width: 60px;
+  font-weight: 500;
+  color: #333;
+  min-width: 60px;
 }
 
 .matching-card-detail-item .detail-value {
-    color: #666;
+  color: #666;
 }
 
 .matching-card-footer {
-    border-top: 1px solid #e0e0e0;
-    padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
 }
 
 .matching-card-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 .btn-sm {
-    padding: 6px 12px;
-    font-size: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
 }
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
-    .matching-card-body {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    
-    .matching-score-section {
-        flex-direction: column;
-        gap: 12px;
-    }
-    
-    .matching-reason {
-        padding-top: 0;
-    }
-}
+  .matching-card-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 
+  .matching-score-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .matching-reason {
+    padding-top: 0;
+  }
+}

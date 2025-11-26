@@ -34,7 +34,6 @@ class AppRecentScreens extends HTMLElement {
         const menuItems = screens.map(screen => `
             <li class="sidebar-menu-item">
                 <a href="#" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">${screen.icon || '📋'}</span>
                     <span class="sidebar-menu-text">
                         <span class="sidebar-menu-title">${screen.title || ''}</span>
                         <span class="sidebar-menu-detail">${screen.detail || ''}</span>

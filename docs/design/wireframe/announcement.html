@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ - chktn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/announcement.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <app-header></app-header>
+
+        <!-- メインレイアウト -->
+        <div class="main-layout">
+            <!-- サイドメニュー -->
+            <aside class="sidebar">
+                <nav>
+                    <!-- 共通コンポーネント: 最近使った画面 -->
+                    <app-recent-screens></app-recent-screens>
+                </nav>
+            </aside>
+
+            <!-- コンテンツエリア -->
+            <main class="content-area">
+                <div class="announcement-page">
+                    <div class="page-header">
+                        <h1 class="page-title">お知らせ</h1>
+                    </div>
+
+                    <!-- タブナビゲーション -->
+                    <div class="tab-navigation">
+                        <button class="tab-button active" data-tab="global">全体のお知らせ</button>
+                        <button class="tab-button" data-tab="tenant">社内のお知らせ</button>
+                    </div>
+
+                    <!-- タブ1: 全体のお知らせ -->
+                    <div class="tab-content active" id="tab-global">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">全体のお知らせ</h2>
+                        </div>
+
+                        <div class="announcements-list" id="global-announcements-list">
+                            <!-- Announcements will be dynamically loaded -->
+                        </div>
+
+                        <!-- ページネーション -->
+                        <app-pagination id="global-pagination" current-page="1" total-pages="5"></app-pagination>
+                    </div>
+
+                    <!-- タブ2: 社内のお知らせ -->
+                    <div class="tab-content" id="tab-tenant">
+                        <div class="tab-content-header">
+                            <h2 class="tab-content-title">社内のお知らせ</h2>
+                        </div>
+
+                        <div class="announcements-list" id="tenant-announcements-list">
+                            <!-- Announcements will be dynamically loaded -->
+                        </div>
+
+                        <!-- ページネーション -->
+                        <app-pagination id="tenant-pagination" current-page="1" total-pages="3"></app-pagination>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Web Components -->
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-recent-screens.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
+    
+    <script type="module" src="js/announcement.js"></script>
+</body>
+</html>
