@@ -3,9 +3,44 @@
  * Web Components (Custom Elements) を使用して実装
  */
 class AppEngineerMeetingEdit extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
+        // 依存関係を読み込む
+        await this.loadDependencies();
+        // 依存関係読み込み後にレンダリングとイベントリスナー初期化
         this.render();
         this.initEventListeners();
+    }
+
+    /**
+     * 依存関係を動的に読み込む
+     */
+    async loadDependencies() {
+        // app-message-listが未定義の場合のみ読み込む
+        if (!customElements.get('app-message-list')) {
+            try {
+                await import('./app-message-list.js');
+            } catch (error) {
+                console.error('Failed to load app-message-list component:', error);
+            }
+        }
+
+        // app-message-replyが未定義の場合のみ読み込む
+        if (!customElements.get('app-message-reply')) {
+            try {
+                await import('./app-message-reply.js');
+            } catch (error) {
+                console.error('Failed to load app-message-reply component:', error);
+            }
+        }
+
+        // app-message-thread-modalが未定義の場合のみ読み込む
+        if (!customElements.get('app-message-thread-modal')) {
+            try {
+                await import('./app-message-thread-modal.js');
+            } catch (error) {
+                console.error('Failed to load app-message-thread-modal component:', error);
+            }
+        }
     }
 
     render() {
@@ -64,41 +99,8 @@ class AppEngineerMeetingEdit extends HTMLElement {
                             </div>
                         </div>
 
-                        <!-- メッセージ一覧セクション -->
-                        <div class="message-list-section">
-                            <h4 class="message-list-title">メッセージ一覧</h4>
-                            <ul class="message-list" id="message-list">
-                                <li class="message-list-item" data-message-id="1">
-                                    <div class="message-list-header">
-                                        <span class="message-list-title-text">面談の日程調整について</span>
-                                        <span class="message-list-date">2024/12/10 14:30</span>
-                                    </div>
-                                    <div class="message-list-from">送信者: サンプル株式会社</div>
-                                </li>
-                                <li class="message-list-item" data-message-id="2">
-                                    <div class="message-list-header">
-                                        <span class="message-list-title-text">エンジニアのスキルシート確認</span>
-                                        <span class="message-list-date">2024/12/09 10:15</span>
-                                    </div>
-                                    <div class="message-list-from">送信者: サンプル株式会社</div>
-                                </li>
-                                <li class="message-list-item" data-message-id="3">
-                                    <div class="message-list-header">
-                                        <span class="message-list-title-text">面談の場所について</span>
-                                        <span class="message-list-date">2024/12/08 16:45</span>
-                                    </div>
-                                    <div class="message-list-from">送信者: サンプル株式会社</div>
-                                </li>
-                            </ul>
-                            <!-- メッセージ内容表示エリア -->
-                            <div class="message-content-area" id="message-content-area" style="display: none;">
-                                <div class="message-content-header">
-                                    <h5 class="message-content-title" id="message-content-title"></h5>
-                                    <button type="button" class="message-content-close" id="message-content-close">×</button>
-                                </div>
-                                <div class="message-content-body" id="message-content-body"></div>
-                            </div>
-                        </div>
+                        <!-- メッセージスレッド一覧セクション -->
+                        <app-message-list title="面談スレッド - エンジニア・案件でスレッド1つ"></app-message-list>
 
                         <!-- タブUI -->
                         <div class="tab-container">
@@ -187,6 +189,12 @@ class AppEngineerMeetingEdit extends HTMLElement {
                     </div>
                 </div>
             </div>
+
+            <!-- メッセージ返信フォームモーダルコンポーネント -->
+            <app-message-reply></app-message-reply>
+
+            <!-- スレッド全表示モーダルコンポーネント -->
+            <app-message-thread-modal></app-message-thread-modal>
         `;
     }
 
@@ -210,23 +218,6 @@ class AppEngineerMeetingEdit extends HTMLElement {
         }
 
         // 更新ボタンの処理は外部JavaScript（engineer-meeting-edit.js）で実装
-
-        // メッセージ一覧のクリック処理
-        const messageItems = this.querySelectorAll('.message-list-item');
-        messageItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const messageId = item.dataset.messageId;
-                this.showMessageContent(messageId);
-            });
-        });
-
-        // メッセージ内容を閉じる
-        const messageContentClose = this.querySelector('#message-content-close');
-        if (messageContentClose) {
-            messageContentClose.addEventListener('click', () => {
-                this.hideMessageContent();
-            });
-        }
 
         // タブ切り替え処理
         const tabButtons = this.querySelectorAll('.tab-button');
@@ -260,6 +251,57 @@ class AppEngineerMeetingEdit extends HTMLElement {
             });
             // 初期状態の反映
             this.updateOperationTabStatus(statusSelect.value);
+        }
+
+        // メッセージ一覧コンポーネントのイベントリスナー
+        const messageListComponent = this.querySelector('app-message-list');
+        const replyComponent = this.querySelector('app-message-reply');
+        const threadModalComponent = this.querySelector('app-message-thread-modal');
+
+        if (messageListComponent) {
+            // 新規メッセージ作成
+            messageListComponent.addEventListener('message-new', () => {
+                if (replyComponent) {
+                    replyComponent.open({ mode: 'new' });
+                }
+            });
+
+            // 返信
+            messageListComponent.addEventListener('message-reply', (e) => {
+                const { threadId, parentMessageId, originalSubject } = e.detail;
+                if (replyComponent) {
+                    replyComponent.open({
+                        mode: 'reply',
+                        threadId,
+                        parentMessageId,
+                        originalSubject
+                    });
+                }
+            });
+
+            // 全て表示
+            messageListComponent.addEventListener('message-show-all', (e) => {
+                const { threadId } = e.detail;
+                const threads = this.getMockMessageThreads();
+                const thread = threads.find(t => t.id === parseInt(threadId));
+                
+                if (thread && threadModalComponent) {
+                    threadModalComponent.open(thread);
+                }
+            });
+
+            // 詳細読み込み
+            messageListComponent.addEventListener('message-detail-load', (e) => {
+                const { messageId, targetElementId } = e.detail;
+                this.loadMessageDetail(messageId, messageListComponent, targetElementId);
+            });
+        }
+
+        // 返信フォームの送信イベント
+        if (replyComponent) {
+            replyComponent.addEventListener('message-reply-submit', (e) => {
+                this.handleMessageReply(e.detail);
+            });
         }
     }
 
@@ -317,62 +359,95 @@ class AppEngineerMeetingEdit extends HTMLElement {
     loadMeetingData(meetingId) {
         // TODO: APIから面談データを取得してフォームに反映
         console.log('面談データを読み込み:', meetingId);
-    }
-
-
-    /**
-     * メッセージ内容を表示
-     */
-    showMessageContent(messageId) {
-        const messageContentArea = this.querySelector('#message-content-area');
-        const messageContentTitle = this.querySelector('#message-content-title');
-        const messageContentBody = this.querySelector('#message-content-body');
-        const messageItems = this.querySelectorAll('.message-list-item');
-
-        // アクティブ状態を更新
-        messageItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.dataset.messageId === messageId) {
-                item.classList.add('active');
-            }
-        });
-
-        // TODO: APIからメッセージ内容を取得
-        // モックデータ
-        const mockMessages = {
-            '1': {
-                title: '面談の日程調整について',
-                body: '面談の日程についてご相談があります。\n\n来週の火曜日または水曜日でご都合の良い日時をご指定いただけますでしょうか。'
-            },
-            '2': {
-                title: 'エンジニアのスキルシート確認',
-                body: 'エンジニアのスキルシートを確認させていただきました。\n\nご提案いただいた案件に非常に興味を持っております。'
-            },
-            '3': {
-                title: '面談の場所について',
-                body: '面談の場所についてご確認させてください。\n\nオンラインでの面談も可能でしょうか。'
-            }
-        };
-
-        const message = mockMessages[messageId];
-        if (message) {
-            messageContentTitle.textContent = message.title;
-            messageContentBody.textContent = message.body;
-            messageContentArea.style.display = 'block';
+        
+        // メッセージ一覧を読み込む
+        const messageListComponent = this.querySelector('app-message-list');
+        if (messageListComponent) {
+            const threads = this.getMockMessageThreads();
+            messageListComponent.displayThreads(threads);
         }
     }
 
     /**
-     * メッセージ内容を非表示
+     * モックメッセージスレッドデータを取得
      */
-    hideMessageContent() {
-        const messageContentArea = this.querySelector('#message-content-area');
-        const messageItems = this.querySelectorAll('.message-list-item');
+    getMockMessageThreads() {
+        return [
+            {
+                id: 1,
+                parentMessage: {
+                    id: 1,
+                    title: '面談の日程調整について',
+                    subject: '面談の日程調整について',
+                    sender: 'サンプル株式会社',
+                    sentDate: '2024-12-10T14:30:00',
+                    content: '面談の日程についてご相談があります。\n\n来週の火曜日または水曜日でご都合の良い日時をご指定いただけますでしょうか。'
+                },
+                children: [
+                    {
+                        id: 11,
+                        subject: 'RE: 面談の日程調整について',
+                        sender: 'テック株式会社',
+                        sentDate: '2024-12-11T10:00:00',
+                        content: 'ご連絡ありがとうございます。\n\n来週の火曜日（12月17日）の14時からであれば対応可能です。\nご都合いかがでしょうか。'
+                    },
+                    {
+                        id: 12,
+                        subject: 'RE: 面談の日程調整について',
+                        sender: 'サンプル株式会社',
+                        sentDate: '2024-12-11T15:30:00',
+                        content: '承知いたしました。\n\n12月17日（火）14時からでお願いいたします。\n場所はオンラインでよろしいでしょうか。'
+                    }
+                ]
+            }
+        ];
+    }
 
-        messageContentArea.style.display = 'none';
-        messageItems.forEach(item => {
-            item.classList.remove('active');
-        });
+    /**
+     * メッセージ詳細を読み込む
+     */
+    loadMessageDetail(messageId, messageListComponent, targetElementId) {
+        // TODO: APIからメッセージ詳細を取得
+        const threads = this.getMockMessageThreads();
+        let message = null;
+
+        // スレッドからメッセージを検索
+        for (const thread of threads) {
+            if (thread.parentMessage.id === parseInt(messageId)) {
+                message = thread.parentMessage;
+                break;
+            }
+            if (thread.children) {
+                const child = thread.children.find(c => c.id === parseInt(messageId));
+                if (child) {
+                    message = child;
+                    break;
+                }
+            }
+        }
+
+        if (message && messageListComponent) {
+            const content = message.content || message.body || '';
+            messageListComponent.updateDetailContent(targetElementId, content);
+        }
+    }
+
+    /**
+     * メッセージ返信の処理
+     */
+    handleMessageReply(replyData) {
+        // TODO: APIに送信
+        console.log('メッセージ返信:', replyData);
+        
+        // モックデータに追加（実際の実装ではAPIから取得）
+        // ここでは表示を更新
+        const messageListComponent = this.querySelector('app-message-list');
+        if (messageListComponent) {
+            const threads = this.getMockMessageThreads();
+            messageListComponent.displayThreads(threads);
+        }
+        
+        alert('返信を送信しました。');
     }
 }
 

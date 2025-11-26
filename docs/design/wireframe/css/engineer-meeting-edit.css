@@ -51,10 +51,9 @@
     color: #333;
     margin-bottom: 12px;
 }
-.meeting-edit-modal .modal-content,
+.meeting-edit-modal,
 .meeting-edit-modal-content {
     width: 90%;
-    max-width: 900px;
     max-height: 90vh;
 }
 
@@ -213,10 +212,9 @@
     justify-content: center;
 }
 
-.email-preview-modal .modal-content,
+.email-preview-modal,
 .email-preview-modal-content {
     width: 90%;
-    max-width: 700px;
     max-height: 90vh;
 }
 

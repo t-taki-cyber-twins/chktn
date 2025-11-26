@@ -326,11 +326,6 @@
     width: auto;
 }
 
-/* モーダルコンテンツ（大サイズ） */
-.modal-content-large {
-    max-width: 900px;
-}
-
 /* テーブルラッパー */
 .table-wrapper {
     overflow-x: auto;

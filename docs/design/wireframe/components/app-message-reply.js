@@ -66,18 +66,48 @@ class AppMessageReply extends HTMLElement {
 
     /**
      * モーダルを開く
+     * @param {Object} options - オプション
+     * @param {string} options.mode - 'new' または 'reply'
+     * @param {string} options.threadId - スレッドID (返信モードで使用)
+     * @param {string} options.parentMessageId - 親メッセージID (返信モードで使用)
+     * @param {string} options.originalSubject - 元の件名 (返信モードで使用)
      */
-    open(threadId, parentMessageId) {
+    open(options = {}) {
         const modal = this.querySelector('.message-reply-modal');
+        const modalTitle = this.querySelector('.modal-title');
+        const subjectInput = this.querySelector('#reply-subject');
+        
         if (modal) {
-            modal.classList.add('active');
-            this.threadId = threadId;
-            this.parentMessageId = parentMessageId;
-            // フォームをリセット
-            const form = this.querySelector('#message-reply-form');
-            if (form) {
-                form.reset();
+            // モードによってタイトルを変更
+            if (options.mode === 'new') {
+                if (modalTitle) modalTitle.textContent = '新規メッセージ';
+                this.threadId = null;
+                this.parentMessageId = null;
+                
+                // 件名をクリア
+                if (subjectInput) subjectInput.value = '';
+            } else {
+                // 返信モード（デフォルト）
+                if (modalTitle) modalTitle.textContent = '返信';
+                this.threadId = options.threadId;
+                this.parentMessageId = options.parentMessageId;
+                
+                // 件名に「RE:」を付加（既にRE:がついている場合は重複しないように）
+                if (subjectInput && options.originalSubject) {
+                    const subject = options.originalSubject.trim();
+                    if (!subject.toUpperCase().startsWith('RE:')) {
+                        subjectInput.value = 'RE: ' + subject;
+                    } else {
+                        subjectInput.value = subject;
+                    }
+                }
             }
+            
+            modal.classList.add('active');
+            
+            // フォーム本文をリセット
+            const bodyTextarea = this.querySelector('#reply-body');
+            if (bodyTextarea) bodyTextarea.value = '';
         }
     }
 

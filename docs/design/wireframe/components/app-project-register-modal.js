@@ -12,7 +12,7 @@ class AppProjectRegisterModal extends HTMLElement {
         this.innerHTML = `
             <div class="modal project-register-modal" id="project-register-modal">
                 <div class="modal-overlay"></div>
-                <div class="modal-content modal-content-large">
+                <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title">案件登録</h3>
                         <button type="button" class="modal-close" data-modal="project-register-modal">×</button>

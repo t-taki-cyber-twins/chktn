@@ -405,10 +405,13 @@ function initEditButtons() {
     const editButtons = document.querySelectorAll('.meeting-edit-btn');
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
+            console.log("aaaaa")
             const meetingId = this.dataset.meetingId;
             // 編集モーダルを開く
             const editModal = document.querySelector('app-engineer-meeting-edit');
+            console.log(editModal)
             if (editModal) {
+                console.log("bbbb")
                 editModal.open(meetingId);
             }
         });

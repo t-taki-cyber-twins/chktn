@@ -827,4 +827,25 @@ document.addEventListener('DOMContentLoaded', function() {
     initProjectListTable();
     initBlacklistSelection();
     initFormSubmit();
+    initSkillMemoButtons();
 });
+
+/**
+ * スキルメモボタンの初期化
+ */
+function initSkillMemoButtons() {
+    const extractBtn = document.getElementById('extract-skill-memo-btn');
+    const generateBtn = document.getElementById('generate-skill-memo-btn');
+
+    if (extractBtn) {
+        extractBtn.addEventListener('click', function() {
+            alert('スキルメモから情報抽出機能は後で実装予定です。');
+        });
+    }
+
+    if (generateBtn) {
+        generateBtn.addEventListener('click', function() {
+            alert('スキルメモを生成機能は後で実装予定です。');
+        });
+    }
+}

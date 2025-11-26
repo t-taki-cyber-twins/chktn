@@ -32,7 +32,6 @@
                     <!-- アクションボタン -->
                     <div class="sidebar-actions">
                         <button type="button" class="btn btn-primary sidebar-meeting-apply-btn" id="meeting-apply-btn" disabled>面談申込</button>
-                        <button type="button" class="btn btn-warning sidebar-inquiry-btn" id="inquiry-btn">問い合わせ</button>
                     </div>
                     
                     <!-- 共通コンポーネント: 最近使った画面 -->
@@ -102,22 +101,9 @@
                     </div>
                 </div>
 
-                <!-- 問い合わせメッセージ一覧セクション -->
+                <!-- メッセージ一覧セクション -->
                 <div class="inquiry-message-list-section">
-                    <h2 class="inquiry-message-list-title">問い合わせメッセージ一覧</h2>
-                    <div class="message-list-section">
-                        <ul class="message-thread-list" id="inquiry-message-list">
-                            <!-- スレッド構造はJavaScriptで動的に生成 -->
-                        </ul>
-                        <!-- メッセージ内容表示エリア -->
-                        <div class="message-content-area" id="inquiry-message-content-area" style="display: none;">
-                            <div class="message-content-header">
-                                <h5 class="message-content-title" id="inquiry-message-content-title"></h5>
-                                <button type="button" class="message-content-close" id="inquiry-message-content-close">×</button>
-                            </div>
-                            <div class="message-content-body" id="inquiry-message-content-body"></div>
-                        </div>
-                    </div>
+                    <app-message-list title="問い合わせスレッド一覧" show-add-inquiry-button="true"></app-message-list>
                 </div>
 
                 <!-- 案件詳細表示 -->
@@ -219,11 +205,16 @@
     <!-- メッセージ返信フォームモーダルコンポーネント -->
     <app-message-reply></app-message-reply>
 
+    <!-- スレッド全表示モーダルコンポーネント -->
+    <app-message-thread-modal></app-message-thread-modal>
+
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     <script type="module" src="components/app-engineer-selector.js"></script>
     <script type="module" src="components/app-engineer-meeting-edit.js"></script>
+    <script type="module" src="components/app-message-list.js"></script>
+    <script type="module" src="components/app-message-thread-modal.js"></script>
     <script type="module" src="components/app-message-reply.js"></script>
     
     <script src="js/common.js"></script>
