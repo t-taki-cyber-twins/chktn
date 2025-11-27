@@ -140,7 +140,7 @@ function createTableRow(project) {
                 <input type="checkbox" class="row-select-checkbox" value="${project.id}">
             </td>
             <td>
-                <a href="project-register.html" class="table-link">${escapeHtml(project.name)}</a>
+                <a href="project-edit.html" class="table-link">${escapeHtml(project.name)}</a>
             </td>
             <td>${escapeHtml(project.endCompany)}</td>
             <td>${startDate}</td>
@@ -155,7 +155,7 @@ function createTableRow(project) {
             </td>
             <td>
                 <div class="table-actions">
-                    <a href="project-register.html" class="btn btn-primary btn-sm">編集</a>
+                    <a href="project-edit.html" class="btn btn-primary btn-sm">編集</a>
                     <button type="button" class="btn btn-danger btn-sm project-delete-btn" data-project-id="${project.id}">削除</button>
                 </div>
             </td>

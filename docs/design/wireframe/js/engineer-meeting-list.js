@@ -214,7 +214,7 @@ function createTableRow(meeting) {
     
     // 自社案件の場合のみ「自」バッジを表示
     const ownBadge = meeting.isOwnProject 
-        ? '<span class="project-link-own-badge">自</span>' 
+        ? '<span class="badge-own-item">自</span>' 
         : '';
     
     return `

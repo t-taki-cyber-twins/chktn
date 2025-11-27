@@ -113,24 +113,12 @@
                                         <span class="form-select-text">選択してください</span>
                                         <span class="form-select-arrow">▼</span>
                                     </button>
-                                    <div class="form-selected-value" id="project-manager-selected" style="display: none;">
-                                        <span class="selected-value-text"></span>
-                                        <button type="button" class="selected-value-remove">×</button>
+                                    <div class="form-selected-values" id="project-manager-selected" style="display: none;">
+                                        <div class="selected-values-list" id="project-manager-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="project-manager-remove-all">すべて解除</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="engineer" class="form-label">エンジニア</label>
-                                <div class="form-select-wrapper">
-                                    <button type="button" class="form-select-btn" id="engineer-btn">
-                                        <span class="form-select-text">選択してください</span>
-                                        <span class="form-select-arrow">▼</span>
-                                    </button>
-                                    <div class="form-selected-value" id="engineer-selected" style="display: none;">
-                                        <span class="selected-value-text"></span>
-                                        <button type="button" class="selected-value-remove">×</button>
-                                    </div>
-                                </div>
+                                <p class="form-help-text">案件を担当する社員を選択します(複数選択可)。</p>
                             </div>
                         </div>
                     </div>
@@ -279,67 +267,42 @@
                 <div class="modal-list">
                     <ul class="employee-list">
                         <li class="employee-list-item">
-                            <button type="button" class="employee-list-btn" data-employee-id="1" data-employee-name="田中太郎">
-                                <span class="employee-name">田中太郎</span>
-                                <span class="employee-department">営業部</span>
-                            </button>
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-checkbox" data-employee-id="1" data-employee-name="田中太郎">
+                                <div class="employee-info">
+                                    <span class="employee-name">田中太郎</span>
+                                    <span class="employee-department">営業部</span>
+                                </div>
+                            </label>
                         </li>
                         <li class="employee-list-item">
-                            <button type="button" class="employee-list-btn" data-employee-id="2" data-employee-name="佐藤花子">
-                                <span class="employee-name">佐藤花子</span>
-                                <span class="employee-department">営業部</span>
-                            </button>
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-checkbox" data-employee-id="2" data-employee-name="佐藤花子">
+                                <div class="employee-info">
+                                    <span class="employee-name">佐藤花子</span>
+                                    <span class="employee-department">営業部</span>
+                                </div>
+                            </label>
                         </li>
                         <li class="employee-list-item">
-                            <button type="button" class="employee-list-btn" data-employee-id="3" data-employee-name="鈴木一郎">
-                                <span class="employee-name">鈴木一郎</span>
-                                <span class="employee-department">営業部</span>
-                            </button>
+                            <label class="employee-list-checkbox-label">
+                                <input type="checkbox" class="employee-checkbox" data-employee-id="3" data-employee-name="鈴木一郎">
+                                <div class="employee-info">
+                                    <span class="employee-name">鈴木一郎</span>
+                                    <span class="employee-department">営業部</span>
+                                </div>
+                            </label>
                         </li>
                     </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="project-manager-confirm-btn">選択完了</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- エンジニア選択モーダル -->
-    <div class="modal" id="engineer-modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">エンジニアを選択</h3>
-                <button type="button" class="modal-close" data-modal="engineer-modal">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-search">
-                    <input type="text" class="form-input modal-search-input" placeholder="エンジニア名で検索">
-                    <button type="button" class="btn btn-info modal-search-btn">検索</button>
-                </div>
-                <div class="modal-list">
-                    <ul class="engineer-list">
-                        <li class="engineer-list-item">
-                            <button type="button" class="engineer-list-btn" data-engineer-id="1" data-engineer-name="山田次郎">
-                                <span class="engineer-name">山田次郎</span>
-                                <span class="engineer-skills">Java, Spring Boot, React</span>
-                            </button>
-                        </li>
-                        <li class="engineer-list-item">
-                            <button type="button" class="engineer-list-btn" data-engineer-id="2" data-engineer-name="中村三郎">
-                                <span class="engineer-name">中村三郎</span>
-                                <span class="engineer-skills">Python, Django, PostgreSQL</span>
-                            </button>
-                        </li>
-                        <li class="engineer-list-item">
-                            <button type="button" class="engineer-list-btn" data-engineer-id="3" data-engineer-name="高橋四郎">
-                                <span class="engineer-name">高橋四郎</span>
-                                <span class="engineer-skills">TypeScript, React, Next.js</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- ブラックリスト選択モーダルコンポーネント -->
     <app-blacklist-selector></app-blacklist-selector>

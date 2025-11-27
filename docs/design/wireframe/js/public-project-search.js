@@ -167,7 +167,7 @@ function createProjectCard(project) {
             </div>
             <div class="project-card-footer">
                 <div class="project-card-actions">
-                    <a href="public-project-detail.html?projectId=${project.id}#project-detail-form" class="btn btn-info btn-sm">詳細</a>
+                    <a href="public-project-detail.html?projectId=${project.id}" class="btn btn-info btn-sm">詳細</a>
                 </div>
             </div>
         </div>

@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     displayRecentMessages();
     displayRecommendationMatching();
     displayAnnouncements();
-    initEditButtons();
 });
 
 /**
@@ -310,7 +309,7 @@ function createMatchingCard(matching) {
             </div>
             <div class="matching-card-footer">
                 <div class="matching-card-actions">
-                    <a href="public-project-detail.html?projectId=${matching.project.id}&engineerId=${matching.engineer.id}" class="btn btn-success btn-sm">面談申込</a>
+                    <a href="public-project-detail.html?projectId=${matching.project.id}&engineerId=${matching.engineer.id}#project-detail-form" class="btn btn-success btn-sm">面談申込</a>
                     <a href="public-project-detail.html?projectId=${matching.project.id}#inquiry-message-list-section" class="btn btn-warning btn-sm">問い合わせ</a>
                     <a href="public-project-detail.html?projectId=${matching.project.id}#project-detail-form" class="btn btn-info btn-sm">詳細</a>
                 </div>

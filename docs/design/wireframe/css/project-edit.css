@@ -2,16 +2,6 @@
    案件編集画面固有スタイルシート
    ======================================== */
 
-/* エンジニア一覧セクション */
-.engineer-list-section {
-    max-width: 1000px;
-    margin: 0 auto 32px;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
 .engineer-list-title {
     font-size: 18px;
     font-weight: 600;
@@ -35,16 +25,6 @@
 .btn-sm {
     padding: 6px 12px;
     font-size: 12px;
-}
-
-/* フォーム */
-.project-edit-form {
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .form-title {

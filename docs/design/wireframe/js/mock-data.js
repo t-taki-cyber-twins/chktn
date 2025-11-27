@@ -142,6 +142,7 @@ export const mockProjectMeetings = [
         projectManager: '山田太郎',
         engineerCompany: 'テック株式会社',
         engineerName: '田中太郎',
+        isOwnEngineer: true,
         status: 'pending',
         statusLabel: '面談予定',
         meetingDate: '2024/12/15 14:00'
@@ -153,6 +154,7 @@ export const mockProjectMeetings = [
         projectManager: '山田太郎',
         engineerCompany: 'システム株式会社',
         engineerName: '佐藤次郎',
+        isOwnEngineer: true,
         status: 'pending',
         statusLabel: '面談予定',
         meetingDate: '2024/12/16 10:00'
@@ -164,6 +166,7 @@ export const mockProjectMeetings = [
         projectManager: '佐藤花子',
         engineerCompany: 'システム株式会社',
         engineerName: '佐藤次郎',
+        isOwnEngineer: false,
         status: 'completed',
         statusLabel: '面談完了',
         meetingDate: '2024/12/10 10:00'
@@ -175,6 +178,7 @@ export const mockProjectMeetings = [
         projectManager: '鈴木一郎',
         engineerCompany: 'ウェブ株式会社',
         engineerName: '鈴木花子',
+        isOwnEngineer: false,
         status: 'cancelled',
         statusLabel: 'キャンセル',
         meetingDate: '2024/12/08 15:00'

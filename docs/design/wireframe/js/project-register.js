@@ -9,8 +9,7 @@ function initModals() {
     // モーダルを開くボタン（ブラックリストとメーリングリストはコンポーネントで処理）
     const openButtons = {
         'end-company-btn': 'end-company-modal',
-        'project-manager-btn': 'project-manager-modal',
-        'engineer-btn': 'engineer-modal'
+        'project-manager-btn': 'project-manager-modal'
     };
 
     Object.keys(openButtons).forEach(buttonId => {
@@ -94,26 +93,75 @@ function initCompanySelection() {
 }
 
 /**
- * 案件担当者選択処理
+ * 案件担当者選択処理(複数選択)
  */
 function initProjectManagerSelection() {
-    const managerButtons = document.querySelectorAll('.employee-list-btn');
     const selectedDiv = document.getElementById('project-manager-selected');
+    const selectedList = document.getElementById('project-manager-selected-list');
     const selectBtn = document.getElementById('project-manager-btn');
+    const removeAllBtn = document.getElementById('project-manager-remove-all');
     const modal = document.getElementById('project-manager-modal');
+    const confirmBtn = document.getElementById('project-manager-confirm-btn');
+    
+    let selectedManagers = []; // 選択された担当者の配列
 
-    managerButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const employeeId = button.getAttribute('data-employee-id');
-            const employeeName = button.getAttribute('data-employee-name');
+    // 選択された担当者を表示
+    function renderSelectedManagers() {
+        if (!selectedList) return;
+        
+        selectedList.innerHTML = '';
+        if (selectedManagers.length === 0) {
+            selectedDiv.style.display = 'none';
+            if (selectBtn) selectBtn.style.display = 'flex';
+            return;
+        }
+
+        selectedDiv.style.display = 'block';
+        if (selectBtn) selectBtn.style.display = 'none';
+
+        selectedManagers.forEach((manager, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'selected-value-tag';
+            tag.innerHTML = `
+                <span class="selected-value-text">${manager.name}</span>
+                <button type="button" class="selected-value-remove" data-index="${index}">×</button>
+            `;
+            selectedList.appendChild(tag);
+        });
+
+        // 個別削除ボタンのイベントリスナー
+        const removeButtons = selectedList.querySelectorAll('.selected-value-remove');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = parseInt(button.getAttribute('data-index'));
+                selectedManagers.splice(index, 1);
+                renderSelectedManagers();
+            });
+        });
+    }
+
+    // 選択完了ボタン
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
             
-            // 選択された値を表示
-            const selectedText = selectedDiv.querySelector('.selected-value-text');
-            if (selectedText) {
-                selectedText.textContent = employeeName;
-            }
-            selectedDiv.style.display = 'flex';
-            selectBtn.style.display = 'none';
+            checkboxes.forEach(checkbox => {
+                const employeeId = checkbox.getAttribute('data-employee-id');
+                const employeeName = checkbox.getAttribute('data-employee-name');
+                
+                // 既に選択されているかチェック
+                if (!selectedManagers.find(m => m.id === employeeId)) {
+                    selectedManagers.push({
+                        id: employeeId,
+                        name: employeeName
+                    });
+                }
+                
+                // チェックボックスをクリア
+                checkbox.checked = false;
+            });
+            
+            renderSelectedManagers();
             
             // TODO: 選択された担当者IDをフォームデータに保存
             
@@ -122,60 +170,18 @@ function initProjectManagerSelection() {
                 modal.classList.remove('active');
             }
         });
-    });
+    }
 
-    // 選択解除
-    const removeBtn = selectedDiv.querySelector('.selected-value-remove');
-    if (removeBtn) {
-        removeBtn.addEventListener('click', function() {
-            selectedDiv.style.display = 'none';
-            selectBtn.style.display = 'flex';
-            // TODO: フォームデータから担当者IDを削除
+    // すべて解除ボタン
+    if (removeAllBtn) {
+        removeAllBtn.addEventListener('click', function() {
+            selectedManagers = [];
+            renderSelectedManagers();
         });
     }
 }
 
-/**
- * エンジニア選択処理
- */
-function initEngineerSelection() {
-    const engineerButtons = document.querySelectorAll('.engineer-list-btn');
-    const selectedDiv = document.getElementById('engineer-selected');
-    const selectBtn = document.getElementById('engineer-btn');
-    const modal = document.getElementById('engineer-modal');
 
-    engineerButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const engineerId = button.getAttribute('data-engineer-id');
-            const engineerName = button.getAttribute('data-engineer-name');
-            
-            // 選択された値を表示
-            const selectedText = selectedDiv.querySelector('.selected-value-text');
-            if (selectedText) {
-                selectedText.textContent = engineerName;
-            }
-            selectedDiv.style.display = 'flex';
-            selectBtn.style.display = 'none';
-            
-            // TODO: 選択されたエンジニアIDをフォームデータに保存
-            
-            // モーダルを閉じる
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        });
-    });
-
-    // 選択解除
-    const removeBtn = selectedDiv.querySelector('.selected-value-remove');
-    if (removeBtn) {
-        removeBtn.addEventListener('click', function() {
-            selectedDiv.style.display = 'none';
-            selectBtn.style.display = 'flex';
-            // TODO: フォームデータからエンジニアIDを削除
-        });
-    }
-}
 
 /**
  * スキル選択処理
@@ -533,7 +539,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initModals();
     initCompanySelection();
     initProjectManagerSelection();
-    initEngineerSelection();
     initSkillSelection();
     initBlacklistSelection();
     initMailingListSelection();

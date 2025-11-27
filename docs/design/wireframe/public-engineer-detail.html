@@ -31,7 +31,7 @@
 
                     <!-- アクションボタン -->
                     <div class="sidebar-actions">
-                        <button type="button" class="btn btn-primary sidebar-scout-btn" id="scout-btn" disabled>スカウトを送る</button>
+                        <button type="button" class="btn btn-success sidebar-scout-btn" id="scout-btn" disabled>面談申込</button>
                         <button type="button" class="btn btn-warning sidebar-inquiry-btn" id="inquiry-btn">問い合わせ</button>
                     </div>
                     
@@ -42,54 +42,70 @@
 
             <!-- コンテンツエリア -->
             <main class="content-area">
-                <!-- マッチング案件セクション -->
-                <div class="project-list-section">
-                    <h2 class="project-list-title">マッチング案件（自社の案件のみ表示）</h2>
+                <!-- 関連案件面談一覧セクション -->
+                <div class="meeting-list-section" style="margin-bottom: 30px;">
+                    <h2 class="section-title">関連案件(面談中のものと直近稼働案件)</h2>
                     <div class="table-wrapper">
-                        <table class="common-table" id="project-table">
+                        <table class="common-table" id="meeting-table">
                             <thead>
                                 <tr>
                                     <th>案件名</th>
-                                    <th>必須スキル</th>
-                                    <th>マッチングスコア</th>
-                                    <th>スカウトステータス</th>
+                                    <th>案件提供会社</th>
+                                    <th>ステータス</th>
+                                    <th>面談日時</th>
+                                    <th>稼働開始</th>
+                                    <th>稼働終了</th>
                                     <th>アクション</th>
                                 </tr>
                             </thead>
-                            <tbody id="project-table-body">
-                                <tr data-project-id="1">
-                                    <td>フルスタックエンジニア募集</td>
+                            <tbody id="meeting-table-body">
+                                <tr data-meeting-id="1">
                                     <td>
-                                        <span class="skill-tag">Java</span>
-                                        <span class="skill-tag">React</span>
+                                        <a href="project-edit.html" class="table-link"><span class="badge-own-item">自</span>フルスタックエンジニア募集</a>
                                     </td>
+                                    <td>サンプル株式会社</td>
                                     <td>
-                                        <span class="matching-score-badge matching-score-high">90%</span>
+                                        <span class="badge badge-status-pending">面談予定</span>
                                     </td>
-                                    <td>
-                                        <span class="badge badge-status-pending">未スカウト</span>
-                                    </td>
+                                    <td>2024/12/15 14:00</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="table-actions">
-                                            <button type="button" class="btn btn-primary btn-sm scout-send-btn" data-project-id="1">スカウト</button>
+                                            <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="1">編集</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-project-id="2">
-                                    <td>バックエンドエンジニア募集</td>
+                                <tr data-meeting-id="2">
                                     <td>
-                                        <span class="skill-tag">Python</span>
-                                        <span class="skill-tag">AWS</span>
+                                        <a href="public-project-detail.html" class="table-link">バックエンドエンジニア募集</a>
                                     </td>
+                                    <td>テック株式会社</td>
                                     <td>
-                                        <span class="matching-score-badge matching-score-medium">75%</span>
+                                        <span class="badge badge-status-completed">面談完了</span>
                                     </td>
-                                    <td>
-                                        <span class="badge badge-status-completed">スカウト済</span>
-                                    </td>
+                                    <td>2024/12/10 10:00</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="table-actions">
-                                            <button type="button" class="btn btn-secondary btn-sm" disabled>送信済</button>
+                                            <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="2">編集</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="public-project-detail.html" class="table-link">あの時の案件</a>
+                                    </td>
+                                    <td>テック株式会社</td>
+                                    <td>
+                                        <span class="badge badge-status-active">稼働中</span>
+                                    </td>
+                                    <td></td>
+                                    <td>2023/09/10</td>
+                                    <td>2025/01/01</td>
+                                    <td>
+                                        <div class="table-actions">
                                         </div>
                                     </td>
                                 </tr>
@@ -99,7 +115,7 @@
                 </div>
 
                 <!-- 問い合わせメッセージ一覧セクション -->
-                <div class="inquiry-message-list-section">
+                <div id="inquiry-message-list-section" class="inquiry-message-list-section">
                     <h2 class="inquiry-message-list-title">問い合わせメッセージ一覧</h2>
                     <div class="message-list-section">
                         <ul class="message-thread-list" id="inquiry-message-list">
@@ -117,7 +133,7 @@
                 </div>
 
                 <!-- エンジニア詳細表示 -->
-                <div class="engineer-detail-form">
+                <div id="engineer-detail-form" class="engineer-detail-form">
                     <h1 class="form-title">公開エンジニア詳細</h1>
 
                     <!-- 基本情報セクション -->

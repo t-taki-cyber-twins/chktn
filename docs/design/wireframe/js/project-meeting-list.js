@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
     initTableSort();
     initDeleteButtons();
+    initEditButtons
     initPagination();
     
     // 初期表示のために検索を実行
@@ -112,25 +113,31 @@ function createTableRow(meeting) {
                              meeting.statusLabel === '面談完了' ? 'badge-status-completed' : 
                              meeting.statusLabel === 'キャンセル' ? 'badge-status-cancelled' : 'badge-status-pending';
     
+    // エンジニア名のリンクとアイコンを設定
+    const engineerLink = meeting.isOwnEngineer ? 'engineer-edit.html' : 'public-engineer-detail.html';
+    const engineerIcon = meeting.isOwnEngineer ? '<span class="badge badge-own-item">自</span> ' : '';
+    
     return `
         <tr data-meeting-id="${meeting.id}">
             <td class="table-checkbox">
                 <input type="checkbox" class="row-select-checkbox" value="${meeting.id}">
             </td>
             <td>
-                <a href="#" class="table-link">${escapeHtml(meeting.projectName)}</a>
+                <a href="project-edit.html" class="table-link">${escapeHtml(meeting.projectName)}</a>
             </td>
             <td>${escapeHtml(meeting.projectCompany)}</td>
             <td>${escapeHtml(meeting.projectManager)}</td>
             <td>${escapeHtml(meeting.engineerCompany)}</td>
-            <td>${escapeHtml(meeting.engineerName)}</td>
+            <td>
+                ${engineerIcon}<a href="${engineerLink}" class="table-link">${escapeHtml(meeting.engineerName)}</a>
+            </td>
             <td>
                 <span class="badge ${statusBadgeClass}">${escapeHtml(meeting.statusLabel)}</span>
             </td>
             <td>${escapeHtml(meetingDateTime)}</td>
             <td>
                 <div class="table-actions">
-                    <a href="#" class="btn btn-primary btn-sm">編集</a>
+                    <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="${meeting.id}">編集</button>
                     <button type="button" class="btn btn-danger btn-sm meeting-delete-btn" data-meeting-id="${meeting.id}">削除</button>
                 </div>
             </td>
@@ -204,8 +211,8 @@ function sortTable(column, direction) {
                 bValue = b.cells[4].textContent.trim();
                 break;
             case 'engineer-name':
-                aValue = a.cells[5].textContent.trim();
-                bValue = b.cells[5].textContent.trim();
+                aValue = a.cells[5].querySelector('.table-link').textContent.trim();
+                bValue = b.cells[5].querySelector('.table-link').textContent.trim();
                 break;
             case 'status':
                 aValue = a.cells[6].textContent.trim();
@@ -232,6 +239,23 @@ function sortTable(column, direction) {
 }
 
 /**
+ * 編集ボタンの初期化
+ */
+function initEditButtons() {
+    const editButtons = document.querySelectorAll('.meeting-edit-btn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const meetingId = this.dataset.meetingId;
+            // 編集モーダルを開く
+            const editModal = document.querySelector('app-engineer-meeting-edit');
+            if (editModal) {
+                editModal.open(meetingId);
+            }
+        });
+    });
+}
+
+/**
  * 削除ボタンの初期化
  */
 function initDeleteButtons() {
@@ -240,7 +264,7 @@ function initDeleteButtons() {
         button.addEventListener('click', function() {
             const meetingId = this.dataset.meetingId;
             const projectName = this.closest('tr').cells[1].querySelector('.table-link').textContent;
-            const engineerName = this.closest('tr').cells[5].textContent;
+            const engineerName = this.closest('tr').cells[5].querySelector('.table-link').textContent;
             
             if (confirm(`「${projectName}」と「${engineerName}」の面談を削除しますか？`)) {
                 // TODO: 実際のAPI呼び出しに置き換える

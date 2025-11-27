@@ -10,8 +10,6 @@ import { mockProjects, mockEngineers } from './mock-data.js';
 document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
     initSortForm();
-    initMatchingApplyButtons();
-    initMatchingInquiryButtons();
     initPagination();
     
     // 初期表示のために検索を実行
@@ -98,10 +96,6 @@ function displaySearchResults(results) {
     }
     
     matchingList.innerHTML = results.map(matching => createMatchingCard(matching)).join('');
-    
-    // 面談申込ボタンと問い合わせボタンのイベントリスナーを再設定
-    initMatchingApplyButtons();
-    initMatchingInquiryButtons();
 }
 
 /**
@@ -254,9 +248,9 @@ function createMatchingCard(matching) {
             </div>
             <div class="matching-card-footer">
                 <div class="matching-card-actions">
-                    <button type="button" class="btn btn-success btn-sm matching-apply-btn" data-matching-id="${matching.id}">面談申込</button>
-                    <button type="button" class="btn btn-warning btn-sm matching-inquiry-btn" data-matching-id="${matching.id}">問い合わせ</button>
-                    <a href="public-engineer-detail.html" class="btn btn-info btn-sm">詳細</a>
+                    <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}&projectId=${matching.project.id}#engineer-detail-form" class="btn btn-success btn-sm">面談申込</a>
+                    <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}#inquiry-message-list-section" class="btn btn-warning btn-sm">問い合わせ</a>
+                    <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}#engineer-detail-form" class="btn btn-info btn-sm">詳細</a>
                 </div>
             </div>
         </div>
@@ -284,44 +278,6 @@ function updateResultsCount(count) {
     if (resultsCount) {
         resultsCount.textContent = `${count}件`;
     }
-}
-
-/**
- * 面談申込ボタンの初期化
- */
-function initMatchingApplyButtons() {
-    const applyButtons = document.querySelectorAll('.matching-apply-btn');
-    applyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const matchingId = this.dataset.matchingId;
-            const matchingCard = this.closest('.matching-card');
-            const engineerName = matchingCard.querySelector('.matching-card-section:first-child .matching-card-link').textContent;
-            const projectName = matchingCard.querySelector('.matching-card-section:last-child .matching-card-link').textContent;
-            
-            if (confirm(`「${engineerName}」と「${projectName}」の面談を申し込みますか？`)) {
-                console.log('面談申込:', matchingId);
-                alert('面談を申し込みました。');
-            }
-        });
-    });
-}
-
-/**
- * 問い合わせボタンの初期化
- */
-function initMatchingInquiryButtons() {
-    const inquiryButtons = document.querySelectorAll('.matching-inquiry-btn');
-    inquiryButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const matchingId = this.dataset.matchingId;
-            const matchingCard = this.closest('.matching-card');
-            const engineerName = matchingCard.querySelector('.matching-card-section:first-child .matching-card-link').textContent;
-            const projectName = matchingCard.querySelector('.matching-card-section:last-child .matching-card-link').textContent;
-            
-            console.log('問い合わせ:', matchingId, engineerName, projectName);
-            alert(`「${engineerName}」と「${projectName}」について問い合わせますか？\n（問い合わせ画面への遷移は実装予定です）`);
-        });
-    });
 }
 
 /**

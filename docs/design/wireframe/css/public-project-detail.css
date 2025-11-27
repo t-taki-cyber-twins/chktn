@@ -70,26 +70,6 @@
     cursor: not-allowed;
 }
 
-/* エンジニア一覧セクション */
-.engineer-list-section {
-    max-width: 1000px;
-    margin: 0 auto 32px;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* 問い合わせメッセージ一覧セクション */
-.inquiry-message-list-section {
-    max-width: 1000px;
-    margin: 0 auto 32px;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
 .inquiry-message-list-title {
     font-size: 18px;
     font-weight: 600;
@@ -144,17 +124,6 @@
 }
 
 /* btn-smはcommon.cssに移動 */
-
-
-/* 案件詳細表示フォーム */
-.project-detail-form {
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 .form-title {
     font-size: 24px;

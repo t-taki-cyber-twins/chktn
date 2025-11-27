@@ -124,7 +124,7 @@ function createTableRow(message) {
     
     // 自社案件の場合のみ「自」バッジを表示
     const ownBadge = message.isOwnProject 
-        ? '<span class="project-link-own-badge">自</span>' 
+        ? '<span class="badge-own-item">自</span>' 
         : '';
     
     // メッセージタイプに応じてアクションボタンを変更
