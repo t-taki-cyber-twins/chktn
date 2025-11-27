@@ -5,12 +5,6 @@
 /* サイドメニュー検索フォームはcommon.cssに移動 */
 
 
-/* 検索結果エリア */
-.project-search-results {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
 .bulk-actions {
     display: flex;
     align-items: center;

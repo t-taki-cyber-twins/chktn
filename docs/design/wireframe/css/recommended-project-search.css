@@ -29,11 +29,6 @@
 /* フォームグループ、ラベル、入力欄、ヘルプテキスト、アクションはcommon.cssに移動 */
 
 
-/* 検索結果エリア */
-.project-search-results {
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
 .search-results-header {
     display: flex;

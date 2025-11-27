@@ -29,12 +29,6 @@
 /* チェックボックスグループ、アクションはcommon.cssに移動 */
 
 
-/* 検索結果エリア */
-.engineer-search-results {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .search-results-header {
     display: flex;
     justify-content: space-between;
