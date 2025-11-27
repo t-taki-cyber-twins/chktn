@@ -1922,3 +1922,27 @@ main.content-area > div {
   max-height: 400px;
   overflow-y: auto;
 }
+
+/* ========================================
+   共通アイコン
+   ======================================== */
+.icon-ai {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(135deg, #f64008, #ab93c1);
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.icon-ai::before {
+  content: "AI";
+}

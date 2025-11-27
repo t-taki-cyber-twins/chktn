@@ -22,7 +22,6 @@
                     <!-- 画面固有のコンテンツ（アクションボタン） -->
                     <div class="sidebar-actions">
                         <button class="btn btn-success sidebar-save-btn">登録</button>
-                        <button class="btn btn-warning sidebar-cancel-btn">キャンセル</button>
                     </div>
                     
                     <!-- 共通コンポーネント: 最近使った画面 -->
@@ -39,12 +38,55 @@
                     <div class="form-section">
                         <div class="form-grid">
                             <div class="form-group form-group-full">
+                                <label for="engineer-status" class="form-label">営業可否 <span class="form-required">*</span></label>
+                                <select id="engineer-status" name="engineer-status" class="form-select">
+                                    <option value="available">営業可</option>
+                                    <option value="working">営業不可</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="engineer-status" class="form-label">ステータス <span class="form-required">*</span></label>
+                                <select id="engineer-status" name="engineer-status" class="form-select">
+                                    <option value="available">即日可能</option>
+                                    <option value="working">稼働中(社内待機)</option>
+                                    <option value="working">稼働中(自宅待機)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="available-date" class="form-label">稼働可能日</label>
+                                <input type="date" id="available-date" name="available-date" class="form-input">
+                            </div>
+                            <div class="form-group form-group-full">
+                                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+                                    <label for="engineer-memo" class="form-label" style="margin-bottom: 0;">エンジニアメモ</label>
+                                    <button type="button" class="btn btn-info btn-sm" id="extract-engineer-memo-btn"><i class="icon-ai"></i>エンジニアメモから情報抽出</button>
+                                    <button type="button" class="btn btn-success btn-sm" id="generate-engineer-memo-btn"><i class="icon-ai"></i>エンジニアメモを生成</button>
+                                </div>
+                                <textarea id="engineer-memo" name="engineer-memo" class="form-textarea" rows="10" placeholder="氏名　　：T.T（男性）
+年齢　　：40歳
+最寄り駅：両国駅
+国籍　　：日本
+経験年数：3年1ヶ月
+稼働時期：即日
+単価　　：70万円
+
+■スキル：
+React/React Native/JavaScript/Next.js/TypeScript/Swift
+■工程：
+基本設計/詳細設計/実装/テスト/運用・保守
+
+■コメント
+・エンジニア歴は約3年です。
+・フロントエンジニアとして、React、Next.js、TypeScript、React Nativeを活用した開発を中心に携わってきました。
+・直近では、Swiftを活用したiOSネイティブ開発を行っていました。
+・設計～運用・保守まで1人称で対応可能です。
+　技術力も含めて伸びしろがあるエンジニアです。コミュニケーション面について心配はいらないかと思います。"></textarea>
+                            </div>
+                            <div class="form-group form-group-full">
                                 <label class="form-label">スキルシートアップロード状況</label>
                                 <div id="skill-sheet-status" class="skill-sheet-status">
                                     <span class="skill-sheet-status-text">未アップロード</span>
-                                </div>
-                                <div class="skill-sheet-upload-section">
-                                    <button type="button" class="btn btn-primary skill-sheet-upload-btn" id="skill-sheet-upload-btn">スキルシートアップロード</button>
+                                    <span><button type="button" class="btn btn-primary skill-sheet-upload-btn" id="skill-sheet-upload-btn"><i class="icon-ai"></i>スキルシートアップロード</button></span>
                                 </div>
                             </div>
                         </div>
@@ -53,43 +95,43 @@
                     <!-- タブUI -->
                     <div class="tab-container">
                         <div class="tab-buttons">
-                            <button type="button" class="tab-button active" data-tab="employee-info">社員情報</button>
-                            <button type="button" class="tab-button" data-tab="engineer-basic">エンジニア基本情報</button>
+                            <button type="button" class="tab-button active" data-tab="engineer-basic">エンジニア基本情報</button>
+                            <button type="button" class="tab-button" data-tab="employee-info">社員情報</button>
                             <button type="button" class="tab-button" data-tab="skill-sheet">スキルシート</button>
                             <button type="button" class="tab-button" data-tab="projects">案件</button>
                         </div>
 
-                        <!-- 社員情報タブ -->
-                        <div class="tab-content active" id="tab-employee-info">
-                            <app-employee-info-form></app-employee-info-form>
-                        </div>
-
                         <!-- エンジニア基本情報タブ -->
-                        <div class="tab-content" id="tab-engineer-basic">
+                        <div class="tab-content active" id="tab-engineer-basic">
                             <div class="form-section">
                                 <h2 class="form-section-title">エンジニア基本情報</h2>
                                 <div class="form-grid">
                                     <div class="form-group">
-                                        <label for="engineer-status" class="form-label">エンジニアステータス</label>
-                                        <select id="engineer-status" name="engineer-status" class="form-select">
+                                        <label for="desired-price" class="form-label">希望勤務地</label>
+                                        <input type="text" id="desired-price" name="desired-price" class="form-input" placeholder="例) 東京23区、横浜市">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="desired-price" class="form-label">希望リモート頻度</label>
+                                        <select class="form-input" name="" id="">
                                             <option value="">選択してください</option>
-                                            <option value="available">即日可能</option>
-                                            <option value="working">稼働中</option>
-                                            <option value="leaving">離任予定</option>
-                                            <option value="on-leave">休職中</option>
+                                            <option value="">フル出社可</option>
+                                            <option value="">週1-2日</option>
+                                            <option value="">週2-3日</option>
+                                            <option value="">週3-4日</option>
+                                            <option value="">週4-5日</option>
+                                            <option value="">フルリモート</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="available-date" class="form-label">稼働可能日</label>
-                                        <input type="date" id="available-date" name="available-date" class="form-input">
+                                        <label for="desired-price" class="form-label">希望単価</label>
+                                        <div class="form-grid">
+                                            <input type="number" id="desired-price" name="desired-price" class="form-input" placeholder="万円" min="0">
+                                            <input type="number" id="desired-price" name="desired-price" class="form-input" placeholder="万円" min="0">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="experience-years" class="form-label">経験年数</label>
                                         <input type="number" id="experience-years" name="experience-years" class="form-input" placeholder="年" min="0" step="0.5">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="desired-price" class="form-label">希望単価</label>
-                                        <input type="number" id="desired-price" name="desired-price" class="form-input" placeholder="万円" min="0">
                                     </div>
                                     <div class="form-group form-group-full">
                                         <label for="engineer-managers" class="form-label">エンジニア担当者</label>
@@ -106,19 +148,16 @@
                                         <p class="form-help-text">エンジニアの担当者を選択します（複数選択可）。営業担当者、エンジニア担当者など、役割を問わず選択できます。</p>
                                     </div>
                                     <div class="form-group form-group-full">
-                                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
-                                            <label for="engineer-memo" class="form-label" style="margin-bottom: 0;">スキルメモ</label>
-                                            <button type="button" class="btn btn-info btn-sm" id="extract-skill-memo-btn">スキルメモから情報抽出</button>
-                                            <button type="button" class="btn btn-success btn-sm" id="generate-skill-memo-btn">スキルメモを生成</button>
-                                        </div>
-                                        <textarea id="engineer-memo" name="engineer-memo" class="form-textarea" rows="3" placeholder="スキルメモを入力してください"></textarea>
-                                    </div>
-                                    <div class="form-group form-group-full">
                                         <label for="engineer-note" class="form-label">備考</label>
                                         <textarea id="engineer-note" name="engineer-note" class="form-textarea" rows="5" placeholder="エンジニアに関する備考を入力してください"></textarea>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- 社員情報タブ -->
+                        <div class="tab-content" id="tab-employee-info">
+                            <app-employee-info-form></app-employee-info-form>
                         </div>
 
                         <!-- スキルシートタブ -->

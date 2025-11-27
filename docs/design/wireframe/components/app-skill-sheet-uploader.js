@@ -47,7 +47,7 @@ class AppSkillSheetUploader extends HTMLElement {
 
                             <div class="skill-sheet-upload-actions">
                                 <button type="button" class="btn btn-secondary skill-sheet-upload-submit-btn" id="skill-sheet-upload-submit-btn" disabled>アップロードのみ</button>
-                                <button type="button" class="btn btn-primary skill-sheet-ai-analyze-btn" id="skill-sheet-ai-analyze-btn" disabled>AIで解析</button>
+                                <button type="button" class="btn btn-primary skill-sheet-ai-analyze-btn" id="skill-sheet-ai-analyze-btn" disabled><i class="icon-ai"></i>AIで解析</button>
                             </div>
 
                             <div class="skill-sheet-analysis-progress" id="skill-sheet-analysis-progress" style="display: none;">
@@ -259,7 +259,7 @@ class AppSkillSheetUploader extends HTMLElement {
         if (uploadBtn) uploadBtn.disabled = false;
         if (aiAnalyzeBtn) {
             aiAnalyzeBtn.disabled = false;
-            aiAnalyzeBtn.textContent = 'AIで解析';
+            aiAnalyzeBtn.innerHTML = '<i class="icon-ai"></i>AIで解析';
         }
 
         // 進捗表示を更新
@@ -351,7 +351,7 @@ class AppSkillSheetUploader extends HTMLElement {
         if (uploadBtn) uploadBtn.disabled = true;
         if (aiAnalyzeBtn) {
             aiAnalyzeBtn.disabled = true;
-            aiAnalyzeBtn.textContent = 'AIで解析';
+            aiAnalyzeBtn.innerHTML = '<i class="icon-ai"></i>AIで解析';
         }
         if (progressSection) progressSection.style.display = 'none';
         this.hideFileInfo();

@@ -37,62 +37,51 @@
                         <h2 class="section-title">基本情報</h2>
                         <div class="form-grid">
                             <div class="form-group form-group-full">
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <label class="form-label">公開設定</label>
-                                        <div class="form-checkbox-group">
-                                            <label class="form-checkbox-label">
-                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
-                                                <span>公開する</span>
-                                            </label>
-                                        </div>
-                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこの案件を検索できるようになります。</p>
-                                    </div>
-                                    <div class="form-col">
-                                        <label for="blacklist" class="form-label">ブラックリスト</label>
-                                        <div class="form-select-wrapper">
-                                            <button type="button" class="form-select-btn" id="blacklist-btn">
-                                                <span class="form-select-text">選択してください</span>
-                                                <span class="form-select-arrow">▼</span>
-                                            </button>
-                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
-                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
-                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
-                                            </div>
-                                        </div>
-                                        <p class="form-help-text">この案件を検索対象から除外する会社を選択します。</p>
-                                    </div>
+                                <label for="project-recruit-status" class="form-label">募集可否 <span class="form-required">*</span></label>
+                                <select id="project-recruit-status" name="project-recruit-status" class="form-select">
+                                    <option value="available">募集可</option>
+                                    <option value="working">募集不可</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+                                    <label for="project-description" class="form-label" style="margin-bottom: 0;">案件メモ</label>
+                                    <button type="button" class="btn btn-info btn-sm" id="extract-project-memo-btn"><i class="icon-ai"></i>案件メモから情報抽出</button>
+                                    <button type="button" class="btn btn-success btn-sm" id="generate-project-memo-btn"><i class="icon-ai"></i>案件メモを生成</button>
                                 </div>
+                                <textarea id="project-description" name="project-description" class="form-textarea" rows="10" placeholder="◆ 案件名： 監査業務サービスの機能追加プロジェクト(SE枠)
+
+◆ スキル：
+【必須】
+・C#での基本設計開発経験
+・エンジニア経験5年以上
+
+【尚可】
+・DBチューニング経験
+・SQL作成経験
+
+◆ 開始時期：2026年1月
+◆ 募集人数：1名
+
+◆ 年齢　：40歳まで
+◆ 外国籍：不可
+
+◆ 場所：幕張
+◆ リモート頻度：週1か週2程度
+
+◆ 契約：業務委託（準委任）契約
+◆ 金額：～65万円
+◆ 精算時間：140h～180h
+◆ 支払：30日（月末締め翌月末支払い）
+
+◆ 内容：
+監査法人向けの業務システムの改修案件に参画いただきます。
+フェーズとしてはテストフェーズからの参画になりますが、その後は機能追加に伴う設計~開発まで担当頂く予定です。"></textarea>
                             </div>
                             <div class="form-group form-group-full">
                                 <label for="project-name" class="form-label">案件名 <span class="form-required">*</span></label>
                                 <input type="text" id="project-name" name="project-name" class="form-input" placeholder="案件名を入力してください">
                             </div>
-                            <div class="form-group form-group-full">
-                                <label for="project-description" class="form-label">案件概要</label>
-                                <textarea id="project-description" name="project-description" class="form-textarea" rows="5" placeholder="案件概要を入力してください"></textarea>
-                            </div>
-                            <div class="form-group form-group-full">
-                                <label for="mailing-list" class="form-label">メーリングリスト</label>
-                                <div class="form-select-wrapper">
-                                    <button type="button" class="form-select-btn" id="mailing-list-btn">
-                                        <span class="form-select-text">選択してください</span>
-                                        <span class="form-select-arrow">▼</span>
-                                    </button>
-                                    <div class="form-selected-values" id="mailing-list-selected" style="display: none;">
-                                        <div class="selected-values-list" id="mailing-list-selected-list"></div>
-                                        <button type="button" class="selected-value-remove-all" id="mailing-list-remove-all">すべて解除</button>
-                                    </div>
-                                </div>
-                                <p class="form-help-text">案件情報を通知するメーリングリストを選択します（複数選択可）。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 関連情報セクション -->
-                    <div class="form-section">
-                        <h2 class="section-title">関連情報</h2>
-                        <div class="form-grid">
                             <div class="form-group">
                                 <label for="end-company" class="form-label">案件エンド会社 <span class="form-required">*</span></label>
                                 <div class="form-select-wrapper">
@@ -145,6 +134,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group form-group-full">
+                            <label for="skill-memo" class="form-label">スキルメモ</label>
+                            <textarea id="skill-memo" name="skill-memo" class="form-textarea"></textarea>
+                        </div>
                     </div>
 
                     <!-- 詳細情報セクション -->
@@ -156,50 +149,101 @@
                                 <input type="date" id="start-date" name="start-date" class="form-input">
                             </div>
                             <div class="form-group">
-                                <label for="end-date" class="form-label">終了日</label>
-                                <input type="date" id="end-date" name="end-date" class="form-input">
+                                <label for="member-number" class="form-label">募集人数</label>
+                                <input type="number" id="member-number" name="member-number" class="form-input" min="1">
                             </div>
-                            <div class="form-group">
-                                <label for="price" class="form-label">単価</label>
-                                <input type="number" id="price" name="price" class="form-input" placeholder="円">
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="age-range" class="form-label">希望年齢幅</label>
                                 <input type="text" id="age-range" name="age-range" class="form-input" placeholder="例: 25-35">
                             </div>
                             <div class="form-group">
-                                <label for="contract-type" class="form-label">契約形態</label>
-                                <select id="contract-type" name="contract-type" class="form-select">
+                                <label for="foreigner" class="form-label">外国籍</label>
+                                <select id="foreigner" name="foreigner" class="form-input">
                                     <option value="">選択してください</option>
-                                    <option value="contract">契約社員</option>
-                                    <option value="employee">正社員</option>
-                                    <option value="freelance">フリーランス</option>
-                                    <option value="part-time">パートタイム</option>
+                                    <option value="1">可</option>
+                                    <option value="2">不可</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="member-number" class="form-label">募集人数</label>
-                                <input type="number" id="member-number" name="member-number" class="form-input" min="1">
-                            </div>
+
                             <div class="form-group">
                                 <label for="work-location" class="form-label">勤務地</label>
                                 <input type="text" id="work-location" name="work-location" class="form-input" placeholder="例: 東京都千代田区">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">リモートワーク</label>
-                                <div class="form-radio-group">
-                                    <label class="form-radio-label">
-                                        <input type="radio" name="remote-work" value="yes" class="form-radio">
-                                        <span>可</span>
-                                    </label>
-                                    <label class="form-radio-label">
-                                        <input type="radio" name="remote-work" value="no" class="form-radio">
-                                        <span>不可</span>
-                                    </label>
-                                    <label class="form-radio-label">
-                                        <input type="radio" name="remote-work" value="partial" class="form-radio">
-                                        <span>一部可</span>
-                                    </label>
+                                <label for="desired-price" class="form-label">希望リモート頻度</label>
+                                <select class="form-input" name="" id="">
+                                    <option value="">選択してください</option>
+                                    <option value="">フル出社</option>
+                                    <option value="">週1-2日</option>
+                                    <option value="">週2-3日</option>
+                                    <option value="">週3-4日</option>
+                                    <option value="">週4-5日</option>
+                                    <option value="">フルリモート可</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contract-type" class="form-label">契約形態</label>
+                                <select id="contract-type" name="contract-type" class="form-select">
+                                    <option value="">選択してください</option>
+                                    <option value="contract">業務委託(準委任)</option>
+                                    <option value="contract">業務委託(請負)</option>
+                                    <option value="contract">契約社員</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="form-label">希望単価</label>
+                                <div class="form-grid">
+                                    <input type="number" id="desired-price" name="desired-price" class="form-input" placeholder="万円" min="0">
+                                    <input type="number" id="desired-price" name="desired-price" class="form-input" placeholder="万円" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="form-label">精算時間</label>
+                                <div class="form-grid">
+                                    <input type="number" id="payment-time" name="payment-time" class="form-input" placeholder="140" min="0">
+                                    <input type="number" id="payment-time" name="payment-time" class="form-input" placeholder="180" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-site" class="form-label">支払いサイト</label>
+                                <input type="text" id="payment-site" name="payment-site" class="form-input" placeholder="30日（月末締め翌月末支払い）">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- 公開設定セクション -->
+                    <div class="form-section">
+                        <h2 class="section-title">公開設定</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label">公開設定</label>
+                                        <div class="form-checkbox-group">
+                                            <label class="form-checkbox-label">
+                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
+                                                <span>公開する</span>
+                                            </label>
+                                        </div>
+                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこの案件を検索できるようになります。</p>
+                                    </div>
+                                    <div class="form-col">
+                                        <label for="blacklist" class="form-label">ブラックリスト</label>
+                                        <div class="form-select-wrapper">
+                                            <button type="button" class="form-select-btn" id="blacklist-btn">
+                                                <span class="form-select-text">選択してください</span>
+                                                <span class="form-select-arrow">▼</span>
+                                            </button>
+                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
+                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
+                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
+                                            </div>
+                                        </div>
+                                        <p class="form-help-text">この案件を検索対象から除外する会社を選択します。</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
