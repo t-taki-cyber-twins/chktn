@@ -6,6 +6,7 @@ export const mockEngineers = [
     {
         id: 1,
         name: '山田 太郎',
+        initial: 'T.Y',
         representatives: ['鈴木一郎', '田中太郎'],
         company: 'テック株式会社',
         skills: 'Java, Spring Boot, AWS',
@@ -19,6 +20,7 @@ export const mockEngineers = [
     {
         id: 2,
         name: '鈴木 一郎',
+        initial: 'I.S',
         representatives: ['田中太郎'],
         company: 'システム株式会社',
         skills: 'React, TypeScript, Node.js',
@@ -32,6 +34,7 @@ export const mockEngineers = [
     {
         id: 3,
         name: '田中 花子',
+        initial: 'H.T',
         representatives: ['高橋次郎', '鈴木一郎'],
         company: 'システム株式会社',
         skills: 'Python, Django, Machine Learning',

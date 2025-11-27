@@ -225,7 +225,7 @@ function createMatchingCard(matching) {
                     <div class="matching-card-section-title">エンジニア情報</div>
                     <div class="matching-card-item">
                         <h3 class="matching-card-item-title">
-                            <a href="public-engineer-detail.html" class="matching-card-link">${escapeHtml(matching.engineer.name)}</a>
+                            <a href="public-engineer-detail.html" class="matching-card-link">${escapeHtml(matching.engineer.initial)}</a>
                         </h3>
                         <div class="matching-card-skills">
                             ${engineerSkillsHtml}

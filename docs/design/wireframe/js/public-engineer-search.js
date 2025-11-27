@@ -124,7 +124,7 @@ function createEngineerCard(engineer) {
         <div class="engineer-card">
             <div class="engineer-card-header">
                 <h2 class="engineer-card-title">
-                    <a href="public-engineer-detail.html?engineerId=${engineer.id}" class="engineer-card-link">${escapeHtml(engineer.name)}</a>
+                    <a href="public-engineer-detail.html?engineerId=${engineer.id}" class="engineer-card-link">${escapeHtml(engineer.initial)}</a>
                 </h2>
                 <div class="engineer-card-badge">
                     <span class="badge ${badgeClass}">${badgeText}</span>
