@@ -250,7 +250,7 @@ function createMatchingCard(matching) {
                 <div class="matching-card-actions">
                     <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}&projectId=${matching.project.id}#engineer-detail-form" class="btn btn-success btn-sm">面談申込</a>
                     <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}#inquiry-message-list-section" class="btn btn-warning btn-sm">問い合わせ</a>
-                    <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}#engineer-detail-form" class="btn btn-info btn-sm">詳細</a>
+                    <a href="public-engineer-detail.html?engineerId=${matching.engineer.id}" class="btn btn-info btn-sm">詳細</a>
                 </div>
             </div>
         </div>

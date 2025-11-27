@@ -44,7 +44,7 @@
             <main class="content-area">
                 <!-- 関連案件面談一覧セクション -->
                 <div class="meeting-list-section" style="margin-bottom: 30px;">
-                    <h2 class="section-title">関連案件(面談中のものと直近稼働案件)</h2>
+                    <h2 class="section-title">関連案件(表示しているエンジニアのかつ自テナントの案件)</h2>
                     <div class="table-wrapper">
                         <table class="common-table" id="meeting-table">
                             <thead>
@@ -76,28 +76,11 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-meeting-id="2">
-                                    <td>
-                                        <a href="public-project-detail.html" class="table-link">バックエンドエンジニア募集</a>
-                                    </td>
-                                    <td>テック株式会社</td>
-                                    <td>
-                                        <span class="badge badge-status-completed">面談完了</span>
-                                    </td>
-                                    <td>2024/12/10 10:00</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="2">編集</button>
-                                        </div>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td>
-                                        <a href="public-project-detail.html" class="table-link">あの時の案件</a>
+                                        <a href="project-edit.html" class="table-link"><span class="badge-own-item">自</span>あの時の案件</a>
                                     </td>
-                                    <td>テック株式会社</td>
+                                    <td>サンプル株式会社</td>
                                     <td>
                                         <span class="badge badge-status-active">稼働中</span>
                                     </td>
@@ -116,20 +99,7 @@
 
                 <!-- 問い合わせメッセージ一覧セクション -->
                 <div id="inquiry-message-list-section" class="inquiry-message-list-section">
-                    <h2 class="inquiry-message-list-title">問い合わせメッセージ一覧</h2>
-                    <div class="message-list-section">
-                        <ul class="message-thread-list" id="inquiry-message-list">
-                            <!-- スレッド構造はJavaScriptで動的に生成 -->
-                        </ul>
-                        <!-- メッセージ内容表示エリア -->
-                        <div class="message-content-area" id="inquiry-message-content-area" style="display: none;">
-                            <div class="message-content-header">
-                                <h5 class="message-content-title" id="inquiry-message-content-title"></h5>
-                                <button type="button" class="message-content-close" id="inquiry-message-content-close">×</button>
-                            </div>
-                            <div class="message-content-body" id="inquiry-message-content-body"></div>
-                        </div>
-                    </div>
+                    <app-message-list title="問い合わせスレッド一覧" show-add-inquiry-button="true"></app-message-list>
                 </div>
 
                 <!-- エンジニア詳細表示 -->
@@ -227,17 +197,18 @@
         </div>
     </div>
 
-    <!-- 案件選択モーダルコンポーネント (エンジニア選択モーダルを流用・改造するか、新規作成) -->
-    <!-- ここでは簡易的にapp-project-selectorを使用する想定だが、サイドバー用とは別かも -->
-    <app-project-selector></app-project-selector>
-
     <!-- メッセージ返信フォームモーダルコンポーネント -->
     <app-message-reply></app-message-reply>
+
+    <!-- スレッド全表示モーダルコンポーネント -->
+    <app-message-thread-modal></app-message-thread-modal>
 
     <!-- Web Components -->
     <script type="module" src="components/app-header.js"></script>
     <script type="module" src="components/app-recent-screens.js"></script>
     <script type="module" src="components/app-project-selector.js"></script>
+    <script type="module" src="components/app-message-list.js"></script>
+    <script type="module" src="components/app-message-thread-modal.js"></script>
     <script type="module" src="components/app-message-reply.js"></script>
     
     <script src="js/common.js"></script>

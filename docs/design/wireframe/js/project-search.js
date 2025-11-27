@@ -139,9 +139,7 @@ function createTableRow(project) {
             <td class="table-checkbox">
                 <input type="checkbox" class="row-select-checkbox" value="${project.id}">
             </td>
-            <td>
-                <a href="project-edit.html" class="table-link">${escapeHtml(project.name)}</a>
-            </td>
+            <td>${escapeHtml(project.name)}</td>
             <td>${escapeHtml(project.endCompany)}</td>
             <td>${startDate}</td>
             <td>${endDate}</td>

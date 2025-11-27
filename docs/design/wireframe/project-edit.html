@@ -31,26 +31,30 @@
             <main class="content-area">
                 <!-- エンジニア一覧セクション -->
                 <div class="engineer-list-section">
-                    <h2 class="section-title">関連エンジニア</h2>
+                    <h2 class="section-title">関連エンジニア(表示している自テナントの案件の面談中のものと稼働中のエンジニア)</h2>
                     <div class="table-wrapper">
                         <table class="common-table" id="engineer-table">
                             <thead>
                                 <tr>
                                     <th>会社</th>
                                     <th>エンジニア名</th>
-                                    <th>面談ステータス</th>
+                                    <th>ステータス</th>
                                     <th>面談日時</th>
+                                    <th>稼働開始</th>
+                                    <th>稼働終了</th>
                                     <th>アクション</th>
                                 </tr>
                             </thead>
                             <tbody id="engineer-table-body">
                                 <tr data-engineer-id="1">
+                                    <td><a href="engineer-edit.html" class="table-link"><span class="badge-own-item">自</span>山田次郎</a></td>
                                     <td>テック株式会社</td>
-                                    <td>山田次郎</td>
                                     <td>
                                         <span class="badge badge-status-pending">面談予定</span>
                                     </td>
                                     <td>2024/12/15 14:00</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="table-actions">
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="1">編集</button>
@@ -58,12 +62,14 @@
                                     </td>
                                 </tr>
                                 <tr data-engineer-id="2">
+                                    <td><a href="public-engineer-detail.html" class="table-link">佐藤次郎</a></td>
                                     <td>システム株式会社</td>
-                                    <td>佐藤次郎</td>
                                     <td>
                                         <span class="badge badge-status-completed">面談完了</span>
                                     </td>
                                     <td>2024/12/10 10:00</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="table-actions">
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="2">編集</button>
@@ -71,12 +77,14 @@
                                     </td>
                                 </tr>
                                 <tr data-engineer-id="3">
+                                    <td><a href="engineer-edit.html" class="table-link"><span class="badge-own-item">自</span>鈴木花子</a></td>
                                     <td>ウェブ株式会社</td>
-                                    <td>鈴木花子</td>
                                     <td>
-                                        <span class="badge badge-status-pending">面談予定</span>
+                                        <span class="badge badge-status-active">稼働中</span>
                                     </td>
                                     <td>2024/12/20 15:00</td>
+                                    <td>2023/09/10</td>
+                                    <td>2025/01/01</td>
                                     <td>
                                         <div class="table-actions">
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="3">編集</button>

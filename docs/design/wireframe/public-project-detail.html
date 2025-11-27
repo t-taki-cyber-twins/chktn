@@ -41,58 +41,50 @@
 
             <!-- コンテンツエリア -->
             <main class="content-area">
-                <!-- 関連エンジニアセクション -->
+                <!-- エンジニア一覧セクション -->
                 <div class="engineer-list-section">
-                    <h2 class="engineer-list-title">関連エンジニア（自社のエンジニアのみ表示）</h2>
+                    <h2 class="section-title">関連エンジニア(表示している案件のかつ自テナントのエンジニア)</h2>
                     <div class="table-wrapper">
                         <table class="common-table" id="engineer-table">
                             <thead>
                                 <tr>
+                                    <th>会社</th>
                                     <th>エンジニア名</th>
-                                    <th>スキル</th>
-                                    <th>マッチングスコア</th>
-                                    <th>面談ステータス</th>
+                                    <th>ステータス</th>
                                     <th>面談日時</th>
+                                    <th>稼働開始</th>
+                                    <th>稼働終了</th>
                                     <th>アクション</th>
                                 </tr>
                             </thead>
                             <tbody id="engineer-table-body">
                                 <tr data-engineer-id="1">
-                                    <td>山田太郎</td>
-                                    <td>
-                                        <span class="skill-tag">Java</span>
-                                        <span class="skill-tag">Spring Boot</span>
-                                        <span class="skill-tag">React</span>
-                                    </td>
-                                    <td>
-                                        <span class="matching-score-badge matching-score-high">85%</span>
-                                    </td>
+                                    <td><a href="engineer-edit.html" class="table-link"><span class="badge-own-item">自</span>山田次郎</a></td>
+                                    <td>テック株式会社</td>
                                     <td>
                                         <span class="badge badge-status-pending">面談予定</span>
                                     </td>
                                     <td>2024/12/15 14:00</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="table-actions">
                                             <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="1">編集</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr data-engineer-id="2">
-                                    <td>佐藤花子</td>
+                                <tr data-engineer-id="3">
+                                    <td><a href="engineer-edit.html" class="table-link"><span class="badge-own-item">自</span>鈴木花子</a></td>
+                                    <td>ウェブ株式会社</td>
                                     <td>
-                                        <span class="skill-tag">Python</span>
-                                        <span class="skill-tag">Django</span>
+                                        <span class="badge badge-status-active">稼働中</span>
                                     </td>
-                                    <td>
-                                        <span class="matching-score-badge matching-score-medium">72%</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-status-completed">面談完了</span>
-                                    </td>
-                                    <td>2024/12/10 10:00</td>
+                                    <td>2024/12/20 15:00</td>
+                                    <td>2023/09/10</td>
+                                    <td>2025/01/01</td>
                                     <td>
                                         <div class="table-actions">
-                                            <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="2">編集</button>
+                                            <button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="3">編集</button>
                                         </div>
                                     </td>
                                 </tr>

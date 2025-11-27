@@ -213,9 +213,7 @@
                     <td class="table-checkbox">
                         <input type="checkbox" class="row-select-checkbox" value="${engineer.id}">
                     </td>
-                    <td>
-                        <a href="engineer-edit.html" class="table-link">${escapeHtml(engineer.name)}</a>
-                    </td>
+                    <td>${escapeHtml(engineer.name)}</td>
                     <td>${Array.isArray(engineer.representatives) ? engineer.representatives.map(r => escapeHtml(r)).join(', ') : escapeHtml(engineer.representative || '')}</td>
                     <td>${escapeHtml(engineer.company)}</td>
                     <td>${escapeHtml(engineer.skills)}</td>
