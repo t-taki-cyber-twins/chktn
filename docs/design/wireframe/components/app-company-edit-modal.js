@@ -32,54 +32,60 @@ class AppCompanyEditModal extends HTMLElement {
             <button class="modal-close" id="close-btn">×</button>
           </div>
           <div class="modal-body">
+            <!-- 法人検索ボタンを一番上に目立つように配置 -->
             <div class="form-grid">
               <div class="form-group form-group-full">
+                <button class="btn btn-primary" id="search-btn" style="width: 100%; padding: 12px; font-size: 16px; font-weight: bold;">🔍 法人検索</button>
+                <div class="form-help-text">法人検索ボタンをクリックして、法人情報を検索・選択してください。</div>
+              </div>
+
+              <div class="form-group form-group-full">
                 <label class="form-label">法人番号 <span class="form-required">*</span></label>
-                <div class="form-row">
-                  <input type="text" class="form-input" id="corporate-number" placeholder="13桁の法人番号">
-                  <button class="btn btn-secondary" id="search-btn">法人検索</button>
-                </div>
-                <div class="form-help-text">法人番号を入力するか、検索ボタンから検索してください。</div>
+                <input type="text" class="form-input" id="corporate-number" placeholder="13桁の法人番号" readonly>
+                <div class="form-help-text">法人検索から自動入力されます(編集不可)</div>
               </div>
 
               <div class="form-group form-group-full">
                 <label class="form-label">会社名 <span class="form-required">*</span></label>
-                <input type="text" class="form-input" id="company-name">
+                <input type="text" class="form-input" id="company-name" readonly>
+                <div class="form-help-text">法人検索から自動入力されます(編集不可)</div>
               </div>
 
               <div class="form-group form-group-full">
-                <label class="form-label">会社名（カナ）</label>
-                <input type="text" class="form-input" id="company-kana">
+                <label class="form-label">会社名(カナ)</label>
+                <input type="text" class="form-input" id="company-kana" readonly>
               </div>
 
               <div class="form-group">
                 <label class="form-label">郵便番号</label>
-                <input type="text" class="form-input" id="postal-code" placeholder="123-4567">
+                <input type="text" class="form-input" id="postal-code" placeholder="123-4567" readonly>
               </div>
 
               <div class="form-group">
                 <label class="form-label">都道府県</label>
-                <select class="form-select" id="prefecture">
-                  <option value="">選択してください</option>
-                  <option value="東京都">東京都</option>
-                  <option value="大阪府">大阪府</option>
-                  <!-- その他省略 -->
-                </select>
+                <input type="text" class="form-input" id="prefecture" readonly>
               </div>
 
               <div class="form-group">
                 <label class="form-label">市区町村</label>
-                <input type="text" class="form-input" id="city">
+                <input type="text" class="form-input" id="city" readonly>
               </div>
 
               <div class="form-group">
                 <label class="form-label">番地</label>
-                <input type="text" class="form-input" id="street">
+                <input type="text" class="form-input" id="street" readonly>
               </div>
 
               <div class="form-group form-group-full">
                 <label class="form-label">建物名</label>
-                <input type="text" class="form-input" id="building">
+                <input type="text" class="form-input" id="building" readonly>
+              </div>
+
+              <!-- メモテキストエリアを追加(自由入力) -->
+              <div class="form-group form-group-full">
+                <label class="form-label">メモ</label>
+                <textarea class="form-textarea" id="memo" rows="4" placeholder="自由にメモを入力できます"></textarea>
+                <div class="form-help-text">会社に関する補足情報を自由に記入してください。</div>
               </div>
             </div>
           </div>

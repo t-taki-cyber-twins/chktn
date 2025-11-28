@@ -6,6 +6,9 @@
     <title>マスタロール管理 - chktn</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/master-role.css">
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,6 +17,61 @@
 
         <!-- メインレイアウト -->
         <div class="main-layout">
+            <app-sidebar>
+                <!-- タブ1: マスタロール検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-role">
+                    <div class="sidebar-title">検索条件 (ロール)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="role-search" class="search-form-label">ロール名</label>
+                            <input type="text" id="role-search" class="search-form-input" placeholder="ロール名で検索">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- タブ2: マスタロールグループ検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-role-group" style="display: none;">
+                    <div class="sidebar-title">検索条件 (ロールグループ)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="role-group-search" class="search-form-label">ロールグループ名</label>
+                            <input type="text" id="role-group-search" class="search-form-input" placeholder="ロールグループ名で検索">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- タブ3: マスタロールグループロール検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-role-group-role" style="display: none;">
+                    <div class="sidebar-title">検索条件 (紐づけ)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="role-group-role-filter" class="search-form-label">ロールグループ</label>
+                            <select id="role-group-role-filter" class="search-form-select">
+                                <option value="">すべてのロールグループ</option>
+                                <option value="10">管理者</option>
+                                <option value="20">エンジニア管理者</option>
+                                <option value="30">バックオフィス</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
+
             <!-- コンテンツエリア -->
             <main class="content-area">
                 <div class="master-role-management">
@@ -35,10 +93,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-role-btn">新規作成</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <input type="text" id="role-search" class="search-input" placeholder="ロール名で検索...">
                         </div>
 
                         <div class="table-wrapper">
@@ -121,6 +175,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <app-pagination id="role-pagination"></app-pagination>
                     </div>
 
                     <!-- タブ2: マスタロールグループ管理 -->
@@ -130,10 +185,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-role-group-btn">新規作成</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <input type="text" id="role-group-search" class="search-input" placeholder="ロールグループ名で検索...">
                         </div>
 
                         <div class="table-wrapper">
@@ -183,6 +234,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <app-pagination id="role-pagination"></app-pagination>
                     </div>
 
                     <!-- タブ3: マスタロールグループロール管理 -->
@@ -192,15 +244,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-role-group-role-btn">新規紐づけ</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <select id="role-group-role-filter" class="search-select">
-                                <option value="">すべてのロールグループ</option>
-                                <option value="10">管理者</option>
-                                <option value="20">エンジニア管理者</option>
-                                <option value="30">バックオフィス</option>
-                            </select>
                         </div>
 
                         <div class="table-wrapper">
@@ -287,14 +330,12 @@
                                 </tbody>
                             </table>
                         </div>
+                        <app-pagination id="role-pagination"></app-pagination>
                     </div>
                 </div>
             </main>
         </div>
     </div>
-
-    <!-- Web Components -->
-    <script type="module" src="components/app-header.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/master-role.js"></script>

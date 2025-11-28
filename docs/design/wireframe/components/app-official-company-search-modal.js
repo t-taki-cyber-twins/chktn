@@ -102,10 +102,6 @@ class AppOfficialCompanySearchModal extends HTMLElement {
             <div class="search-panel" id="panel-name">
               <div class="form-grid">
                 <div class="form-group">
-                  <label class="form-label">会社名</label>
-                  <input type="text" class="form-input" placeholder="会社名を入力" id="input-name">
-                </div>
-                <div class="form-group">
                   <label class="form-label">都道府県</label>
                   <select class="form-select" id="input-prefecture">
                     <option value="">選択してください</option>
@@ -114,6 +110,10 @@ class AppOfficialCompanySearchModal extends HTMLElement {
                     <option value="kanagawa">神奈川県</option>
                     <!-- その他省略 -->
                   </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">会社名</label>
+                  <input type="text" class="form-input" placeholder="会社名を入力" id="input-name">
                 </div>
                 <div class="form-group-full">
                   <button class="btn btn-info" style="width: 100%;" id="search-name-btn">検索</button>

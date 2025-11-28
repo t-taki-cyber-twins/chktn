@@ -6,15 +6,46 @@
   <title>取引先管理 - CHKTN</title>
   <link rel="stylesheet" href="css/client-list.css">
   <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-sidebar.js" type="module"></script>
   <script src="components/app-company-edit-modal.js" type="module"></script>
   <script src="components/app-official-company-search-modal.js" type="module"></script>
+  <script src="components/app-pagination.js" type="module"></script>
 </head>
 <body>
   <div class="container">
     <app-header></app-header>
 
     <div class="main-layout">
-      
+      <app-sidebar>
+        <div class="sidebar-search-form">
+            <div class="sidebar-title">検索条件</div>
+            <form id="search-form" class="search-form">
+                <div class="search-form-actions">
+                    <button type="submit" class="btn btn-info search-form-submit">検索</button>
+                    <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                </div>
+
+                <div class="search-form-group">
+                    <label for="search-company-name" class="search-form-label">会社名</label>
+                    <input type="text" id="search-company-name" name="company-name"
+                        class="search-form-input" placeholder="会社名で検索">
+                </div>
+
+                <div class="search-form-group">
+                    <label for="search-corporate-number" class="search-form-label">法人番号</label>
+                    <input type="text" id="search-corporate-number" name="corporate-number" class="search-form-input"
+                        placeholder="法人番号で検索">
+                </div>
+
+                <div class="search-form-group">
+                    <label for="search-address" class="search-form-label">住所</label>
+                    <input type="text" id="search-address" name="address" class="search-form-input"
+                        placeholder="住所で検索">
+                </div>
+            </form>
+        </div>
+      </app-sidebar>
+
       <main class="content-area">
         <div class="section-card">
           <div class="section-header">
@@ -54,6 +85,8 @@
               </tbody>
             </table>
           </div>
+          
+          <app-pagination id="client-pagination"></app-pagination>
         </div>
       </main>
     </div>
@@ -61,7 +94,6 @@
 
   <app-company-edit-modal id="company-edit-modal"></app-company-edit-modal>
   <app-official-company-search-modal id="official-company-search-modal"></app-official-company-search-modal>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const addClientBtn = document.getElementById('add-client-btn');
@@ -92,6 +124,16 @@
           });
         }
       });
+
+      // ページングイベントのリスナー設定
+      const pagination = document.getElementById('client-pagination');
+      if (pagination) {
+        pagination.addEventListener('page-change', (e) => {
+          console.log('ページが変更されました:', e.detail.page);
+          // ここに実際のデータ取得処理などを記述します
+          // 例: fetchClients(e.detail.page);
+        });
+      }
     });
   </script>
 </body>

@@ -6,6 +6,9 @@
     <title>メール管理 - chktn</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/mail-management.css">
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,6 +17,67 @@
 
         <!-- メインレイアウト -->
         <div class="main-layout">
+            <app-sidebar>
+                <!-- タブ1: メールテンプレート検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-template">
+                    <div class="sidebar-title">検索条件 (テンプレート)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="template-search" class="search-form-label">テンプレート名</label>
+                            <input type="text" id="template-search" class="search-form-input" placeholder="テンプレート名で検索">
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="template-category-filter" class="search-form-label">カテゴリ</label>
+                            <select id="template-category-filter" class="search-form-select">
+                                <option value="">すべてのカテゴリ</option>
+                                <option value="engineer">エンジニア関連</option>
+                                <option value="project">案件関連</option>
+                                <option value="meeting">面談関連</option>
+                                <option value="system">システム通知</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- タブ2: メーリングリスト検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-mailing-list" style="display: none;">
+                    <div class="sidebar-title">検索条件 (メーリングリスト)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="mailing-list-search" class="search-form-label">リスト名</label>
+                            <input type="text" id="mailing-list-search" class="search-form-input" placeholder="リスト名で検索">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- タブ3: デフォルト設定検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-default-settings" style="display: none;">
+                    <div class="sidebar-title">検索条件 (デフォルト設定)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="default-setting-search" class="search-form-label">設定名</label>
+                            <input type="text" id="default-setting-search" class="search-form-input" placeholder="設定名で検索">
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
+
             <!-- コンテンツエリア -->
             <main class="content-area">
                 <div class="mail-management">
@@ -35,17 +99,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-template-btn">新規作成</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <input type="text" id="template-search" class="search-input" placeholder="テンプレート名で検索...">
-                            <select id="template-category-filter" class="search-select">
-                                <option value="">すべてのカテゴリ</option>
-                                <option value="engineer">エンジニア関連</option>
-                                <option value="project">案件関連</option>
-                                <option value="meeting">面談関連</option>
-                                <option value="system">システム通知</option>
-                            </select>
                         </div>
 
                         <div class="table-wrapper">
@@ -99,6 +152,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <app-pagination id="template-pagination"></app-pagination>
                     </div>
 
                     <!-- タブ2: メーリングリスト管理 -->
@@ -108,10 +162,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-mailing-list-btn">新規作成</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <input type="text" id="mailing-list-search" class="search-input" placeholder="リスト名で検索...">
                         </div>
 
                         <div class="table-wrapper">
@@ -165,6 +215,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <app-pagination id="mailing-list-pagination"></app-pagination>
                     </div>
 
                     <!-- タブ3: メールデフォルト設定管理 -->
@@ -174,10 +225,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-default-setting-btn">新規作成</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <input type="text" id="default-setting-search" class="search-input" placeholder="設定名で検索...">
                         </div>
 
                         <div class="table-wrapper">
@@ -235,14 +282,12 @@
                                 </tbody>
                             </table>
                         </div>
+                        <app-pagination id="mailing-list-pagination"></app-pagination>
                     </div>
                 </div>
             </main>
         </div>
     </div>
-
-    <!-- Web Components -->
-    <script type="module" src="components/app-header.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/mail-management.js"></script>

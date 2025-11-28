@@ -6,6 +6,9 @@
     <title>カスタムロールグループ管理 - chktn</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/custom-role-group.css">
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,19 +17,33 @@
 
         <!-- メインレイアウト -->
         <div class="main-layout">
+            <app-sidebar>
+                <div class="sidebar-search-form">
+                    <div class="sidebar-title">検索条件</div>
+                    <form id="search-form" class="search-form">
+                        <div class="search-form-actions">
+                            <button type="submit" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="custom-role-group-search" class="search-form-label">カスタムロールグループ名</label>
+                            <input type="text" id="custom-role-group-search" name="custom-role-group-name"
+                                class="search-form-input" placeholder="カスタムロールグループ名で検索">
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
+
             <!-- コンテンツエリア -->
             <main class="content-area">
                 <div class="custom-role-group-management">
-                    <div class="page-header">
-                        <h1 class="page-title">カスタムロールグループ管理</h1>
-                        <p class="page-description">テナントごとにカスタマイズ可能なロールグループと権限の設定を行います</p>
-                    </div>
-
-                    <div class="search-filter-bar">
-                        <input type="text" id="custom-role-group-search" class="search-input" placeholder="カスタムロールグループ名で検索...">
-                        <div class="search-actions">
-                            <button type="button" class="btn btn-primary" id="create-custom-role-group-btn">新規作成</button>
+                    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h1 class="page-title">カスタムロールグループ管理</h1>
+                            <p class="page-description">テナントごとにカスタマイズ可能なロールグループと権限の設定を行います</p>
                         </div>
+                        <button type="button" class="btn btn-primary" id="create-custom-role-group-btn">新規作成</button>
                     </div>
 
                     <div class="table-wrapper">
@@ -92,6 +109,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <app-pagination id="custom-role-group-pagination"></app-pagination>
                 </div>
             </main>
         </div>
@@ -216,12 +234,6 @@
             </div>
         </div>
     </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Web Components -->
-    <script type="module" src="components/app-header.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/custom-role-group.js"></script>

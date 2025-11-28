@@ -4,17 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>テナント・会社管理 - CHKTN</title>
+  <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/tenant-company-list.css">
   <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-sidebar.js" type="module"></script>
   <script src="components/app-company-edit-modal.js" type="module"></script>
   <script src="components/app-official-company-search-modal.js" type="module"></script>
   <script src="components/app-tenant-edit-modal.js" type="module"></script>
+  <script src="components/app-pagination.js" type="module"></script>
 </head>
 <body>
   <div class="container">
     <app-header></app-header>
 
     <div class="main-layout">
+      <app-sidebar>
+        <div class="sidebar-search-form">
+            <div class="sidebar-title">検索条件</div>
+            <form class="search-form">
+                <div class="search-form-actions">
+                    <button type="button" class="btn btn-info search-form-submit">検索</button>
+                    <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                </div>
+
+                <div class="search-form-group">
+                    <label class="search-form-label">会社名</label>
+                    <input type="text" class="search-form-input" placeholder="会社名を入力">
+                </div>
+                <div class="search-form-group">
+                    <label class="search-form-label">法人番号</label>
+                    <input type="text" class="search-form-input" placeholder="法人番号を入力">
+                </div>
+            </form>
+        </div>
+      </app-sidebar>
       
       <main class="content-area">
         <div class="tenant-info-section">
@@ -84,6 +107,7 @@
               </tbody>
             </table>
           </div>
+          <app-pagination id="company-pagination"></app-pagination>
         </div>
       </main>
     </div>
@@ -113,7 +137,7 @@
       companyEditModal.setSearchModal(officialCompanySearchModal);
 
       // 編集ボタンのイベントリスナー設定
-      const editBtns = document.querySelectorAll('.btn-secondary.btn-sm');
+      const editBtns = document.querySelectorAll('.btn-primary.btn-sm, .btn-secondary.btn-sm');
       editBtns.forEach(btn => {
         if (btn.textContent.trim() === '編集' && btn.id !== 'tenant-edit-btn') {
           btn.addEventListener('click', (e) => {

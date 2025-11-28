@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>法人マスタ管理 - CHKTN</title>
+  <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/admin-corporate-master-list.css">
   <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-sidebar.js" type="module"></script>
   <script src="components/app-pagination.js" type="module"></script>
 </head>
 <body>
@@ -13,38 +15,40 @@
     <app-header></app-header>
 
     <div class="main-layout">
+      <app-sidebar>
+        <div class="sidebar-search-form">
+            <div class="sidebar-title">検索条件</div>
+            <form class="search-form">
+                <div class="search-form-actions">
+                    <button type="button" class="btn btn-info search-form-submit">検索</button>
+                    <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                </div>
+
+                <div class="search-form-group">
+                    <label class="search-form-label">法人番号</label>
+                    <input type="text" class="search-form-input" placeholder="法人番号を入力">
+                </div>
+                <div class="search-form-group">
+                    <label class="search-form-label">会社名</label>
+                    <input type="text" class="search-form-input" placeholder="会社名を入力">
+                </div>
+                <div class="search-form-group">
+                    <label class="search-form-label">都道府県</label>
+                    <select class="search-form-select">
+                        <option value="">すべて</option>
+                        <option value="tokyo">東京都</option>
+                        <option value="osaka">大阪府</option>
+                        <!-- 他の都道府県は省略 -->
+                    </select>
+                </div>
+            </form>
+        </div>
+      </app-sidebar>
       
       <main class="content-area">
         <div class="section-card">
           <div class="section-header">
             <h2 class="section-title">法人マスタ管理</h2>
-          </div>
-
-          <div class="search-section">
-            <div class="form-group">
-              <div class="search-form">
-                <div class="form-group">
-                  <label class="form-label">法人番号</label>
-                  <input type="text" class="form-input" placeholder="法人番号を入力">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">会社名</label>
-                  <input type="text" class="form-input" placeholder="会社名を入力">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">都道府県</label>
-                  <select class="form-select">
-                    <option value="">すべて</option>
-                    <option value="tokyo">東京都</option>
-                    <option value="osaka">大阪府</option>
-                    <!-- 他の都道府県は省略 -->
-                  </select>
-                </div>
-                <div class="search-actions">
-                  <button class="btn btn-info">検索</button>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div class="table-wrapper">

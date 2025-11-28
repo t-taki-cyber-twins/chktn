@@ -6,6 +6,9 @@
     <title>スキルマスタ管理 - chktn</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/master-skill.css">
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,6 +17,61 @@
 
         <!-- メインレイアウト -->
         <div class="main-layout">
+            <app-sidebar>
+                <!-- タブ1: スキルマスタ検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-skill">
+                    <div class="sidebar-title">検索条件 (スキル)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="skill-search" class="search-form-label">スキル名</label>
+                            <input type="text" id="skill-search" class="search-form-input" placeholder="スキル名で検索">
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="category-filter" class="search-form-label">カテゴリ</label>
+                            <select id="category-filter" class="search-form-select">
+                                <option value="">すべてのカテゴリ</option>
+                                <option value="1">プログラミング言語</option>
+                                <option value="2">フレームワーク</option>
+                                <option value="3">データベース</option>
+                                <option value="4">クラウド</option>
+                            </select>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="status-filter" class="search-form-label">ステータス</label>
+                            <select id="status-filter" class="search-form-select">
+                                <option value="">すべてのステータス</option>
+                                <option value="public">公開</option>
+                                <option value="private">非公開</option>
+                                <option value="request">リクエスト</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- タブ2: スキルカテゴリ検索 -->
+                <div class="sidebar-search-form" id="sidebar-search-category" style="display: none;">
+                    <div class="sidebar-title">検索条件 (カテゴリ)</div>
+                    <form class="search-form">
+                        <div class="search-form-actions">
+                            <button type="button" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="category-search" class="search-form-label">カテゴリ名</label>
+                            <input type="text" id="category-search" class="search-form-input" placeholder="カテゴリ名で検索">
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
+
             <!-- コンテンツエリア -->
             <main class="content-area">
                 <div class="master-skill-management">
@@ -34,23 +92,6 @@
                             <div class="tab-content-actions">
                                 <button type="button" class="btn btn-primary" id="create-skill-btn">新規作成</button>
                             </div>
-                        </div>
-
-                        <div class="search-filter-bar">
-                            <input type="text" id="skill-search" class="search-input" placeholder="スキル名で検索...">
-                            <select id="category-filter" class="search-select">
-                                <option value="">すべてのカテゴリ</option>
-                                <option value="1">プログラミング言語</option>
-                                <option value="2">フレームワーク</option>
-                                <option value="3">データベース</option>
-                                <option value="4">クラウド</option>
-                            </select>
-                            <select id="status-filter" class="search-select">
-                                <option value="">すべてのステータス</option>
-                                <option value="public">公開</option>
-                                <option value="private">非公開</option>
-                                <option value="request">リクエスト</option>
-                            </select>
                         </div>
 
                         <div class="table-wrapper">
@@ -161,10 +202,6 @@
                             </div>
                         </div>
 
-                        <div class="search-filter-bar">
-                            <input type="text" id="category-search" class="search-input" placeholder="カテゴリ名で検索...">
-                        </div>
-
                         <div class="table-wrapper">
                             <table class="common-table" id="category-table">
                                 <thead>
@@ -231,10 +268,6 @@
             </main>
         </div>
     </div>
-
-    <!-- Web Components -->
-    <script type="module" src="components/app-header.js"></script>
-    <script type="module" src="components/app-pagination.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/master-skill.js"></script>

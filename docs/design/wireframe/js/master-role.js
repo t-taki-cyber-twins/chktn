@@ -66,6 +66,13 @@ function switchTab(tabName) {
         targetButton.classList.add('active');
         targetContent.classList.add('active');
         
+        // サイドバーの検索フォームの表示切り替え
+        document.querySelectorAll('.sidebar-search-form').forEach(form => form.style.display = 'none');
+        const sidebarSearch = document.getElementById(`sidebar-search-${tabName}`);
+        if (sidebarSearch) {
+            sidebarSearch.style.display = 'block';
+        }
+
         // URLハッシュを更新（履歴に追加）
         if (window.location.hash !== `#${tabName}`) {
             window.location.hash = tabName;

@@ -27,6 +27,13 @@ function initTabs() {
             // クリックされたタブボタンと対応するコンテンツに active クラスを追加
             this.classList.add('active');
             document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            // サイドバーの検索フォームの表示切り替え
+            document.querySelectorAll('.sidebar-search-form').forEach(form => form.style.display = 'none');
+            const sidebarSearch = document.getElementById(`sidebar-search-${tabName}`);
+            if (sidebarSearch) {
+                sidebarSearch.style.display = 'block';
+            }
             
             // URLハッシュを更新
             window.location.hash = tabName;

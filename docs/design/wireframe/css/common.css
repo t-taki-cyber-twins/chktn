@@ -397,6 +397,10 @@ main.content-area > div {
 }
 
 /* サイドメニュー */
+app-sidebar {
+  display: contents;
+}
+
 .sidebar {
   width: 240px;
   background-color: #fff;

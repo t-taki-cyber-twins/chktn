@@ -6,6 +6,9 @@
     <title>お知らせ管理 - chktn</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/announcement-management.css">
+    <script type="module" src="components/app-header.js"></script>
+    <script type="module" src="components/app-sidebar.js"></script>
+    <script type="module" src="components/app-pagination.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,6 +17,45 @@
 
         <!-- メインレイアウト -->
         <div class="main-layout">
+            <app-sidebar>
+                <div class="sidebar-search-form">
+                    <div class="sidebar-title">検索条件</div>
+                    <form id="search-form" class="search-form">
+                        <div class="search-form-actions">
+                            <button type="submit" class="btn btn-info search-form-submit">検索</button>
+                            <button type="button" class="btn btn-warning search-form-reset">リセット</button>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="announcement-search" class="search-form-label">タイトル</label>
+                            <input type="text" id="announcement-search" name="title"
+                                class="search-form-input" placeholder="タイトルで検索">
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="category-filter" class="search-form-label">カテゴリ</label>
+                            <select id="category-filter" name="category" class="search-form-select">
+                                <option value="">すべてのカテゴリ</option>
+                                <option value="maintenance">メンテナンス</option>
+                                <option value="feature">新機能</option>
+                                <option value="improvement">改善</option>
+                                <option value="important">重要なお知らせ</option>
+                            </select>
+                        </div>
+
+                        <div class="search-form-group">
+                            <label for="status-filter" class="search-form-label">ステータス</label>
+                            <select id="status-filter" name="status" class="search-form-select">
+                                <option value="">すべてのステータス</option>
+                                <option value="published">公開中</option>
+                                <option value="ended">公開終了</option>
+                                <option value="scheduled">公開前</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </app-sidebar>
+
             <!-- コンテンツエリア -->
             <main class="content-area">
                 <div class="announcement-management">
@@ -26,23 +68,6 @@
                         <div class="tab-content-actions">
                             <button type="button" class="btn btn-primary" id="create-announcement-btn">新規作成</button>
                         </div>
-                    </div>
-
-                    <div class="search-filter-bar">
-                        <input type="text" id="announcement-search" class="search-input" placeholder="タイトルで検索...">
-                        <select id="category-filter" class="search-select">
-                            <option value="">すべてのカテゴリ</option>
-                            <option value="maintenance">メンテナンス</option>
-                            <option value="feature">新機能</option>
-                            <option value="improvement">改善</option>
-                            <option value="important">重要なお知らせ</option>
-                        </select>
-                        <select id="status-filter" class="search-select">
-                            <option value="">すべてのステータス</option>
-                            <option value="published">公開中</option>
-                            <option value="ended">公開終了</option>
-                            <option value="scheduled">公開前</option>
-                        </select>
                     </div>
 
                     <div class="table-wrapper">
@@ -118,13 +143,11 @@
                             </tbody>
                         </table>
                     </div>
+                    <app-pagination id="announcement-pagination"></app-pagination>
                 </div>
             </main>
         </div>
     </div>
-
-    <!-- Web Components -->
-    <script type="module" src="components/app-header.js"></script>
     
     <script src="js/common.js"></script>
     <script src="js/announcement-management.js"></script>
