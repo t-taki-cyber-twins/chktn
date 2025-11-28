@@ -40,17 +40,24 @@ class AppCompanyEditModal extends HTMLElement {
               </div>
 
               <div class="form-group form-group-full">
-                <label class="form-label">法人番号 <span class="form-required">*</span></label>
+                <label class="form-label">法人番号</label>
                 <input type="text" class="form-input" id="corporate-number" placeholder="13桁の法人番号" readonly>
                 <div class="form-help-text">法人検索から自動入力されます(編集不可)</div>
               </div>
 
               <div class="form-group form-group-full">
-                <label class="form-label">会社名 <span class="form-required">*</span></label>
+                <label class="form-label">会社名</label>
                 <input type="text" class="form-input" id="company-name" readonly>
                 <div class="form-help-text">法人検索から自動入力されます(編集不可)</div>
               </div>
 
+              <!-- メモテキストエリアを追加(自由入力) -->
+              <div class="form-group form-group-full">
+                <label class="form-label">メモ</label>
+                <textarea class="form-textarea" id="memo" rows="4" placeholder="自由にメモを入力できます"></textarea>
+                <div class="form-help-text">会社に関する補足情報を自由に記入してください。</div>
+              </div>
+              
               <div class="form-group form-group-full">
                 <label class="form-label">会社名(カナ)</label>
                 <input type="text" class="form-input" id="company-kana" readonly>
@@ -79,13 +86,6 @@ class AppCompanyEditModal extends HTMLElement {
               <div class="form-group form-group-full">
                 <label class="form-label">建物名</label>
                 <input type="text" class="form-input" id="building" readonly>
-              </div>
-
-              <!-- メモテキストエリアを追加(自由入力) -->
-              <div class="form-group form-group-full">
-                <label class="form-label">メモ</label>
-                <textarea class="form-textarea" id="memo" rows="4" placeholder="自由にメモを入力できます"></textarea>
-                <div class="form-help-text">会社に関する補足情報を自由に記入してください。</div>
               </div>
             </div>
           </div>

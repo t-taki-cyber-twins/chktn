@@ -562,6 +562,13 @@ app-sidebar {
   outline: none;
   border-color: #0066cc;
 }
+.form-input[readonly],
+.form-textarea[readonly],
+.form-select[readonly] {
+  background-color: #eee;
+  color: #333;
+}
+
 
 .form-textarea {
   resize: vertical;
