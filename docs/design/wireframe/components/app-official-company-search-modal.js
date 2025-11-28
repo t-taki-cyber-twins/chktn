@@ -162,7 +162,7 @@ class AppOfficialCompanySearchModal extends HTMLElement {
     const mockResults = [
       {
         number: '1234567890123',
-        name: '株式会社CHKTNテクノロジー',
+        name: '株式会社WT2Mテクノロジー',
         kana: 'カブシキガイシャシーエイチケーティーエヌテクノロジー',
         postalCode: '150-0002',
         prefecture: '東京都',
@@ -172,7 +172,7 @@ class AppOfficialCompanySearchModal extends HTMLElement {
       },
       {
         number: '9876543210987',
-        name: 'CHKTNソリューションズ株式会社',
+        name: 'WT2Mソリューションズ株式会社',
         kana: 'シーエイチケーティーエヌソリューションズカブシキガイシャ',
         postalCode: '530-0001',
         prefecture: '大阪府',

@@ -7,7 +7,7 @@ class AppHeader extends HTMLElement {
         this.innerHTML = `
             <header class="header">
                 <div class="header-left">
-                    <a href="top.html" class="logo">chktn</a>
+                    <a href="top.html" class="logo">wt2m</a>
                     
                     <!-- メッセージ管理 -->
                     <div class="header-dropdown">
