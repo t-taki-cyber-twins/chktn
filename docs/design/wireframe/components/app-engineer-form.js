@@ -295,6 +295,16 @@ class AppEngineerForm extends HTMLElement {
                                 </div>
                                 <p class="form-help-text">本システムの案件と紐づける場合は選択してください。紐づけない場合は空欄のまま入力してください。</p>
                             </div>
+                            <div class="form-group form-group-full">
+                                <label for="operation-status" class="form-label">稼働ステータス</label>
+                                <select id="operation-status" name="operation-status" class="form-select">
+                                    <option value="">選択してください</option>
+                                    <option value="waiting_entry">入場待ち</option>
+                                    <option value="working">稼働済み</option>
+                                    <option value="leaving_soon">退場予定</option>
+                                    <option value="left">退場済み</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="project-start-date" class="form-label">開始日</label>
                                 <input type="date" id="project-start-date" name="project-start-date" class="form-input">
