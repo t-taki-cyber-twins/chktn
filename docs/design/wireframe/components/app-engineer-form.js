@@ -44,7 +44,8 @@ class AppEngineerForm extends HTMLElement {
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
                             <label for="engineer-memo" class="form-label" style="margin-bottom: 0;">エンジニアメモ</label>
                             <button type="button" class="btn btn-info btn-sm" id="extract-engineer-memo-btn"><i class="icon-ai"></i>エンジニアメモから情報抽出</button>
-                            <button type="button" class="btn btn-success btn-sm" id="generate-engineer-memo-btn"><i class="icon-ai"></i>エンジニアメモを生成</button>
+                            <button type="button" class="btn btn-success btn-sm" id="generate-engineer-memo-btn">エンジニアメモを生成</button>
+                            <button type="button" class="btn btn-secondary btn-sm" id="edit-engineer-memo-template-btn">エンジニアメモテンプレート編集</button>
                         </div>
                         <textarea id="engineer-memo" name="engineer-memo" class="form-textarea" rows="10" placeholder="氏名　　：T.T（男性）\n年齢　　：40歳\n最寄り駅：両国駅\n国籍　　：日本\n経験年数：3年1ヶ月\n稼働時期：即日\n単価　　：70万円\n\n■スキル：\nReact/React Native/JavaScript/Next.js/TypeScript/Swift\n■工程：\n基本設計/詳細設計/実装/テスト/運用・保守\n\n■コメント\n・エンジニア歴は約3年です。\n・フロントエンジニアとして、React、Next.js、TypeScript、React Nativeを活用した開発を中心に携わってきました。\n・直近では、Swiftを活用したiOSネイティブ開発を行っていました。\n・設計～運用・保守まで1人称で対応可能です。\n　技術力も含めて伸びしろがあるエンジニアです。コミュニケーション面について心配はいらないかと思います。"></textarea>
                     </div>

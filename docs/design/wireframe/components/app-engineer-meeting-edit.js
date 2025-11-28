@@ -58,7 +58,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                             <div class="meeting-info-section">
                                 <h4 class="meeting-info-section-title">
                                     エンジニア情報
-                                    <a href="public-engineer-detail.html" target="_blank" class="btn btn-outline-primary btn-sm">詳細</a>
+                                    <a href="public-engineer-detail.html#engineer-detail-form" target="_blank" class="btn btn-outline-primary btn-sm">詳細</a>
                                 </h4>
                                 <div class="meeting-info-grid">
                                     <div class="meeting-info-item">
@@ -80,7 +80,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                             <div class="meeting-info-section">
                                 <h4 class="meeting-info-section-title">
                                     案件情報
-                                    <a href="public-project-detail.html" target="_blank" class="btn btn-outline-primary btn-sm">詳細</a>
+                                    <a href="public-project-detail.html#project-detail-form" target="_blank" class="btn btn-outline-primary btn-sm">詳細</a>
                                 </h4>
                                 <div class="meeting-info-grid">
                                     <div class="meeting-info-item">
@@ -143,10 +143,6 @@ class AppEngineerMeetingEdit extends HTMLElement {
                                             <input type="text" id="meeting-location" name="meeting-location" class="form-input" placeholder="例: 東京都千代田区 会議室A">
                                         </div>
                                         <div class="form-group form-group-full">
-                                            <label for="meeting-note" class="form-label">面談備考</label>
-                                            <textarea id="meeting-note" name="meeting-note" class="form-textarea" rows="4" placeholder="面談に関する備考を入力してください"></textarea>
-                                        </div>
-                                        <div class="form-group form-group-full">
                                             <label for="meeting-private-note" class="form-label">面談非公開メモ</label>
                                             <textarea id="meeting-private-note" name="meeting-private-note" class="form-textarea" rows="4" placeholder="社内のみで共有する非公開メモを入力してください"></textarea>
                                         </div>
@@ -171,12 +167,16 @@ class AppEngineerMeetingEdit extends HTMLElement {
                                             <input type="number" id="operation-price" name="operation-price" class="form-input" placeholder="万円" min="0">
                                         </div>
                                         <div class="form-group form-group-full">
-                                            <label for="operation-note" class="form-label">備考</label>
-                                            <textarea id="operation-note" name="operation-note" class="form-textarea" rows="4" placeholder="稼働に関する備考を入力してください"></textarea>
+                                            <label for="project-work-content" class="form-label">業務内容</label>
+                                            <textarea id="project-work-content" name="project-work-content" class="form-textarea" rows="3" placeholder="業務内容を入力してください"></textarea>
                                         </div>
                                         <div class="form-group form-group-full">
-                                            <label for="operation-private-note" class="form-label">非公開メモ</label>
-                                            <textarea id="operation-private-note" name="operation-private-note" class="form-textarea" rows="4" placeholder="社内のみで共有する非公開メモを入力してください"></textarea>
+                                            <label for="project-languages-tools" class="form-label">言語・ツール</label>
+                                            <textarea id="project-languages-tools" name="project-languages-tools" class="form-textarea" rows="2" placeholder="使用した言語・ツールを入力してください"></textarea>
+                                        </div>
+                                        <div class="form-group form-group-full">
+                                            <label for="project-role-process" class="form-label">役割・工程</label>
+                                            <textarea id="project-role-process" name="project-role-process" class="form-textarea" rows="2" placeholder="役割・工程を入力してください"></textarea>
                                         </div>
                                     </div>
                                 </div>

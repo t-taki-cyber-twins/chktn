@@ -32,7 +32,8 @@ class AppProjectForm extends HTMLElement {
                             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
                                 <label for="project-description" class="form-label" style="margin-bottom: 0;">案件メモ</label>
                                 <button type="button" class="btn btn-info btn-sm" id="extract-project-memo-btn"><i class="icon-ai"></i>案件メモから情報抽出</button>
-                                <button type="button" class="btn btn-success btn-sm" id="generate-project-memo-btn"><i class="icon-ai"></i>案件メモを生成</button>
+                                <button type="button" class="btn btn-success btn-sm" id="generate-project-memo-btn">案件メモを生成</button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="edit-project-memo-template-btn">案件メモテンプレート編集</button>
                             </div>
                             <textarea id="project-description" name="project-description" class="form-textarea" rows="10" placeholder="案件の詳細を入力してください"></textarea>
                         </div>
@@ -68,18 +69,8 @@ class AppProjectForm extends HTMLElement {
                             <p class="form-help-text">案件を担当する社員を選択します(複数選択可)。</p>
                         </div>
                         <div class="form-group form-group-full">
-                            <label for="mailing-list" class="form-label">メーリングリスト</label>
-                            <div class="form-select-wrapper">
-                                <button type="button" class="form-select-btn" id="mailing-list-btn">
-                                    <span class="form-select-text">選択してください</span>
-                                    <span class="form-select-arrow">▼</span>
-                                </button>
-                                <div class="form-selected-values" id="mailing-list-selected" style="display: none;">
-                                    <div class="selected-values-list" id="mailing-list-selected-list"></div>
-                                    <button type="button" class="selected-value-remove-all" id="mailing-list-remove-all">すべて解除</button>
-                                </div>
-                            </div>
-                            <p class="form-help-text">案件情報を通知するメーリングリストを選択します（複数選択可）。</p>
+                            <label for="project-summary" class="form-label">案件概要</label>
+                            <textarea id="project-summary" name="project-summary" class="form-textarea" rows="3" placeholder="案件の概要を入力してください"></textarea>
                         </div>
                     </div>
                 </div>
@@ -87,6 +78,14 @@ class AppProjectForm extends HTMLElement {
                 <!-- スキル情報セクション -->
                 <div class="form-section">
                     <h2 class="section-title">案件スキル</h2>
+                    <div class="form-group form-group-full">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+                            <label for="skill-memo" class="form-label">スキルメモ</label>
+                            <button type="button" class="btn btn-info btn-sm" id="extract-skill-memo-btn"><i class="icon-ai"></i>スキルメモからスキル情報を抽出</button>
+                        </div>
+                        <textarea id="skill-memo" name="skill-memo" class="form-textarea"></textarea>
+                    </div>
+                    <h3 class="section-title">必須スキル</h3>
                     <div class="form-group form-group-full">
                         <div class="skill-selector">
                             <div class="skill-select-header">
@@ -106,9 +105,25 @@ class AppProjectForm extends HTMLElement {
                             </div>
                         </div>
                     </div>
+                    <h3 class="section-title">尚可スキル</h3>
                     <div class="form-group form-group-full">
-                        <label for="skill-memo" class="form-label">スキルメモ</label>
-                        <textarea id="skill-memo" name="skill-memo" class="form-textarea"></textarea>
+                        <div class="skill-selector">
+                            <div class="skill-select-header">
+                                <select id="skill-master" class="form-select">
+                                    <option value="">スキルを選択してください</option>
+                                    <option value="1">Java</option>
+                                    <option value="2">Spring Boot</option>
+                                    <option value="3">React</option>
+                                    <option value="4">PostgreSQL</option>
+                                    <option value="5">AWS</option>
+                                </select>
+                                <input type="text" id="skill-custom" class="form-input skill-custom-input" placeholder="マスタにない場合は新規追加">
+                                <button type="button" class="btn btn-secondary skill-add-btn">追加</button>
+                            </div>
+                            <div class="skill-list" id="skill-list">
+                                <!-- 選択されたスキルがここに表示される -->
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -123,6 +138,11 @@ class AppProjectForm extends HTMLElement {
                         <div class="form-group">
                             <label for="end-date" class="form-label">終了日</label>
                             <input type="date" id="end-date" name="end-date" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="interview-number" class="form-label">面談回数 <span class="form-required">*</span></label>
+                            <input type="number" id="interview-number" name="interview-number" class="form-input" min="1">
                         </div>
                         <div class="form-group">
                             <label for="member-number" class="form-label">募集人数</label>
@@ -143,7 +163,7 @@ class AppProjectForm extends HTMLElement {
                         </div>
 
                         <div class="form-group">
-                            <label for="work-location" class="form-label">勤務地</label>
+                            <label for="work-location" class="form-label">勤務地 <span class="form-required">*</span></label>
                             <input type="text" id="work-location" name="work-location" class="form-input" placeholder="例: 東京都千代田区">
                         </div>
                         <div class="form-group">
@@ -160,7 +180,7 @@ class AppProjectForm extends HTMLElement {
                         </div>
 
                         <div class="form-group">
-                            <label for="contract-type" class="form-label">契約形態</label>
+                            <label for="contract-type" class="form-label">契約形態 <span class="form-required">*</span></label>
                             <select id="contract-type" name="contract-type" class="form-select">
                                 <option value="">選択してください</option>
                                 <option value="subcontracting">業務委託(準委任)</option>
@@ -178,6 +198,11 @@ class AppProjectForm extends HTMLElement {
                                 <input type="number" id="desired-price-max" name="desired-price-max" class="form-input" placeholder="最大(万円)" min="0">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="payment-site" class="form-label">支払いサイト <span class="form-required">*</span></label>
+                            <input type="text" id="payment-site" name="payment-site" class="form-input" placeholder="30日（月末締め翌月末支払い）">
+                        </div>
                         <div class="form-group">
                             <label for="payment-time" class="form-label">精算時間</label>
                             <div class="form-grid">
@@ -185,11 +210,6 @@ class AppProjectForm extends HTMLElement {
                                 <input type="number" id="payment-time-max" name="payment-time-max" class="form-input" placeholder="最大(h)" min="0">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="payment-site" class="form-label">支払いサイト</label>
-                            <input type="text" id="payment-site" name="payment-site" class="form-input" placeholder="30日（月末締め翌月末支払い）">
-                        </div>
-                        
                     </div>
                 </div>
 
