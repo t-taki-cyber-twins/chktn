@@ -206,7 +206,7 @@
                                 </thead>
                                 <tbody id="template-table-body">
                                     <tr data-template-id="1">
-                                        <td>稼働確認テンプレート</td>
+                                        <td>通常案件メモ</td>
                                         <td>案件メモ</td>
                                         <td>
                                             ------------------------------------------------------------------<br/>
@@ -225,23 +225,8 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr data-template-id="2">
-                                        <td>商談進捗テンプレート</td>
-                                        <td>案件メモ</td>
-                                        <td>{{会社名}}様との商談を実施。{{案件名}}案件について...</td>
-                                        <td>
-                                            <span class="badge badge-info">会社名</span>
-                                            <span class="badge badge-info">案件名</span>
-                                        </td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button type="button" class="btn btn-secondary btn-sm template-edit-btn" data-template-id="2">編集</button>
-                                                <button type="button" class="btn btn-secondary btn-sm template-delete-btn" data-template-id="2">削除</button>
-                                            </div>
-                                        </td>
-                                    </tr>
                                     <tr data-template-id="3">
-                                        <td>スキル確認テンプレート</td>
+                                        <td>通常スキルメモ</td>
                                         <td>エンジニアメモ</td>
                                         <td>
                                             --------------------------------------<br/>
@@ -262,11 +247,17 @@
                                         </td>
                                     </tr>
                                     <tr data-template-id="4">
-                                        <td>定期面談テンプレート</td>
+                                        <td>AIスキルメモ</td>
                                         <td>エンジニアメモ</td>
-                                        <td>{{エンジニア氏名}}さんと定期面談を実施。現在の業務状況や今後のキャリアプランについて...</td>
+                                        <td>
+                                            --------------------------------------<br/>
+                                            氏名 ： {{エンジニア氏名}}（{{性別}}）<br/>
+                                            備考 ： {{AI生成:案件経歴}}
+                                        </td>
                                         <td>
                                             <span class="badge badge-info">エンジニア氏名</span>
+                                            <span class="badge badge-info">性別</span>
+                                            <span class="badge badge-info">AI生成:案件経歴</span>
                                         </td>
                                         <td>
                                             <div class="table-actions">

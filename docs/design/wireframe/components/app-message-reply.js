@@ -27,9 +27,17 @@ class AppMessageReply extends HTMLElement {
                                 <label for="reply-body" class="form-label">本文 <span class="form-required">*</span></label>
                                 <textarea id="reply-body" name="body" class="form-textarea" rows="10" placeholder="返信内容を入力してください" required></textarea>
                             </div>
+                            
                         </form>
                     </div>
                     <div class="modal-footer message-reply-modal-footer">
+                        <div class="form-group">
+                            <label class="form-checkbox-label">
+                                <input type="checkbox" id="reply-internal-notification" name="internal-notification" class="form-checkbox">
+                                社内通知メールを送信
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-info message-reply-preview-btn">メールプレビュー</button>
                         <button type="button" class="btn btn-warning message-reply-cancel-btn">キャンセル</button>
                         <button type="button" class="btn btn-primary message-reply-submit-btn">送信</button>
                     </div>
@@ -61,6 +69,12 @@ class AppMessageReply extends HTMLElement {
         const submitBtn = this.querySelector('.message-reply-submit-btn');
         if (submitBtn) {
             submitBtn.addEventListener('click', () => this.handleSubmit());
+        }
+
+        // プレビューボタン
+        const previewBtn = this.querySelector('.message-reply-preview-btn');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', () => this.handlePreview());
         }
     }
 
@@ -129,6 +143,9 @@ class AppMessageReply extends HTMLElement {
     /**
      * 送信処理
      */
+    /**
+     * 送信処理
+     */
     handleSubmit() {
         const form = this.querySelector('#message-reply-form');
         if (!form) return;
@@ -143,7 +160,8 @@ class AppMessageReply extends HTMLElement {
             threadId: this.threadId,
             parentMessageId: this.parentMessageId,
             subject: formData.get('subject'),
-            body: formData.get('body')
+            body: formData.get('body'),
+            internalNotification: this.querySelector('#reply-internal-notification').checked
         };
 
         // カスタムイベントを発火
@@ -154,6 +172,37 @@ class AppMessageReply extends HTMLElement {
 
         // モーダルを閉じる
         this.close();
+    }
+
+    /**
+     * プレビュー処理
+     */
+    handlePreview() {
+        const form = this.querySelector('#message-reply-form');
+        if (!form) return;
+
+        const formData = new FormData(form);
+        const subject = formData.get('subject');
+        const body = formData.get('body');
+
+        // app-email-previewコンポーネントを取得（なければ動的に生成）
+        let previewModal = document.querySelector('app-email-preview');
+        if (!previewModal) {
+            previewModal = document.createElement('app-email-preview');
+            document.body.appendChild(previewModal);
+        }
+
+        // プレビュー表示
+        previewModal.open({
+            to: '社内通知用メーリングリスト', // 仮の宛先
+            title: subject,
+            body: body
+        }, {
+            onUpdateWithSend: () => {
+                // 送信して更新の場合、送信処理を実行
+                this.handleSubmit();
+            }
+        });
     }
 }
 

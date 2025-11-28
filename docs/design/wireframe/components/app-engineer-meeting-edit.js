@@ -527,7 +527,11 @@ class AppEngineerMeetingEdit extends HTMLElement {
             cancelBtn.addEventListener('click', () => this.close());
         }
 
-        // 更新ボタンの処理は外部JavaScript（engineer-meeting-edit.js）で実装
+        // 更新ボタンの処理
+        const updateBtn = this.querySelector('.meeting-edit-update-btn');
+        if (updateBtn) {
+            updateBtn.addEventListener('click', () => this.handleUpdate());
+        }
 
         // 稼働ステータス変更
         const operationStatusSelect = this.querySelector('#operation-status');
@@ -751,6 +755,80 @@ class AppEngineerMeetingEdit extends HTMLElement {
     /**
      * メッセージ返信の処理
      */
+    /**
+     * 更新ボタンクリック時の処理
+     */
+    handleUpdate() {
+        // 現在のステータスを取得
+        const currentRound = this.meetingRounds.find(r => r.roundNumber === this.activeRound);
+        if (!currentRound) return;
+
+        // ステータスに応じたテンプレートを取得
+        const template = this.getTemplateByStatus(currentRound.status);
+        
+        // 返信モーダルを開く
+        const replyComponent = this.querySelector('app-message-reply');
+        if (replyComponent) {
+            // スレッドIDを取得（最後のスレッドを使用）
+            const threads = this.getMockMessageThreads();
+            const lastThread = threads[threads.length - 1];
+            
+            // 親メッセージIDを取得（スレッドの最後のメッセージ）
+            let parentMessageId = lastThread.parentMessage.id;
+            let originalSubject = lastThread.parentMessage.subject;
+            
+            if (lastThread.children && lastThread.children.length > 0) {
+                const lastChild = lastThread.children[lastThread.children.length - 1];
+                parentMessageId = lastChild.id;
+                originalSubject = lastChild.subject;
+            }
+
+            // モーダルを開く前に、テンプレートをセットするためのハック
+            // app-message-replyのopenメソッドはbodyを受け取らないため、
+            // open後にDOMを操作するか、openメソッドを拡張する必要があるが、
+            // ここではopen後にDOMを操作する方法をとる
+            replyComponent.open({
+                mode: 'reply',
+                threadId: lastThread.id,
+                parentMessageId: parentMessageId,
+                originalSubject: originalSubject
+            });
+
+            // 本文にテンプレートをセット
+            const bodyTextarea = replyComponent.querySelector('#reply-body');
+            if (bodyTextarea) {
+                bodyTextarea.value = template;
+            }
+        }
+    }
+
+    /**
+     * ステータスに応じたテンプレートを取得
+     */
+    getTemplateByStatus(status) {
+        switch (status) {
+            case 'proposal': // 調整中
+                return '面談の日程調整をお願いいたします。\n\n候補日：\n1. \n2. \n3. ';
+            case 'pending': // 面談確定
+                return '面談日時が確定いたしました。\n\n日時：YYYY/MM/DD HH:mm\n場所：';
+            case 'canceled': // 面談中止
+                return '誠に申し訳ございませんが、面談を中止させていただきたく存じます。\n\n理由：';
+            case 'waiting_result': // 結果待ち
+                return '面談ありがとうございました。\n結果につきましては、追ってご連絡させていただきます。';
+            case 'passed': // 合格
+                return '面談の結果、合格となりました。\n\n今後の進め方についてご相談させてください。';
+            case 'failed': // 不合格
+                return '厳正なる選考の結果、誠に残念ながら今回は見送らせていただくことになりました。\nご希望に添えず申し訳ございませんが、何卒ご了承くださいますようお願い申し上げます。';
+            case 'rejected': // 辞退
+                return 'この度は辞退のご連絡をいただき、承知いたしました。\nまたの機会がございましたら、よろしくお願いいたします。';
+            default:
+                return 'ステータスが更新されました。';
+        }
+    }
+
+    /**
+     * メッセージ返信の処理
+     */
     handleMessageReply(replyData) {
         // TODO: APIに送信
         console.log('メッセージ返信:', replyData);
@@ -760,10 +838,18 @@ class AppEngineerMeetingEdit extends HTMLElement {
         const messageListComponent = this.querySelector('app-message-list');
         if (messageListComponent) {
             const threads = this.getMockMessageThreads();
-            messageListComponent.displayThreads(threads);
+            // 新しいメッセージを追加するロジックはモックなので省略し、アラートのみ表示
+            // messageListComponent.displayThreads(threads);
         }
         
-        alert('返信を送信しました。');
+        let message = 'ステータスを更新し、メッセージを送信しました。';
+        if (replyData.internalNotification) {
+            message += '\n社内通知メールを送信しました。';
+        }
+        alert(message);
+        
+        // モーダルを閉じる
+        this.close();
     }
 }
 

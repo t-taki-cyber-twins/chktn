@@ -45,8 +45,8 @@ class AppEmailPreview extends HTMLElement {
                     </div>
                     <div class="modal-footer email-preview-modal-footer">
                         <button type="button" class="btn btn-warning email-preview-cancel-btn">キャンセル</button>
-                        <button type="button" class="btn btn-info email-preview-update-without-send-btn">送信しないで更新</button>
-                        <button type="button" class="btn btn-success email-preview-update-with-send-btn">送信して更新</button>
+                        <!--button type="button" class="btn btn-info email-preview-update-without-send-btn">送信しないで更新</button-->
+                        <!--button type="button" class="btn btn-success email-preview-update-with-send-btn">送信して更新</button-->
                     </div>
                 </div>
             </div>

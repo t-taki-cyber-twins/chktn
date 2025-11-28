@@ -32,7 +32,13 @@ class AppProjectForm extends HTMLElement {
                             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
                                 <label for="project-description" class="form-label" style="margin-bottom: 0;">案件メモ</label>
                                 <button type="button" class="btn btn-info btn-sm" id="extract-project-memo-btn"><i class="icon-ai"></i>案件メモから情報抽出</button>
-                                <button type="button" class="btn btn-success btn-sm" id="generate-project-memo-btn">案件メモを生成</button>
+                                &nbsp;
+                                <select id="project-memo-template-select" class="form-select" style="width: auto; display: inline-block;">
+                                    <option value="">テンプレート選択</option>
+                                    <option value="1">通常案件メモ</option>
+                                    <option value="2">AI案件メモ</option>
+                                </select>
+                                <button type="button" class="btn btn-success btn-sm" id="generate-project-memo-btn"><i class="icon-ai"></i>案件メモを生成</button>
                                 <button type="button" class="btn btn-secondary btn-sm" id="edit-project-memo-template-btn">案件メモテンプレート編集</button>
                             </div>
                             <textarea id="project-description" name="project-description" class="form-textarea" rows="10" placeholder="案件の詳細を入力してください"></textarea>
