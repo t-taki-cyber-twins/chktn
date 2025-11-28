@@ -28,18 +28,6 @@ class AppEngineerForm extends HTMLElement {
                             <option value="unavailable">営業不可</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="engineer-status" class="form-label">ステータス <span class="form-required">*</span></label>
-                        <select id="engineer-status" name="engineer-status" class="form-select">
-                            <option value="available">即日可能</option>
-                            <option value="working_internal">稼働中(社内待機)</option>
-                            <option value="working_home">稼働中(自宅待機)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="available-date" class="form-label">稼働可能日</label>
-                        <input type="date" id="available-date" name="available-date" class="form-input">
-                    </div>
                     <div class="form-group form-group-full">
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
                             <label for="engineer-memo" class="form-label" style="margin-bottom: 0;">エンジニアメモ</label>
@@ -244,9 +232,11 @@ class AppEngineerForm extends HTMLElement {
                                     <thead>
                                         <tr>
                                             <th>案件名</th>
-                                            <th>開始日</th>
-                                            <th>終了日</th>
-                                            <th>単価</th>
+                                            <th>案件提供会社</th>
+                                            <th>ステータス</th>
+                                            <th>面談日時</th>
+                                            <th>稼働開始</th>
+                                            <th>稼働終了</th>
                                             <th>アクション</th>
                                         </tr>
                                     </thead>
@@ -300,7 +290,7 @@ class AppEngineerForm extends HTMLElement {
                                 <select id="operation-status" name="operation-status" class="form-select">
                                     <option value="">選択してください</option>
                                     <option value="waiting_entry">入場待ち</option>
-                                    <option value="working">稼働済み</option>
+                                    <option value="working">稼働中</option>
                                     <option value="leaving_soon">退場予定</option>
                                     <option value="left">退場済み</option>
                                 </select>
@@ -347,19 +337,25 @@ class AppEngineerForm extends HTMLElement {
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const targetTab = button.getAttribute('data-tab');
-
-                // すべてのタブボタンとコンテンツからactiveクラスを削除
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-
-                // クリックされたタブボタンと対応するコンテンツにactiveクラスを追加
-                button.classList.add('active');
-                const targetContent = this.querySelector(`#tab-${targetTab}`);
-                if (targetContent) {
-                    targetContent.classList.add('active');
-                }
+                this.activateTab(targetTab);
             });
         });
+    }
+
+    activateTab(tabName) {
+        const tabButtons = this.querySelectorAll('.tab-button');
+        const tabContents = this.querySelectorAll('.tab-content');
+
+        // すべてのタブボタンとコンテンツからactiveクラスを削除
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        // 指定されたタブボタンとコンテンツにactiveクラスを追加
+        const targetButton = this.querySelector(`.tab-button[data-tab="${tabName}"]`);
+        const targetContent = this.querySelector(`#tab-${tabName}`);
+
+        if (targetButton) targetButton.classList.add('active');
+        if (targetContent) targetContent.classList.add('active');
     }
 
     initSkillSheetUpload() {
@@ -639,15 +635,53 @@ class AppEngineerForm extends HTMLElement {
             if (!projectTableBody) return;
 
             if (this.projects.length === 0) {
-                projectTableBody.innerHTML = '<tr><td colspan="5" class="no-results">案件が登録されていません</td></tr>';
+                projectTableBody.innerHTML = '<tr><td colspan="7" class="no-results">案件が登録されていません</td></tr>';
                 return;
             }
 
-            projectTableBody.innerHTML = this.projects.map((project, index) => {
+            // 日付で降順ソート
+            // 優先順位: 稼働終了 > 稼働開始 > 面談日時
+            const sortedProjects = [...this.projects].sort((a, b) => {
+                const getDateValue = (project) => {
+                    if (project.endDate) return new Date(project.endDate).getTime();
+                    if (project.startDate) return new Date(project.startDate).getTime();
+                    if (project.interviewDate) return new Date(project.interviewDate).getTime();
+                    return 0; // 日付がない場合は一番最後（または最初）にするか？ここでは0（最古）扱い
+                };
+
+                const dateA = getDateValue(a);
+                const dateB = getDateValue(b);
+
+                return dateB - dateA; // 降順
+            });
+
+            projectTableBody.innerHTML = sortedProjects.map((project, index) => {
+                // 元の配列のインデックスを見つける（編集・削除用）
+                const originalIndex = this.projects.indexOf(project);
+
                 const startDate = project.startDate ? this.formatDate(project.startDate) : '-';
                 const endDate = project.endDate ? this.formatDate(project.endDate) : '-';
-                const price = project.price ? project.price + '万円' : '-';
                 const projectName = project.projectName || project.projectData?.name || '未紐づけ案件';
+                const companyName = project.companyName || '-';
+                
+                // ステータスバッジの生成
+                let statusBadge = '-';
+                if (project.status) {
+                    const statusMap = {
+                        'waiting_entry': { text: '入場待ち', class: 'badge-status-pending' },
+                        'working': { text: '稼働中', class: 'badge-status-active' },
+                        'leaving_soon': { text: '退場予定', class: 'badge-status-warning' },
+                        'left': { text: '退場済み', class: 'badge-status-inactive' },
+                        'interview_pending': { text: '面談予定', class: 'badge-status-pending' },
+                        'interview_completed': { text: '面談完了', class: 'badge-status-completed' },
+                        'interview_rejected': { text: '不合格', class: 'badge-status-inactive' },
+                        'interview_declined': { text: '辞退', class: 'badge-status-inactive' }
+                    };
+                    const statusInfo = statusMap[project.status] || { text: project.status, class: 'badge-secondary' };
+                    statusBadge = `<span class="badge ${statusInfo.class}">${statusInfo.text}</span>`;
+                }
+
+                const interviewDate = project.interviewDate ? this.formatDate(project.interviewDate, true) : '-';
                 
                 // 案件名のリンクを条件分岐で設定
                 let projectLinkHtml = '';
@@ -656,7 +690,9 @@ class AppEngineerForm extends HTMLElement {
                     const linkUrl = isOwnProject 
                         ? `project-edit.html?id=${project.projectId}` 
                         : `public-project-detail.html?id=${project.projectId}`;
-                    projectLinkHtml = `<a href="${linkUrl}" class="table-link">${this.escapeHtml(projectName)}</a>`;
+                    
+                    const ownBadge = isOwnProject ? '<span class="badge-own-item">自</span>' : '';
+                    projectLinkHtml = `<a href="${linkUrl}" class="table-link">${ownBadge}${this.escapeHtml(projectName)}</a>`;
                 } else {
                     projectLinkHtml = this.escapeHtml(projectName);
                 }
@@ -666,13 +702,15 @@ class AppEngineerForm extends HTMLElement {
                         <td>
                             ${projectLinkHtml}
                         </td>
+                        <td>${this.escapeHtml(companyName)}</td>
+                        <td>${statusBadge}</td>
+                        <td>${interviewDate}</td>
                         <td>${startDate}</td>
                         <td>${endDate}</td>
-                        <td>${price}</td>
                         <td>
                             <div class="table-actions">
-                                <button type="button" class="btn btn-secondary btn-sm project-edit-btn" data-index="${index}">編集</button>
-                                <button type="button" class="btn btn-danger btn-sm project-delete-btn" data-index="${index}">削除</button>
+                                <button type="button" class="btn btn-secondary btn-sm project-edit-btn" data-index="${originalIndex}">編集</button>
+                                <button type="button" class="btn btn-danger btn-sm project-delete-btn" data-index="${originalIndex}">削除</button>
                             </div>
                         </td>
                     </tr>
@@ -699,7 +737,7 @@ class AppEngineerForm extends HTMLElement {
         };
 
         // 案件編集モーダルを開く
-        const openProjectEditModal = (index) => {
+        this.openProjectEdit = (index) => {
             if (index < 0 || index >= this.projects.length) return;
 
             editingProjectIndex = index;
@@ -726,6 +764,7 @@ class AppEngineerForm extends HTMLElement {
             this.querySelector('#project-work-content').value = project.workContent || '';
             this.querySelector('#project-languages-tools').value = project.languagesTools || '';
             this.querySelector('#project-role-process').value = project.roleProcess || '';
+            this.querySelector('#operation-status').value = project.status || ''; // ステータスもセット
 
             // モーダルタイトルを変更
             const modalTitle = projectAddModal.querySelector('.modal-title');
@@ -738,6 +777,8 @@ class AppEngineerForm extends HTMLElement {
                 projectAddModal.classList.add('active');
             }
         };
+
+        const openProjectEditModal = this.openProjectEdit;
 
         // 案件追加モーダルを開く（新規追加）
         const openProjectAddModal = () => {
@@ -1042,8 +1083,6 @@ class AppEngineerForm extends HTMLElement {
         if (!data) return;
 
         if (data.salesStatus) this.querySelector('#sales-status').value = data.salesStatus;
-        if (data.engineerStatus) this.querySelector('#engineer-status').value = data.engineerStatus;
-        if (data.availableDate) this.querySelector('#available-date').value = data.availableDate;
         if (data.engineerMemo) this.querySelector('#engineer-memo').value = data.engineerMemo;
         if (data.desiredLocation) this.querySelector('#desired-location').value = data.desiredLocation;
         if (data.desiredRemote) this.querySelector('#desired-remote').value = data.desiredRemote;

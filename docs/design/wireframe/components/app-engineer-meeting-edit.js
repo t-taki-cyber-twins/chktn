@@ -157,7 +157,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                                             <select id="operation-status" name="operation-status" class="form-select">
                                                 <option value="">選択してください</option>
                                                 <option value="waiting_entry">入場待ち</option>
-                                                <option value="working">稼働済み</option>
+                                                <option value="working">稼働中</option>
                                                 <option value="leaving_soon">退場予定</option>
                                                 <option value="left">退場済み</option>
                                             </select>
@@ -479,7 +479,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
         if (this.operationStatus) {
             const operationStatusMap = {
                 'waiting_entry': '入場待ち',
-                'working': '稼働済み',
+                'working': '稼働中',
                 'leaving_soon': '退場予定',
                 'left': '退場済み'
             };
