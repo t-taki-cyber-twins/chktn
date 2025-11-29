@@ -53,17 +53,33 @@ class AppTenantEditModal extends HTMLElement {
         .billing-item {
           display: flex;
           justify-content: space-between;
-          padding: 8px 0;
+          align-items: center;
+          padding: 12px 0;
           border-bottom: 1px solid #f0f0f0;
           font-size: 14px;
         }
         
         .billing-date {
           color: #666;
+          width: 100px;
         }
         
         .billing-amount {
           font-weight: 500;
+          width: 100px;
+        }
+
+        .billing-actions {
+          display: flex;
+          gap: 8px;
+        }
+
+        .btn-icon {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 4px 8px;
+          font-size: 12px;
         }
       </style>
 
@@ -79,10 +95,10 @@ class AppTenantEditModal extends HTMLElement {
               <h3 class="section-title" style="font-size: 16px;">プラン情報</h3>
             </div>
             <div class="plan-info">
-              <div class="plan-name">スタンダードプラン</div>
+              <div class="plan-name">ダブルプラン</div>
               <div class="plan-price">月額 50,000円（税抜）</div>
               <div class="mt-2">
-                <button class="btn btn-secondary btn-sm">プラン変更</button>
+                <button class="btn btn-secondary btn-sm" id="change-plan-btn">プラン変更</button>
               </div>
             </div>
 
@@ -94,7 +110,7 @@ class AppTenantEditModal extends HTMLElement {
                 <span>💳</span>
                 <span>クレジットカード (****-****-****-1234)</span>
               </div>
-              <button class="btn btn-secondary btn-sm">お支払い情報変更</button>
+              <button class="btn btn-secondary btn-sm" id="change-payment-btn">お支払い情報変更</button>
             </div>
 
             <div class="section-header">
@@ -104,14 +120,38 @@ class AppTenantEditModal extends HTMLElement {
               <div class="billing-item">
                 <span class="billing-date">2023/10/31</span>
                 <span class="billing-amount">¥55,000</span>
+                <div class="billing-actions">
+                  <button class="btn btn-outline-secondary btn-icon">
+                    📄 請求書
+                  </button>
+                  <button class="btn btn-outline-secondary btn-icon">
+                    🧾 領収書
+                  </button>
+                </div>
               </div>
               <div class="billing-item">
                 <span class="billing-date">2023/09/30</span>
                 <span class="billing-amount">¥55,000</span>
+                <div class="billing-actions">
+                  <button class="btn btn-outline-secondary btn-icon">
+                    📄 請求書
+                  </button>
+                  <button class="btn btn-outline-secondary btn-icon">
+                    🧾 領収書
+                  </button>
+                </div>
               </div>
               <div class="billing-item">
                 <span class="billing-date">2023/08/31</span>
                 <span class="billing-amount">¥55,000</span>
+                <div class="billing-actions">
+                  <button class="btn btn-outline-secondary btn-icon">
+                    📄 請求書
+                  </button>
+                  <button class="btn btn-outline-secondary btn-icon">
+                    🧾 領収書
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -128,6 +168,8 @@ class AppTenantEditModal extends HTMLElement {
     const overlay = this.shadowRoot.getElementById('overlay');
     const closeBtn = this.shadowRoot.getElementById('close-btn');
     const cancelBtn = this.shadowRoot.getElementById('cancel-btn');
+    const changePlanBtn = this.shadowRoot.getElementById('change-plan-btn');
+    const changePaymentBtn = this.shadowRoot.getElementById('change-payment-btn');
 
     const close = () => {
       modal.classList.remove('active');
@@ -136,10 +178,33 @@ class AppTenantEditModal extends HTMLElement {
     overlay.addEventListener('click', close);
     closeBtn.addEventListener('click', close);
     cancelBtn.addEventListener('click', close);
+
+    changePlanBtn.addEventListener('click', () => {
+      const planModal = document.getElementById('plan-selection-modal');
+      if (planModal) planModal.open();
+    });
+
+    changePaymentBtn.addEventListener('click', () => {
+      const paymentModal = document.getElementById('payment-method-modal');
+      if (paymentModal) paymentModal.open();
+    });
   }
 
   open() {
     this.shadowRoot.getElementById('modal').classList.add('active');
+  }
+
+  setAdminMode(isAdmin) {
+    const changePlanBtn = this.shadowRoot.getElementById('change-plan-btn');
+    const changePaymentBtn = this.shadowRoot.getElementById('change-payment-btn');
+    
+    if (isAdmin) {
+      changePlanBtn.style.display = 'none';
+      changePaymentBtn.style.display = 'none';
+    } else {
+      changePlanBtn.style.display = 'inline-block';
+      changePaymentBtn.style.display = 'inline-block';
+    }
   }
 }
 

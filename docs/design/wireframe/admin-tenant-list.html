@@ -9,6 +9,7 @@
   <script src="components/app-header.js" type="module"></script>
   <script src="components/app-sidebar.js" type="module"></script>
   <script src="components/app-pagination.js" type="module"></script>
+  <script src="components/app-tenant-edit-modal.js" type="module"></script>
 </head>
 <body>
   <div class="container">
@@ -107,15 +108,19 @@
     </div>
   </div>
 
+  <app-tenant-edit-modal id="tenant-edit-modal"></app-tenant-edit-modal>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // モックのイベントリスナー
-      const buttons = document.querySelectorAll('.btn-secondary.btn-sm');
+      const buttons = document.querySelectorAll('.btn-info.btn-sm, .btn-secondary.btn-sm');
       buttons.forEach(btn => {
         btn.addEventListener('click', (e) => {
           const action = e.target.textContent.trim();
           if (action === '詳細/編集') {
-            alert('テナント詳細・編集画面（またはモーダル）を開きます（未実装）');
+            const modal = document.getElementById('tenant-edit-modal');
+            modal.setAdminMode(true);
+            modal.open();
           } else if (action === '停止') {
             if(confirm('このテナントを停止しますか？')) {
               alert('テナントを停止しました');

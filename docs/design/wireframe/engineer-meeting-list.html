@@ -50,13 +50,10 @@
                         
                         <div class="search-form-group">
                             <label for="search-status" class="search-form-label">ステータス</label>
-                            <select id="search-status" name="status" class="search-form-select" multiple>
-                                <option value="">すべて</option>
-                                <option value="pending">面談予定</option>
-                                <option value="completed">面談完了</option>
-                                <option value="cancelled">キャンセル</option>
+                            <select id="search-status" name="status" class="search-form-select">
+                                <option value="pending">面談中のみ</option>
+                                <option value="completed">完了含む</option>
                             </select>
-                            <p class="search-form-help">Ctrlキー（MacはCmdキー）を押しながらクリックで複数選択</p>
                         </div>
                     </form>
                 </div>

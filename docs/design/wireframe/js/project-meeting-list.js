@@ -107,6 +107,7 @@ function displaySearchResults(results) {
  * テーブル行のHTMLを生成
  */
 function createTableRow(meeting) {
+    if(meeting.status === 'completed' || meeting.status === 'cancelled') return;
     // meetingDate includes time in the new mock data structure
     const meetingDateTime = meeting.meetingDate;
     const statusBadgeClass = meeting.statusLabel === '面談予定' ? 'badge-status-pending' : 
