@@ -148,6 +148,10 @@ function displayRecentMessages() {
     }
     
     messagesList.innerHTML = recentMessages.map(message => createMessageItem(message)).join('');
+    
+    // イベントリスナーを設定
+    initDetailButtons();
+    initReadStatusButtons();
 }
 
 /**
@@ -156,6 +160,16 @@ function displayRecentMessages() {
 function createMessageItem(message) {
     const formattedDate = formatDateTime(message.date);
     
+    // メッセージタイプに応じてアクションボタンを変更
+    // 質問・問い合わせ（100）の場合は「詳細」ボタン、それ以外は「面談編集」ボタン
+    const isInquiry = message.messageType === 100;
+    const actionButton = isInquiry
+        ? `<button type="button" class="btn btn-secondary btn-sm message-detail-btn" data-message-id="${message.id}">詳細</button>`
+        : `<button type="button" class="btn btn-primary btn-sm meeting-edit-btn" data-meeting-id="${message.meetingId || message.id}">面談編集</button>`;
+    
+    // 未読・既読ボタン
+    const readStatusBtn = `<button type="button" class="btn btn-sm ${message.isRead ? 'btn-outline-secondary' : 'btn-warning'} read-status-btn" data-message-id="${message.id}" data-is-read="${message.isRead}">${message.isRead ? '既読' : '未読'}</button>`;
+
     return `
         <li class="common-list-item">
             <div class="message-header">
@@ -163,9 +177,66 @@ function createMessageItem(message) {
                 <div class="message-date">${formattedDate}</div>
             </div>
             <div class="message-content">${escapeHtml(message.content)}</div>
-            <div class="message-from">送信者: ${escapeHtml(message.sender)}</div>
+            <div class="message-footer">
+                <div class="message-from">送信者: ${escapeHtml(message.sender)}</div>
+                <div class="message-actions">
+                    ${readStatusBtn}
+                    ${actionButton}
+                </div>
+            </div>
         </li>
     `;
+}
+
+/**
+ * 詳細ボタンと面談編集ボタンの初期化
+ */
+function initDetailButtons() {
+    // 詳細ボタン（質問・問い合わせの場合）
+    const detailButtons = document.querySelectorAll('.message-detail-btn');
+    detailButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const messageId = this.dataset.messageId;
+            // 面談詳細画面への遷移
+            window.location.href = `public-project-detail.html?messageId=${messageId}`;
+        });
+    });
+    
+    // 面談編集ボタン（質問・問い合わせ以外の場合）
+    const editButtons = document.querySelectorAll('.meeting-edit-btn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const meetingId = this.dataset.meetingId;
+            const modalComponent = document.querySelector('app-engineer-meeting-edit');
+            if (modalComponent) {
+                modalComponent.open(meetingId);
+            } else {
+                console.error('面談編集モーダルコンポーネントが見つかりません');
+            }
+        });
+    });
+}
+
+/**
+ * 読み取りステータスボタンの初期化
+ */
+function initReadStatusButtons() {
+    const statusButtons = document.querySelectorAll('.read-status-btn');
+    statusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const messageId = Number(this.dataset.messageId);
+            const isRead = this.dataset.isRead === 'true';
+            
+            // モックデータの更新
+            const msg = mockMessages.find(m => m.id === messageId);
+            if (msg) {
+                msg.isRead = !isRead;
+            }
+            
+            // 表示の更新（再描画）
+            displayRecentMessages();
+        });
+    });
 }
 
 /**

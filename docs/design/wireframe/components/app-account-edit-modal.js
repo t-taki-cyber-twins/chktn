@@ -101,6 +101,19 @@ class AppAccountEditModal extends HTMLElement {
                             </div>
 
                             <div class="form-row">
+                                <div class="form-group">
+                                    <label for="account-2fa" class="form-label required">二段階認証</label>
+                                    <select id="account-2fa" name="two-factor-auth" class="form-select" required>
+                                        <option value="enabled">有効</option>
+                                        <option value="disabled">無効</option>
+                                    </select>
+                                    <div class="form-help-text">
+                                        このアカウントの二段階認証設定
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
                                 <div class="form-notice">
                                     <strong>注意:</strong> アカウントを作成すると、指定したメールアドレスに初期パスワードが送信されます。
                                 </div>
@@ -170,6 +183,7 @@ class AppAccountEditModal extends HTMLElement {
             this.querySelector('#account-company').value = accountData.companyId || '';
             this.querySelector('#account-role-group').value = accountData.roleGroupId || '';
             this.querySelector('#account-status').value = accountData.status || 'active';
+            this.querySelector('#account-2fa').value = accountData.twoFactorAuth || 'disabled';
             
             // 編集時はパスワードは必須ではない
             passwordField.removeAttribute('required');

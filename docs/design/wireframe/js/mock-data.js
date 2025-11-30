@@ -289,27 +289,67 @@ export const mockAccounts = [
 export const mockMessages = [
     {
         id: 1,
-        projectName: 'フルスタックエンジニア募集',
+        messageType: 1,
+        messageName: '面談依頼: フルスタックエンジニア募集',
         content: '面談の日程調整についてご相談があります。',
-        sender: '株式会社サンプル',
-        date: '2024-11-15T14:30:00',
+        sender: '山田太郎（サンプル株式会社）',
+        date: '2024-12-15T14:30:00',
+        projectName: 'フルスタックエンジニア募集',
+        engineerName: '佐藤一郎',
+        isOwnProject: true,
+        meetingId: 1,
         isRead: false
     },
     {
         id: 2,
-        projectName: 'バックエンドエンジニア募集',
+        messageType: 2,
+        messageName: '面談依頼: バックエンドエンジニア募集',
         content: 'エンジニアのスキルシートを確認させていただきました。',
-        sender: '株式会社テック',
-        date: '2024-11-14T10:15:00',
-        isRead: false
+        sender: '鈴木花子（テック株式会社）',
+        date: '2024-12-14T10:15:00',
+        projectName: 'バックエンドエンジニア募集',
+        engineerName: '田中次郎',
+        isOwnProject: false,
+        meetingId: 2,
+        isRead: true
     },
     {
         id: 3,
-        projectName: 'フロントエンドエンジニア募集',
+        messageType: 3,
+        messageName: 'ステータス変更: 面談確定',
         content: '面談の結果についてご連絡いたします。',
-        sender: '株式会社デザイン',
-        date: '2024-11-13T16:45:00',
+        sender: 'システム',
+        date: '2024-12-13T16:45:00',
+        projectName: 'フロントエンドエンジニア募集',
+        engineerName: '伊藤三郎',
+        isOwnProject: true,
+        meetingId: 3,
+        isRead: false
+    },
+    {
+        id: 4,
+        messageType: 4,
+        messageName: '社内通知: 面談確定',
+        content: '面談が確定しました。',
+        sender: 'システム',
+        date: '2024-12-13T16:45:00',
+        projectName: 'フロントエンドエンジニア募集',
+        engineerName: '伊藤三郎',
+        isOwnProject: true,
+        meetingId: 3,
         isRead: true
+    },
+    {
+        id: 5,
+        messageType: 100,
+        messageName: '案件についての質問',
+        content: '案件の詳細について質問があります。',
+        sender: '高橋四郎（デザイン株式会社）',
+        date: '2024-12-12T09:20:00',
+        projectName: 'UI/UXデザイナー募集',
+        engineerName: null,
+        isOwnProject: false,
+        isRead: false
     }
 ];
 

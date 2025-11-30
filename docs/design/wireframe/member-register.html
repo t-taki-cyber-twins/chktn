@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規会員登録 - wt2m</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="components/app-official-company-search-modal.js" type="module"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card" style="max-width: 600px;">
+            <div class="login-header">
+                <a href="index.html" class="login-logo">wt2m</a>
+                <h1 class="login-title">新規会員登録</h1>
+                <p class="login-subtitle">以下の情報を入力して登録ボタンを押してください。<br>本登録用のメールを送信します。</p>
+            </div>
+
+            <form class="login-form" id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">会社情報 <span class="badge badge-required">必須</span></label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="companyName" name="companyName" class="form-input" placeholder="法人番号検索から選択してください" readonly required>
+                        <button type="button" class="btn btn-secondary" id="searchCompanyBtn" style="white-space: nowrap;">法人検索</button>
+                    </div>
+                    <input type="hidden" id="corporateNumber" name="corporateNumber">
+                    <input type="text" id="companyAddress" name="companyAddress" class="form-input" placeholder="住所" readonly style="background-color: #f5f5f5;">
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">氏名 <span class="badge badge-required">必須</span></label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="姓" required>
+                            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="名" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="department" class="form-label">部署名</label>
+                    <input type="text" id="department" name="department" class="form-input" placeholder="部署名を入力">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">メールアドレス <span class="badge badge-required">必須</span></label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">電話番号 <span class="badge badge-required">必須</span></label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="03-1234-5678" required>
+                </div>
+
+                <div class="login-actions">
+                    <button type="submit" class="btn btn-primary login-btn">登録してメールを送信</button>
+                </div>
+            </form>
+
+            <div class="login-links">
+                <a href="index.html" class="login-link">ログイン画面に戻る</a>
+            </div>
+
+            <div class="login-footer">
+                &copy; 2024 wt2m All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <app-official-company-search-modal id="companySearchModal"></app-official-company-search-modal>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerForm = document.getElementById('registerForm');
+            const searchCompanyBtn = document.getElementById('searchCompanyBtn');
+            const companySearchModal = document.getElementById('companySearchModal');
+            
+            // 法人検索モーダルを開く
+            searchCompanyBtn.addEventListener('click', () => {
+                companySearchModal.open();
+            });
+
+            // 法人が選択された時の処理
+            companySearchModal.addEventListener('company-selected', (e) => {
+                const company = e.detail;
+                document.getElementById('companyName').value = company.name;
+                document.getElementById('corporateNumber').value = company.number;
+                document.getElementById('companyAddress').value = `${company.prefecture}${company.city}${company.street}${company.building || ''}`;
+            });
+
+            // フォーム送信処理
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // バリデーション（簡易）
+                const requiredIds = ['companyName', 'lastName', 'firstName', 'email', 'phone'];
+                let isValid = true;
+                
+                requiredIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el.value) {
+                        isValid = false;
+                        el.style.borderColor = 'red';
+                    } else {
+                        el.style.borderColor = '';
+                    }
+                });
+
+                if (isValid) {
+                    alert('登録確認メールを送信しました。\nメール内のリンクから本登録へ進んでください。');
+                    // 実際の送信処理はここに実装
+                    window.location.href = 'index.html';
+                } else {
+                    alert('必須項目を入力してください');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

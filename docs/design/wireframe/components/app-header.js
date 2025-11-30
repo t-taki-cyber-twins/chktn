@@ -135,7 +135,7 @@ class AppHeader extends HTMLElement {
                                 <div class="user-info-item">会社名: サンプル株式会社</div>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">ログアウト</a>
+                            <a href="index.html" class="dropdown-item">ログアウト</a>
                         </div>
                     </div>
                 </div>
