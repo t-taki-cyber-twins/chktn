@@ -13,7 +13,11 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 date: '',
                 time: '',
                 location: '',
-                privateNote: ''
+                privateNote: '',
+                meetingTool: '', // 選択された面談ツール
+                meetingUrl: '', // 面談ツールで発行されたURL
+                engineerParticipants: [], // エンジニア側参加者 [{id, name, email}, ...]
+                projectParticipants: [] // 案件側参加者 [{id, name, email}, ...]
             }
         ];
         this.activeRound = 1; // 現在アクティブな面談回
@@ -67,6 +71,15 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 await import('./app-project-selector.js');
             } catch (error) {
                 console.error('Failed to load app-project-selector component:', error);
+            }
+        }
+
+        // app-employee-selectorが未定義の場合のみ読み込む
+        if (!customElements.get('app-employee-selector')) {
+            try {
+                await import('./app-employee-selector.js');
+            } catch (error) {
+                console.error('Failed to load app-employee-selector component:', error);
             }
         }
     }
@@ -228,6 +241,55 @@ class AppEngineerMeetingEdit extends HTMLElement {
 
             <!-- 案件選択モーダルコンポーネント -->
             <app-project-selector></app-project-selector>
+
+            <!-- 社員選択モーダルコンポーネント -->
+            <app-employee-selector></app-employee-selector>
+
+            <!-- 面談ツール設定モーダル -->
+            <div class="modal meeting-tool-setting-modal" id="meeting-tool-setting-modal">
+                <div class="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">面談ツール設定</h3>
+                        <button type="button" class="modal-close meeting-tool-setting-close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- エンジニア側参加者 -->
+                        <div class="form-section">
+                            <h4>エンジニア側参加者</h4>
+                            <div id="engineer-participants-selector-section">
+                                <button type="button" class="btn btn-outline-primary btn-sm" id="engineer-participants-select-btn">社員を選択</button>
+                            </div>
+                            <div class="form-group" style="margin-top: 12px;">
+                                <label for="engineer-emails" class="form-label">メールアドレス (自由入力、カンマ区切り)</label>
+                                <textarea id="engineer-emails" class="form-textarea" rows="3" placeholder="例: tanaka@example.com, engineer@example.com"></textarea>
+                            </div>
+                            <div id="engineer-participants-display" style="margin-top: 12px;">
+                                <!-- 選択された社員が表示される -->
+                            </div>
+                        </div>
+
+                        <!-- 案件側参加者 -->
+                        <div class="form-section" style="margin-top: 20px;">
+                            <h4>案件側参加者</h4>
+                            <div id="project-participants-selector-section">
+                                <button type="button" class="btn btn-outline-primary btn-sm" id="project-participants-select-btn">社員を選択</button>
+                            </div>
+                            <div class="form-group" style="margin-top: 12px;">
+                                <label for="project-emails" class="form-label">メールアドレス (自由入力、カンマ区切り)</label>
+                                <textarea id="project-emails" class="form-textarea" rows="3" placeholder="例: yamada@example.com, pm@example.com"></textarea>
+                            </div>
+                            <div id="project-participants-display" style="margin-top: 12px;">
+                                <!-- 選択された社員が表示される -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning meeting-tool-setting-cancel">キャンセル</button>
+                        <button type="button" class="btn btn-primary meeting-tool-setting-confirm">設定を保存</button>
+                    </div>
+                </div>
+            </div>
         `;
     }
 
@@ -298,6 +360,26 @@ class AppEngineerMeetingEdit extends HTMLElement {
                             <label for="meeting-location-${round.roundNumber}" class="form-label">面談場所</label>
                             <input type="text" id="meeting-location-${round.roundNumber}" name="meeting-location" class="form-input" placeholder="例: 東京都千代田区 会議室A" value="${round.location}">
                         </div>
+                        
+                        <!-- 面談ツール設定 -->
+                        <div class="form-group">
+                            <label for="meeting-tool-${round.roundNumber}" class="form-label">面談ツール</label>
+                            <select id="meeting-tool-${round.roundNumber}" name="meeting-tool" class="form-select meeting-tool-select" data-round="${round.roundNumber}">
+                                <option value="">選択してください</option>
+                                <option value="zoom" ${round.meetingTool === 'zoom' ? 'selected' : ''}>Zoom</option>
+                                <option value="google-meet" ${round.meetingTool === 'google-meet' ? 'selected' : ''}>Google Meet</option>
+                                <option value="teams" ${round.meetingTool === 'teams' ? 'selected' : ''}>Microsoft Teams</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="button" class="btn btn-outline-secondary meeting-tool-setting-btn" data-round="${round.roundNumber}">面談ツール設定</button>
+                        </div>
+                        <div class="form-group form-group-full">
+                            <label for="meeting-url-${round.roundNumber}" class="form-label">面談URL</label>
+                            <input type="text" id="meeting-url-${round.roundNumber}" name="meeting-url" class="form-input" value="${round.meetingUrl}" readonly style="background-color: #f5f5f5;">
+                        </div>
+                        
                         <div class="form-group form-group-full">
                             <label for="meeting-private-note-${round.roundNumber}" class="form-label">面談非公開メモ</label>
                             <textarea id="meeting-private-note-${round.roundNumber}" name="meeting-private-note" class="form-textarea" rows="4" placeholder="社内のみで共有する非公開メモを入力してください">${round.privateNote}</textarea>
@@ -325,7 +407,11 @@ class AppEngineerMeetingEdit extends HTMLElement {
             date: '',
             time: '',
             location: '',
-            privateNote: ''
+            privateNote: '',
+            meetingTool: '',
+            meetingUrl: '',
+            engineerParticipants: [],
+            projectParticipants: []
         });
         
         // 現在のフォームデータを保存
@@ -429,12 +515,16 @@ class AppEngineerMeetingEdit extends HTMLElement {
         const timeInput = this.querySelector(`#meeting-time-${this.activeRound}`);
         const locationInput = this.querySelector(`#meeting-location-${this.activeRound}`);
         const noteTextarea = this.querySelector(`#meeting-private-note-${this.activeRound}`);
+        const meetingToolSelect = this.querySelector(`#meeting-tool-${this.activeRound}`);
+        const meetingUrlInput = this.querySelector(`#meeting-url-${this.activeRound}`);
         
         if (statusSelect) currentRound.status = statusSelect.value;
         if (dateInput) currentRound.date = dateInput.value;
         if (timeInput) currentRound.time = timeInput.value;
         if (locationInput) currentRound.location = locationInput.value;
         if (noteTextarea) currentRound.privateNote = noteTextarea.value;
+        if (meetingToolSelect) currentRound.meetingTool = meetingToolSelect.value;
+        if (meetingUrlInput) currentRound.meetingUrl = meetingUrlInput.value;
     }
 
     /**
@@ -491,6 +581,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 }
             });
         });
+
+        // 面談ツール設定ボタン
+        this.attachMeetingToolSettingListeners();
     }
 
     /**
@@ -665,6 +758,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 this.handleProvisionalProject();
             });
         }
+
+        // 面談ツール設定モーダル関連
+        this.initMeetingToolModalListeners();
     }
 
     /**
@@ -692,6 +788,232 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 if (meetingTabBtn) meetingTabBtn.click();
             }
         }
+    }
+
+    /**
+     * 面談ツール設定モーダル関連のイベントリスナーを初期化
+     */
+    initMeetingToolModalListeners() {
+        // モーダルの開閉
+        const modal = this.querySelector('#meeting-tool-setting-modal');
+        const modalOverlay = modal?.querySelector('.modal-overlay');
+        const modalCloseBtn = modal?.querySelector('.meeting-tool-setting-close');
+        const cancelBtn = modal?.querySelector('.meeting-tool-setting-cancel');
+        const confirmBtn = modal?.querySelector('.meeting-tool-setting-confirm');
+
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', () => this.closeMeetingToolModal());
+        }
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', () => this.closeMeetingToolModal());
+        }
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => this.closeMeetingToolModal());
+        }
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', () => this.saveMeetingToolSettings());
+        }
+
+        // エンジニア側参加者選択ボタン
+        const engineerSelectBtn = this.querySelector('#engineer-participants-select-btn');
+        if (engineerSelectBtn) {
+            engineerSelectBtn.addEventListener('click', () => {
+                this.openEmployeeSelector('engineer');
+            });
+        }
+
+        // 案件側参加者選択ボタン
+        const projectSelectBtn = this.querySelector('#project-participants-select-btn');
+        if (projectSelectBtn) {
+            projectSelectBtn.addEventListener('click', () => {
+                this.openEmployeeSelector('project');
+            });
+        }
+    }
+
+    /**
+     * 面談ツール設定ボタンのイベントリスナーを設定
+     * （renderMeetingRoundContentで動的に生成されるため、attachMeetingRoundEventListenersから呼ばれる）
+     */
+    attachMeetingToolSettingListeners() {
+        this.querySelectorAll('.meeting-tool-setting-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const roundNumber = parseInt(btn.dataset.round);
+                this.openMeetingToolModal(roundNumber);
+            });
+        });
+    }
+
+    /**
+     * 面談ツール設定モーダルを開く
+     */
+    openMeetingToolModal(roundNumber) {
+        this.currentMeetingToolRound = roundNumber;
+        const round = this.meetingRounds.find(r => r.roundNumber === roundNumber);
+        if (!round) return;
+
+        const modal = this.querySelector('#meeting-tool-setting-modal');
+        if (!modal) return;
+
+        // エンジニア側参加者を初期設定
+        const engineerEmailsTextarea = this.querySelector('#engineer-emails');
+        if (engineerEmailsTextarea) {
+            const engineerEmails = round.engineerParticipants
+                .filter(p => p.email)
+                .map(p => p.email)
+                .join(', ');
+            engineerEmailsTextarea.value = engineerEmails;
+        }
+
+        // 案件側参加者を初期設定
+        const projectEmailsTextarea = this.querySelector('#project-emails');
+        if (projectEmailsTextarea) {
+            const projectEmails = round.projectParticipants
+                .filter(p => p.email)
+                .map(p => p.email)
+                .join(', ');
+            projectEmailsTextarea.value = projectEmails;
+        }
+
+        // 選択済み社員の表示を更新
+        this.renderParticipantsDisplay('engineer', round.engineerParticipants);
+        this.renderParticipantsDisplay('project', round.projectParticipants);
+
+        // テナント判定によってボタンの表示/非表示を制御（モックなので常に表示）
+        // 実際の実装では、エンジニア側/案件側が自テナントかどうかを判定
+        const engineerSelectorSection = this.querySelector('#engineer-participants-selector-section');
+        const projectSelectorSection = this.querySelector('#project-participants-selector-section');
+        
+        // TODO: 実際の実装では以下のようにテナント判定を行う
+        // const isEngineerOwnTenant = ...; 
+        // if (engineerSelectorSection) engineerSelectorSection.style.display = isEngineerOwnTenant ? 'block' : 'none';
+        // const isProjectOwnTenant = ...;
+        // if (projectSelectorSection) projectSelectorSection.style.display = isProjectOwnTenant ? 'block' : 'none';
+
+        modal.classList.add('active');
+    }
+
+    /**
+     * 面談ツール設定モーダルを閉じる
+     */
+    closeMeetingToolModal() {
+        const modal = this.querySelector('#meeting-tool-setting-modal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
+        this.currentMeetingToolRound = null;
+    }
+
+    /**
+     * 社員選択モーダルを開く
+     */
+    openEmployeeSelector(side) {
+        const employeeSelector = this.querySelector('app-employee-selector');
+        if (!employeeSelector) return;
+
+        const round = this.meetingRounds.find(r => r.roundNumber === this.currentMeetingToolRound);
+        if (!round) return;
+
+        // 既に選択されている社員を初期選択状態として渡す
+        const initialSelected = side === 'engineer' 
+            ? round.engineerParticipants.filter(p => p.id)
+            : round.projectParticipants.filter(p => p.id);
+
+        employeeSelector.open(initialSelected, (selectedEmployees) => {
+            // 選択された社員を反映
+            if (side === 'engineer') {
+                // IDを持つ参加者のみを更新（メールアドレスのみの参加者は保持）
+                const emailOnlyParticipants = round.engineerParticipants.filter(p => !p.id);
+                round.engineerParticipants = [
+                    ...selectedEmployees.map(e => ({ id: e.id, name: e.name, email: e.email || '' })),
+                    ...emailOnlyParticipants
+                ];
+                this.renderParticipantsDisplay('engineer', round.engineerParticipants);
+            } else {
+                const emailOnlyParticipants = round.projectParticipants.filter(p => !p.id);
+                round.projectParticipants = [
+                    ...selectedEmployees.map(e => ({ id: e.id, name: e.name, email: e.email || '' })),
+                    ...emailOnlyParticipants
+                ];
+                this.renderParticipantsDisplay('project', round.projectParticipants);
+            }
+        });
+    }
+
+    /**
+     * 参加者リストの表示を更新
+     */
+    renderParticipantsDisplay(side, participants) {
+        const displayId = side === 'engineer' ? 'engineer-participants-display' : 'project-participants-display';
+        const displayElement = this.querySelector(`#${displayId}`);
+        if (!displayElement) return;
+
+        if (participants.length === 0 || !participants.some(p => p.id)) {
+            displayElement.innerHTML = '';
+            return;
+        }
+
+        const employeeParticipants = participants.filter(p => p.id);
+        const badgesHtml = employeeParticipants.map(p => 
+            `<span class="badge badge-secondary" style="margin-right: 4px;">${p.name}</span>`
+        ).join('');
+
+        displayElement.innerHTML = `
+            <div style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
+                <div style="font-size: 12px; margin-bottom: 4px; font-weight: bold;">選択済み社員:</div>
+                <div>${badgesHtml}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * 面談ツール設定を保存
+     */
+    saveMeetingToolSettings() {
+        const round = this.meetingRounds.find(r => r.roundNumber === this.currentMeetingToolRound);
+        if (!round) return;
+
+        // エンジニア側のメールアドレスを取得
+        const engineerEmailsTextarea = this.querySelector('#engineer-emails');
+        if (engineerEmailsTextarea) {
+            const emails = engineerEmailsTextarea.value
+                .split(',')
+                .map(e => e.trim())
+                .filter(e => e.length > 0);
+            
+            // メールアドレスのみの参加者を追加
+            const emailOnlyParticipants = emails.map(email => ({ email }));
+            const employeeParticipants = round.engineerParticipants.filter(p => p.id);
+            round.engineerParticipants = [...employeeParticipants, ...emailOnlyParticipants];
+        }
+
+        // 案件側のメールアドレスを取得
+        const projectEmailsTextarea = this.querySelector('#project-emails');
+        if (projectEmailsTextarea) {
+            const emails = projectEmailsTextarea.value
+                .split(',')
+                .map(e => e.trim())
+                .filter(e => e.length > 0);
+            
+            const emailOnlyParticipants = emails.map(email => ({ email }));
+            const employeeParticipants = round.projectParticipants.filter(p => p.id);
+            round.projectParticipants = [...employeeParticipants, ...emailOnlyParticipants];
+        }
+
+        // TODO: 実際の実装では、ここで面談ツールAPIを呼び出してURLを発行
+        // 仮のURLを設定
+        if (round.meetingTool) {
+            round.meetingUrl = `https://example.com/meeting/${round.meetingTool}/${round.roundNumber}`;
+            
+            // UIに反映
+            const urlInput = this.querySelector(`#meeting-url-${round.roundNumber}`);
+            if (urlInput) {
+                urlInput.value = round.meetingUrl;
+            }
+        }
+
+        alert('面談ツール設定を保存しました。');
+        this.closeMeetingToolModal();
     }
 
     /**
@@ -792,7 +1114,11 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 date: '',
                 time: '',
                 location: '',
-                privateNote: ''
+                privateNote: '',
+                meetingTool: '',
+                meetingUrl: '',
+                engineerParticipants: [],
+                projectParticipants: []
             }
         ];
         this.activeRound = 1;
@@ -920,7 +1246,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
         if (!currentRound) return;
 
         // ステータスに応じたテンプレートを取得
-        const template = this.getTemplateByStatus(currentRound.status);
+        const template = this.getTemplateByStatus(currentRound.status, currentRound);
         
         // 返信モーダルを開く
         const replyComponent = this.querySelector('app-message-reply');
@@ -941,8 +1267,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
 
             // モーダルを開く前に、テンプレートをセットするためのハック
             // app-message-replyのopenメソッドはbodyを受け取らないため、
-            // open後にDOMを操作するか、openメソッドを拡張する必要があるが、
-            // ここではopen後にDOMを操作する方法をとる
+            // open後にDOMを操作する方法をとる
             replyComponent.open({
                 mode: 'reply',
                 threadId: lastThread.id,
@@ -961,25 +1286,41 @@ class AppEngineerMeetingEdit extends HTMLElement {
     /**
      * ステータスに応じたテンプレートを取得
      */
-    getTemplateByStatus(status) {
+    getTemplateByStatus(status, round) {
+        let baseTemplate = '';
+        
         switch (status) {
             case 'proposal': // 調整中
-                return '面談の日程調整をお願いいたします。\n\n候補日：\n1. \n2. \n3. ';
+                baseTemplate = '面談の日程調整をお願いいたします。\n\n候補日：\n1. \n2. \n3. ';
+                break;
             case 'pending': // 面談確定
-                return '面談日時が確定いたしました。\n\n日時：YYYY/MM/DD HH:mm\n場所：';
+                baseTemplate = '面談日時が確定いたしました。\n\n日時：YYYY/MM/DD HH:mm\n場所：';
+                break;
             case 'canceled': // 面談中止
-                return '誠に申し訳ございませんが、面談を中止させていただきたく存じます。\n\n理由：';
+                baseTemplate = '誠に申し訳ございませんが、面談を中止させていただきたく存じます。\n\n理由：';
+                break;
             case 'waiting_result': // 結果待ち
-                return '面談ありがとうございました。\n結果につきましては、追ってご連絡させていただきます。';
+                baseTemplate = '面談ありがとうございました。\n結果につきましては、追ってご連絡させていただきます。';
+                break;
             case 'passed': // 合格
-                return '面談の結果、合格となりました。\n\n今後の進め方についてご相談させてください。';
+                baseTemplate = '面談の結果、合格となりました。\n\n今後の進め方についてご相談させてください。';
+                break;
             case 'failed': // 不合格
-                return '厳正なる選考の結果、誠に残念ながら今回は見送らせていただくことになりました。\nご希望に添えず申し訳ございませんが、何卒ご了承くださいますようお願い申し上げます。';
+                baseTemplate = '厳正なる選考の結果、誠に残念ながら今回は見送らせていただくことになりました。\nご希望に添えず申し訳ございませんが、何卒ご了承くださいますようお願い申し上げます。';
+                break;
             case 'rejected': // 辞退
-                return 'この度は辞退のご連絡をいただき、承知いたしました。\nまたの機会がございましたら、よろしくお願いいたします。';
+                baseTemplate = 'この度は辞退のご連絡をいただき、承知いたしました。\nまたの機会がございましたら、よろしくお願いいたします。';
+                break;
             default:
-                return 'ステータスが更新されました。';
+                baseTemplate = 'ステータスが更新されました。';
         }
+        
+        // 面談URLが設定されている場合は追加
+        if (round && round.meetingUrl) {
+            baseTemplate += '\n\n面談URL：' + round.meetingUrl;
+        }
+        
+        return baseTemplate;
     }
 
     /**

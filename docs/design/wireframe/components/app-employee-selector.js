@@ -72,6 +72,17 @@ class AppEmployeeSelector extends HTMLElement {
                 </div>
             </div>
             <style>
+                /* モーダルが重なった時に前面に表示されるようにz-indexを設定 */
+                .employee-selector-modal {
+                    z-index: 2100;
+                }
+                .employee-selector-modal .modal-overlay {
+                    z-index: 2100;
+                }
+                .employee-selector-modal .modal-content {
+                    z-index: 2101;
+                }
+                
                 .modal-search-area {
                     margin-bottom: 16px;
                     padding-bottom: 16px;
