@@ -28,7 +28,7 @@ function initEngineerRepresentativeSelection() {
     const selectedDiv = document.getElementById('search-engineer-representative-selected');
     const selectedList = document.getElementById('search-engineer-representative-selected-list');
     const removeAllBtn = document.getElementById('search-engineer-representative-remove-all');
-    const selectorComponent = document.querySelector('app-engineer-representative-selector');
+    const selectorComponent = document.querySelector('app-employee-selector');
     
     let selectedItems = []; // 選択されたアイテムの配列
 

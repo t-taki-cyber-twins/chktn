@@ -309,7 +309,7 @@ class AppEngineerForm extends HTMLElement {
             </div>
 
             <!-- コンポーネント -->
-            <app-engineer-representative-selector></app-engineer-representative-selector>
+            <app-employee-selector></app-employee-selector>
             <app-blacklist-selector></app-blacklist-selector>
             <app-skill-sheet-uploader></app-skill-sheet-uploader>
             <app-project-selector></app-project-selector>
@@ -460,7 +460,7 @@ class AppEngineerForm extends HTMLElement {
         const selectedDiv = this.querySelector('#engineer-managers-selected');
         const selectedList = this.querySelector('#engineer-managers-selected-list');
         const removeAllBtn = this.querySelector('#engineer-managers-remove-all');
-        const selectorComponent = this.querySelector('app-engineer-representative-selector');
+        const selectorComponent = this.querySelector('app-employee-selector');
         
         let selectedItems = []; // 選択されたアイテムの配列
 

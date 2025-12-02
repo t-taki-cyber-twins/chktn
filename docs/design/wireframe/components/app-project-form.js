@@ -346,55 +346,7 @@ class AppProjectForm extends HTMLElement {
                 </div>
             </div>
 
-            <div class="modal" id="project-manager-modal">
-                <div class="modal-overlay"></div>
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">案件担当者を選択</h3>
-                        <button type="button" class="modal-close" data-modal="project-manager-modal">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-search">
-                            <input type="text" class="form-input modal-search-input" placeholder="担当者名で検索">
-                            <button type="button" class="btn btn-info modal-search-btn">検索</button>
-                        </div>
-                        <div class="modal-list">
-                            <ul class="employee-list">
-                                <li class="employee-list-item">
-                                    <label class="employee-list-checkbox-label">
-                                        <input type="checkbox" class="employee-checkbox" data-employee-id="1" data-employee-name="田中太郎">
-                                        <div class="employee-info">
-                                            <span class="employee-name">田中太郎</span>
-                                            <span class="employee-department">営業部</span>
-                                        </div>
-                                    </label>
-                                </li>
-                                <li class="employee-list-item">
-                                    <label class="employee-list-checkbox-label">
-                                        <input type="checkbox" class="employee-checkbox" data-employee-id="2" data-employee-name="佐藤花子">
-                                        <div class="employee-info">
-                                            <span class="employee-name">佐藤花子</span>
-                                            <span class="employee-department">営業部</span>
-                                        </div>
-                                    </label>
-                                </li>
-                                <li class="employee-list-item">
-                                    <label class="employee-list-checkbox-label">
-                                        <input type="checkbox" class="employee-checkbox" data-employee-id="3" data-employee-name="鈴木一郎">
-                                        <div class="employee-info">
-                                            <span class="employee-name">鈴木一郎</span>
-                                            <span class="employee-department">営業部</span>
-                                        </div>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" id="project-manager-confirm-btn">選択完了</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <app-employee-selector id="project-manager-selector"></app-employee-selector>
 
             <app-blacklist-selector></app-blacklist-selector>
             <app-mailing-list-selector></app-mailing-list-selector>
@@ -419,8 +371,7 @@ class AppProjectForm extends HTMLElement {
 
     initModals() {
         const openButtons = {
-            'end-company-btn': 'end-company-modal',
-            'project-manager-btn': 'project-manager-modal'
+            'end-company-btn': 'end-company-modal'
         };
 
         Object.keys(openButtons).forEach(buttonId => {
@@ -504,29 +455,15 @@ class AppProjectForm extends HTMLElement {
     initProjectManagerSelection() {
         const selectBtn = this.querySelector('#project-manager-btn');
         const removeAllBtn = this.querySelector('#project-manager-remove-all');
-        const modal = this.querySelector('#project-manager-modal');
-        const confirmBtn = this.querySelector('#project-manager-confirm-btn');
+        const selectorComponent = this.querySelector('#project-manager-selector');
         
-        if (confirmBtn) {
-            confirmBtn.addEventListener('click', () => {
-                const checkboxes = this.querySelectorAll('.employee-checkbox:checked');
-                
-                checkboxes.forEach(checkbox => {
-                    const employeeId = checkbox.getAttribute('data-employee-id');
-                    const employeeName = checkbox.getAttribute('data-employee-name');
-                    
-                    if (!this.selectedManagers.find(m => m.id === employeeId)) {
-                        this.selectedManagers.push({
-                            id: employeeId,
-                            name: employeeName
-                        });
-                    }
-                    checkbox.checked = false;
-                });
-                
-                this.renderSelectedManagers();
-                if (modal) {
-                    modal.classList.remove('active');
+        if (selectBtn) {
+            selectBtn.addEventListener('click', () => {
+                if (selectorComponent) {
+                    selectorComponent.open(this.selectedManagers, (newSelectedItems) => {
+                        this.selectedManagers = newSelectedItems;
+                        this.renderSelectedManagers();
+                    });
                 }
             });
         }
