@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearchForm();
     initTableSort();
     initDeleteButtons();
-    initEditButtons
+    initEditButtons();
     initPagination();
     
     // 初期表示のために検索を実行
@@ -245,12 +245,13 @@ function sortTable(column, direction) {
 function initEditButtons() {
     const editButtons = document.querySelectorAll('.meeting-edit-btn');
     editButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // 他のイベントリスナー（project-meeting-edit.js）の実行を防ぐ
             const meetingId = this.dataset.meetingId;
-            // 編集モーダルを開く
+            // 編集モーダルを開く（案件側から開く）
             const editModal = document.querySelector('app-engineer-meeting-edit');
             if (editModal) {
-                editModal.open(meetingId);
+                editModal.open(meetingId, 'project');
             }
         });
     });

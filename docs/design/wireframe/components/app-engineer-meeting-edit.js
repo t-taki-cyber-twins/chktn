@@ -318,7 +318,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-warning meeting-tool-setting-cancel">キャンセル</button>
-                        <button type="button" class="btn btn-primary meeting-tool-setting-confirm">設定を保存</button>
+                        <button type="button" class="btn btn-primary meeting-tool-setting-confirm">面談URLを発行</button>
                     </div>
                 </div>
             </div>
@@ -405,7 +405,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                         </div>
                         <div class="form-group">
                             <label class="form-label">&nbsp;</label>
-                            <button type="button" class="btn btn-outline-secondary meeting-tool-setting-btn" data-round="${round.roundNumber}">参加者・設定</button>
+                            <button type="button" class="btn btn-outline-secondary meeting-tool-setting-btn" data-round="${round.roundNumber}">参加者設定・URL発行</button>
                         </div>
                         <div class="form-group form-group-full">
                             <label for="meeting-url-${round.roundNumber}" class="form-label">面談URL</label>
@@ -893,6 +893,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
         const engineerEmailsTextarea = this.querySelector('#engineer-emails');
         const projectEmailsTextarea = this.querySelector('#project-emails');
 
+        // デバッグ: viewSideの値を確認
+        console.log('openMeetingToolModal - viewSide:', this.viewSide);
+
         // viewSideに基づいて表示を制御
         if (this.viewSide === 'engineer') {
             // エンジニア側から表示された場合
@@ -1165,6 +1168,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
         const round = this.meetingRounds.find(r => r.roundNumber === this.currentMeetingToolRound);
         if (!round) return;
 
+        // 現在のフォームデータを保存（面談ツールの選択状態を取得するため）
+        this.saveCurrentRoundData();
+
         // エンジニア側のメールアドレスを取得
         const engineerEmailsTextarea = this.querySelector('#engineer-emails');
         if (engineerEmailsTextarea) {
@@ -1192,19 +1198,24 @@ class AppEngineerMeetingEdit extends HTMLElement {
             round.projectParticipants = [...employeeParticipants, ...emailOnlyParticipants];
         }
 
-        // TODO: 実際の実装では、ここで面談ツールAPIを呼び出してURLを発行
-        // 仮のURLを設定
+        // 面談ツールが選択されている場合、URLを発行
         if (round.meetingTool) {
+            // TODO: 実際の実装では、ここで面談ツールAPIを呼び出してURLを発行
+            // 仮のURLを設定
             round.meetingUrl = `https://example.com/meeting/${round.meetingTool}/${round.roundNumber}`;
             
-            // UIに反映
+            // 呼び出し元の面談URLフィールドに反映
             const urlInput = this.querySelector(`#meeting-url-${round.roundNumber}`);
             if (urlInput) {
                 urlInput.value = round.meetingUrl;
             }
+            
+            alert('面談URLを発行しました。URLは発行されますが、通知はまだ送信していません。');
+        } else {
+            alert('面談ツールを選択してください。');
+            return;
         }
 
-        alert('面談ツール設定を保存しました。');
         this.closeMeetingToolModal();
     }
 
@@ -1216,6 +1227,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
     open(meetingId, viewSide = null) {
         this.mode = 'edit';
         this.viewSide = viewSide; // 表示側の情報を保存
+        console.log('open() called - meetingId:', meetingId, 'viewSide:', viewSide, 'this.viewSide:', this.viewSide);
         const modal = this.querySelector('.meeting-edit-modal');
         if (modal) {
             modal.classList.add('active');
@@ -1436,6 +1448,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
      * 更新ボタンクリック時の処理
      */
     handleUpdate() {
+        // 現在のフォームデータを保存（最新のデータを取得するため）
+        this.saveCurrentRoundData();
+        
         // 現在のステータスを取得
         const currentRound = this.meetingRounds.find(r => r.roundNumber === this.activeRound);
         if (!currentRound) return;
@@ -1510,9 +1525,22 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 baseTemplate = 'ステータスが更新されました。';
         }
         
-        // 面談URLが設定されている場合は追加
-        if (round && round.meetingUrl) {
-            baseTemplate += '\n\n面談URL：' + round.meetingUrl;
+        // 面談ツールが選択されている場合は面談URLを追加
+        if (round && round.meetingTool) {
+            const meetingToolNames = {
+                'zoom': 'Zoom',
+                'google-meet': 'Google Meet',
+                'teams': 'Microsoft Teams'
+            };
+            const toolName = meetingToolNames[round.meetingTool] || round.meetingTool;
+            
+            if (round.meetingUrl) {
+                // 面談URLが設定されている場合はURLを追加
+                baseTemplate += '\n\n面談URL：' + round.meetingUrl;
+            } else {
+                // 面談URLが設定されていない場合でも、面談ツール名を追加
+                baseTemplate += '\n\n面談ツール：' + toolName;
+            }
         }
         
         return baseTemplate;

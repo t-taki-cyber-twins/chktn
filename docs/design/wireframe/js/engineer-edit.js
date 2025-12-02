@@ -206,11 +206,16 @@ function initMeetingEdit() {
 
   if (meetingEditComponent) {
     meetingEditBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation(); // 他のイベントリスナー（project-meeting-edit.js）の実行を防ぐ
         const meetingId = this.getAttribute("data-meeting-id");
+        console.log('initMeetingEdit - meetingId:', meetingId, 'calling open with viewSide: engineer');
         // 編集モーダルを開く（エンジニア側から開く）
         meetingEditComponent.open(meetingId, 'engineer');
+        console.log('initMeetingEdit - after open, viewSide:', meetingEditComponent.viewSide);
       });
     });
+  } else {
+    console.warn('initMeetingEdit - meetingEditComponent not found');
   }
 }

@@ -85,7 +85,15 @@ function initModalOpenClose() {
             const meetingId = editBtn.getAttribute('data-meeting-id');
             const modalComponent = document.querySelector('app-engineer-meeting-edit');
             if (modalComponent) {
-                modalComponent.open(meetingId);
+                // 現在のページに基づいてviewSideを設定
+                const pathname = window.location.pathname;
+                let viewSide = null;
+                if (pathname.includes('engineer-edit.html') || pathname.includes('engineer-meeting-list.html')) {
+                    viewSide = 'engineer';
+                } else if (pathname.includes('project-edit.html') || pathname.includes('project-meeting-list.html')) {
+                    viewSide = 'project';
+                }
+                modalComponent.open(meetingId, viewSide);
             }
         }
     });
