@@ -10,8 +10,8 @@ class AppEngineerMeetingEdit extends HTMLElement {
             {
                 roundNumber: 1,
                 status: '',
-                date: '',
-                time: '',
+                datetime: '', // 日時統合フィールド（YYYY-MM-DDTHH:mm形式）
+                duration: '', // 面談時間（分単位）
                 location: '',
                 privateNote: '',
                 meetingTool: '', // 選択された面談ツール
@@ -381,12 +381,20 @@ class AppEngineerMeetingEdit extends HTMLElement {
 
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="meeting-date-${round.roundNumber}" class="form-label">面談日時</label>
-                            <input type="date" id="meeting-date-${round.roundNumber}" name="meeting-date" class="form-input" value="${round.date}">
+                            <label for="meeting-datetime-${round.roundNumber}" class="form-label">面談日時</label>
+                            <input type="datetime-local" id="meeting-datetime-${round.roundNumber}" name="meeting-datetime" class="form-input" value="${round.datetime}">
                         </div>
                         <div class="form-group">
-                            <label for="meeting-time-${round.roundNumber}" class="form-label">時刻</label>
-                            <input type="time" id="meeting-time-${round.roundNumber}" name="meeting-time" class="form-input" value="${round.time}">
+                            <label for="meeting-duration-${round.roundNumber}" class="form-label">面談時間</label>
+                            <select id="meeting-duration-${round.roundNumber}" name="meeting-duration" class="form-select" data-round="${round.roundNumber}">
+                                <option value="">選択してください</option>
+                                <option value="15" ${round.duration === '15' ? 'selected' : ''}>15分</option>
+                                <option value="30" ${round.duration === '30' ? 'selected' : ''}>30分</option>
+                                <option value="45" ${round.duration === '45' ? 'selected' : ''}>45分</option>
+                                <option value="60" ${round.duration === '60' ? 'selected' : ''}>60分</option>
+                                <option value="90" ${round.duration === '90' ? 'selected' : ''}>90分</option>
+                                <option value="120" ${round.duration === '120' ? 'selected' : ''}>120分</option>
+                            </select>
                         </div>
                         <div class="form-group form-group-full">
                             <label for="meeting-location-${round.roundNumber}" class="form-label">面談場所</label>
@@ -436,8 +444,8 @@ class AppEngineerMeetingEdit extends HTMLElement {
         this.meetingRounds.push({
             roundNumber: newRoundNumber,
             status: '',
-            date: '',
-            time: '',
+            datetime: '', // 日時統合フィールド（YYYY-MM-DDTHH:mm形式）
+            duration: '', // 面談時間（分単位）
             location: '',
             privateNote: '',
             meetingTool: '',
@@ -543,16 +551,16 @@ class AppEngineerMeetingEdit extends HTMLElement {
         if (!currentRound) return;
         
         const statusSelect = this.querySelector(`#meeting-status-${this.activeRound}`);
-        const dateInput = this.querySelector(`#meeting-date-${this.activeRound}`);
-        const timeInput = this.querySelector(`#meeting-time-${this.activeRound}`);
+        const datetimeInput = this.querySelector(`#meeting-datetime-${this.activeRound}`);
+        const durationSelect = this.querySelector(`#meeting-duration-${this.activeRound}`);
         const locationInput = this.querySelector(`#meeting-location-${this.activeRound}`);
         const noteTextarea = this.querySelector(`#meeting-private-note-${this.activeRound}`);
         const meetingToolSelect = this.querySelector(`#meeting-tool-${this.activeRound}`);
         const meetingUrlInput = this.querySelector(`#meeting-url-${this.activeRound}`);
         
         if (statusSelect) currentRound.status = statusSelect.value;
-        if (dateInput) currentRound.date = dateInput.value;
-        if (timeInput) currentRound.time = timeInput.value;
+        if (datetimeInput) currentRound.datetime = datetimeInput.value;
+        if (durationSelect) currentRound.duration = durationSelect.value;
         if (locationInput) currentRound.location = locationInput.value;
         if (noteTextarea) currentRound.privateNote = noteTextarea.value;
         if (meetingToolSelect) currentRound.meetingTool = meetingToolSelect.value;
@@ -1318,8 +1326,8 @@ class AppEngineerMeetingEdit extends HTMLElement {
             {
                 roundNumber: 1,
                 status: '',
-                date: '',
-                time: '',
+                datetime: '', // 日時統合フィールド（YYYY-MM-DDTHH:mm形式）
+                duration: '', // 面談時間（分単位）
                 location: '',
                 privateNote: '',
                 meetingTool: '',
@@ -1499,12 +1507,20 @@ class AppEngineerMeetingEdit extends HTMLElement {
     getTemplateByStatus(status, round) {
         let baseTemplate = '';
         
+        // datetimeを読みやすい形式に変換するヘルパー関数
+        const formatDateTime = (datetimeStr) => {
+            if (!datetimeStr) return 'YYYY/MM/DD HH:mm';
+            // YYYY-MM-DDTHH:mm形式をYYYY/MM/DD HH:mm形式に変換
+            return datetimeStr.replace('T', ' ').replace(/-/g, '/');
+        };
+        
         switch (status) {
             case 'proposal': // 調整中
                 baseTemplate = '面談の日程調整をお願いいたします。\n\n候補日：\n1. \n2. \n3. ';
                 break;
             case 'pending': // 面談確定
-                baseTemplate = '面談日時が確定いたしました。\n\n日時：YYYY/MM/DD HH:mm\n場所：';
+                const datetimeStr = round && round.datetime ? formatDateTime(round.datetime) : 'YYYY/MM/DD HH:mm';
+                baseTemplate = '面談日時が確定いたしました。\n\n日時：' + datetimeStr + '\n場所：';
                 break;
             case 'canceled': // 面談中止
                 baseTemplate = '誠に申し訳ございませんが、面談を中止させていただきたく存じます。\n\n理由：';
