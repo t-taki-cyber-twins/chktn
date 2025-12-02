@@ -208,21 +208,8 @@ function initMeetingEdit() {
     meetingEditBtns.forEach((btn) => {
       btn.addEventListener("click", function () {
         const meetingId = this.getAttribute("data-meeting-id");
-        // モックデータを使用してモーダルを開く
-        const mockData = {
-          id: meetingId,
-          engineerName: "山田 太郎",
-          projectName: "フルスタックエンジニア募集",
-          status: "pending",
-          meetingDate: "2024-12-15T14:00",
-          meetingType: "online",
-          meetingUrl: "https://zoom.us/j/123456789",
-          memo: "技術的な質問を中心に確認予定",
-        };
-        meetingEditComponent.open(mockData, function (updatedData) {
-          console.log("Updated meeting data:", updatedData);
-          alert("面談情報を更新しました");
-        });
+        // 編集モーダルを開く（エンジニア側から開く）
+        meetingEditComponent.open(meetingId, 'engineer');
       });
     });
   }

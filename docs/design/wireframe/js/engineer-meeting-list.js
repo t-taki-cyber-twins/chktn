@@ -347,10 +347,10 @@ function initEditButtons() {
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             const meetingId = this.dataset.meetingId;
-            // 編集モーダルを開く
+            // 編集モーダルを開く（エンジニア側から開く）
             const editModal = document.querySelector('app-engineer-meeting-edit');
             if (editModal) {
-                editModal.open(meetingId);
+                editModal.open(meetingId, 'engineer');
             }
         });
     });

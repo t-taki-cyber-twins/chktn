@@ -24,6 +24,24 @@ class AppEngineerMeetingEdit extends HTMLElement {
         this.operationStatus = ''; // 稼働ステータス
         this.mode = 'edit'; // 'edit' or 'new'
         this.selectedProject = null; // 新規作成時に選択された案件
+        this.viewSide = null; // 'engineer' | 'project' | null - 表示側の情報
+        
+        // モックデータ：エンジニア情報、担当者情報
+        this.mockEngineer = {
+            id: 'engineer-1',
+            name: '山田太郎',
+            email: 'yamada@example.com'
+        };
+        this.mockEngineerManager = {
+            id: 'manager-1',
+            name: '田中花子',
+            email: 'tanaka@example.com'
+        };
+        this.mockProjectManager = {
+            id: 'pm-1',
+            name: '佐藤一郎',
+            email: 'sato@example.com'
+        };
     }
 
     async connectedCallback() {
@@ -869,40 +887,114 @@ class AppEngineerMeetingEdit extends HTMLElement {
         const modal = this.querySelector('#meeting-tool-setting-modal');
         if (!modal) return;
 
-        // エンジニア側参加者を初期設定
+        // エンジニア側・案件側の社員選択要素を取得
+        const engineerSelectWrapper = this.querySelector('#engineer-participants-select-btn')?.closest('.form-group');
+        const projectSelectWrapper = this.querySelector('#project-participants-select-btn')?.closest('.form-group');
         const engineerEmailsTextarea = this.querySelector('#engineer-emails');
-        if (engineerEmailsTextarea) {
-            const engineerEmails = round.engineerParticipants
-                .filter(p => p.email)
-                .map(p => p.email)
-                .join(', ');
-            engineerEmailsTextarea.value = engineerEmails;
-        }
-
-        // 案件側参加者を初期設定
         const projectEmailsTextarea = this.querySelector('#project-emails');
-        if (projectEmailsTextarea) {
-            const projectEmails = round.projectParticipants
-                .filter(p => p.email)
-                .map(p => p.email)
-                .join(', ');
-            projectEmailsTextarea.value = projectEmails;
+
+        // viewSideに基づいて表示を制御
+        if (this.viewSide === 'engineer') {
+            // エンジニア側から表示された場合
+            // エンジニア側の社員選択セクションを表示
+            if (engineerSelectWrapper) engineerSelectWrapper.style.display = 'block';
+            
+            // デフォルトでエンジニアとエンジニア担当者を選択状態にする
+            if (!round.engineerParticipants.some(p => p.id === this.mockEngineer.id)) {
+                round.engineerParticipants.push({
+                    id: this.mockEngineer.id,
+                    name: this.mockEngineer.name,
+                    email: this.mockEngineer.email
+                });
+            }
+            if (!round.engineerParticipants.some(p => p.id === this.mockEngineerManager.id)) {
+                round.engineerParticipants.push({
+                    id: this.mockEngineerManager.id,
+                    name: this.mockEngineerManager.name,
+                    email: this.mockEngineerManager.email
+                });
+            }
+            
+            // 案件側の社員選択セクションを非表示
+            if (projectSelectWrapper) projectSelectWrapper.style.display = 'none';
+            
+            // 案件側のメールアドレスフィールドに案件担当者のメールアドレスを表示
+            if (projectEmailsTextarea) {
+                projectEmailsTextarea.value = this.mockProjectManager.email;
+            }
+            
+            // エンジニア側のメールアドレスは既存の参加者のメールアドレスを表示
+            if (engineerEmailsTextarea) {
+                const engineerEmails = round.engineerParticipants
+                    .filter(p => p.email && !p.id) // IDを持たない（メールアドレスのみの）参加者
+                    .map(p => p.email)
+                    .join(', ');
+                engineerEmailsTextarea.value = engineerEmails;
+            }
+            
+        } else if (this.viewSide === 'project') {
+            // 案件側から表示された場合
+            // 案件側の社員選択セクションを表示
+            if (projectSelectWrapper) projectSelectWrapper.style.display = 'block';
+            
+            // デフォルトで案件担当者を選択状態にする
+            if (!round.projectParticipants.some(p => p.id === this.mockProjectManager.id)) {
+                round.projectParticipants.push({
+                    id: this.mockProjectManager.id,
+                    name: this.mockProjectManager.name,
+                    email: this.mockProjectManager.email
+                });
+            }
+            
+            // エンジニア側の社員選択セクションを非表示
+            if (engineerSelectWrapper) engineerSelectWrapper.style.display = 'none';
+            
+            // エンジニア側のメールアドレスフィールドにエンジニアとエンジニア担当者のメールアドレスを表示
+            if (engineerEmailsTextarea) {
+                const emails = [
+                    this.mockEngineer.email,
+                    this.mockEngineerManager.email
+                ].filter(Boolean).join(', ');
+                engineerEmailsTextarea.value = emails;
+            }
+            
+            // 案件側のメールアドレスは既存の参加者のメールアドレスを表示
+            if (projectEmailsTextarea) {
+                const projectEmails = round.projectParticipants
+                    .filter(p => p.email && !p.id) // IDを持たない（メールアドレスのみの）参加者
+                    .map(p => p.email)
+                    .join(', ');
+                projectEmailsTextarea.value = projectEmails;
+            }
+            
+        } else {
+            // どちらでもない場合（既存の動作）
+            // 両方のセクションを表示
+            if (engineerSelectWrapper) engineerSelectWrapper.style.display = 'block';
+            if (projectSelectWrapper) projectSelectWrapper.style.display = 'block';
+            
+            // エンジニア側参加者を初期設定
+            if (engineerEmailsTextarea) {
+                const engineerEmails = round.engineerParticipants
+                    .filter(p => p.email)
+                    .map(p => p.email)
+                    .join(', ');
+                engineerEmailsTextarea.value = engineerEmails;
+            }
+
+            // 案件側参加者を初期設定
+            if (projectEmailsTextarea) {
+                const projectEmails = round.projectParticipants
+                    .filter(p => p.email)
+                    .map(p => p.email)
+                    .join(', ');
+                projectEmailsTextarea.value = projectEmails;
+            }
         }
 
         // 選択済み社員の表示を更新
         this.renderParticipantsDisplay('engineer', round.engineerParticipants);
         this.renderParticipantsDisplay('project', round.projectParticipants);
-
-        // テナント判定によってボタンの表示/非表示を制御（モックなので常に表示）
-        // 実際の実装では、エンジニア側/案件側が自テナントかどうかを判定
-        const engineerSelectBtn = this.querySelector('#engineer-participants-select-btn');
-        const projectSelectBtn = this.querySelector('#project-participants-select-btn');
-        
-        // TODO: 実際の実装では以下のようにテナント判定を行う
-        // const isEngineerOwnTenant = ...; 
-        // if (engineerSelectBtn) engineerSelectBtn.style.display = isEngineerOwnTenant ? 'flex' : 'none';
-        // const isProjectOwnTenant = ...;
-        // if (projectSelectBtn) projectSelectBtn.style.display = isProjectOwnTenant ? 'flex' : 'none';
 
         modal.classList.add('active');
     }
@@ -1118,9 +1210,12 @@ class AppEngineerMeetingEdit extends HTMLElement {
 
     /**
      * モーダルを開く
+     * @param {string|number} meetingId - 面談ID
+     * @param {string} viewSide - 表示側 ('engineer' | 'project' | null)
      */
-    open(meetingId) {
+    open(meetingId, viewSide = null) {
         this.mode = 'edit';
+        this.viewSide = viewSide; // 表示側の情報を保存
         const modal = this.querySelector('.meeting-edit-modal');
         if (modal) {
             modal.classList.add('active');
