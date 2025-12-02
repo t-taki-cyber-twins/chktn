@@ -99,19 +99,6 @@ class AppEngineerForm extends HTMLElement {
                                 <input type="number" id="experience-years" name="experience-years" class="form-input" placeholder="年" min="0" step="0.5">
                             </div>
                             <div class="form-group form-group-full">
-                                <label class="form-label">エンジニア担当者</label>
-                                <div class="form-select-wrapper">
-                                    <button type="button" class="form-select-btn" id="engineer-managers-btn">
-                                        <span class="form-select-text">選択してください</span>
-                                        <span class="form-select-arrow">▼</span>
-                                    </button>
-                                    <div class="form-selected-values" id="engineer-managers-selected" style="display: none;">
-                                        <div class="selected-values-list" id="engineer-managers-selected-list"></div>
-                                        <button type="button" class="selected-value-remove-all" id="engineer-managers-remove-all">すべて解除</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-full">
                                 <label class="form-label">ブラックリスト</label>
                                 <div class="form-select-wrapper">
                                     <button type="button" class="form-select-btn" id="blacklist-btn">
@@ -133,6 +120,19 @@ class AppEngineerForm extends HTMLElement {
 
                         <h3 class="form-subsection-title">連絡先情報</h3>
                         <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <label class="form-label">エンジニア担当者</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="engineer-managers-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-values" id="engineer-managers-selected" style="display: none;">
+                                        <div class="selected-values-list" id="engineer-managers-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="engineer-managers-remove-all">すべて解除</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group form-group-full">
                                 <label class="form-label">連絡先メーリングリスト</label>
                                 <div class="form-select-wrapper">

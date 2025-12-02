@@ -104,6 +104,7 @@ class AppHeader extends HTMLElement {
                             <a href="employee-list.html" class="dropdown-item">社員管理</a>
                             <a href="account-list.html" class="dropdown-item">アカウント管理</a>
                             <a href="tenant-company-list.html" class="dropdown-item">テナント・会社管理</a>
+                            <a href="api-integration.html" class="dropdown-item">API連携管理</a>
                         </div>
                     </div>
 

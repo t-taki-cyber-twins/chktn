@@ -62,20 +62,6 @@ class AppProjectForm extends HTMLElement {
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="project-manager" class="form-label">案件担当者</label>
-                            <div class="form-select-wrapper">
-                                <button type="button" class="form-select-btn" id="project-manager-btn">
-                                    <span class="form-select-text">選択してください</span>
-                                    <span class="form-select-arrow">▼</span>
-                                </button>
-                                <div class="form-selected-values" id="project-manager-selected" style="display: none;">
-                                    <div class="selected-values-list" id="project-manager-selected-list"></div>
-                                    <button type="button" class="selected-value-remove-all" id="project-manager-remove-all">すべて解除</button>
-                                </div>
-                            </div>
-                            <p class="form-help-text">案件を担当する社員を選択します(複数選択可)。</p>
-                        </div>
                         <div class="form-group form-group-full">
                             <label for="project-summary" class="form-label">案件概要</label>
                             <textarea id="project-summary" name="project-summary" class="form-textarea" rows="3" placeholder="案件の概要を入力してください"></textarea>
@@ -225,6 +211,20 @@ class AppProjectForm extends HTMLElement {
                 <div class="form-section">
                     <h2 class="section-title">連絡先情報</h2>
                     <div class="form-grid">
+                        <div class="form-group form-group-full">
+                            <label for="project-manager" class="form-label">案件担当者</label>
+                            <div class="form-select-wrapper">
+                                <button type="button" class="form-select-btn" id="project-manager-btn">
+                                    <span class="form-select-text">選択してください</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                                <div class="form-selected-values" id="project-manager-selected" style="display: none;">
+                                    <div class="selected-values-list" id="project-manager-selected-list"></div>
+                                    <button type="button" class="selected-value-remove-all" id="project-manager-remove-all">すべて解除</button>
+                                </div>
+                            </div>
+                            <p class="form-help-text">案件を担当する社員を選択します(複数選択可)。</p>
+                        </div>
                         <div class="form-group form-group-full">
                             <label class="form-label">連絡先メーリングリスト</label>
                             <div class="form-select-wrapper">

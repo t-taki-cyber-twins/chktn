@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API連携管理 - WT2M</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    /* Page specific styles */
+    .api-integration-container {
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .page-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 24px;
+      color: #333;
+    }
+  </style>
+  <script src="components/app-header.js" type="module"></script>
+  <script src="components/app-sidebar.js" type="module"></script>
+  <script src="components/app-api-integration.js" type="module"></script>
+</head>
+<body>
+  <div class="container">
+    <app-header></app-header>
+
+    <div class="main-layout">
+      <app-sidebar></app-sidebar>
+      
+      <main class="content-area">
+        <div class="api-integration-container">
+          <h1 class="page-title">API連携管理</h1>
+          <app-api-integration></app-api-integration>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
