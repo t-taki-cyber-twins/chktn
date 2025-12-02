@@ -35,7 +35,10 @@
             <main class="content-area">
                 <!-- 関連案件面談一覧セクション -->
                 <div class="section-container " style="margin-bottom: 30px;">
-                    <h2 class="section-title">関連案件(表示している自テナントのエンジニアの面談中のものと稼働中の案件)</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h2 class="section-title" style="margin-bottom: 0;">関連案件(表示している自テナントのエンジニアの面談中のものと稼働中の案件)</h2>
+                        <button class="btn btn-primary btn-sm add-meeting-btn">+ 面談追加</button>
+                    </div>
                     <div class="table-wrapper">
                         <table class="common-table" id="meeting-table">
                             <thead>

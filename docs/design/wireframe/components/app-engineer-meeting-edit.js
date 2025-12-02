@@ -18,6 +18,8 @@ class AppEngineerMeetingEdit extends HTMLElement {
         ];
         this.activeRound = 1; // 現在アクティブな面談回
         this.operationStatus = ''; // 稼働ステータス
+        this.mode = 'edit'; // 'edit' or 'new'
+        this.selectedProject = null; // 新規作成時に選択された案件
     }
 
     async connectedCallback() {
@@ -58,6 +60,15 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 console.error('Failed to load app-message-thread-modal component:', error);
             }
         }
+
+        // app-project-selectorが未定義の場合のみ読み込む
+        if (!customElements.get('app-project-selector')) {
+            try {
+                await import('./app-project-selector.js');
+            } catch (error) {
+                console.error('Failed to load app-project-selector component:', error);
+            }
+        }
     }
 
     render() {
@@ -70,9 +81,18 @@ class AppEngineerMeetingEdit extends HTMLElement {
                         <button type="button" class="modal-close" data-modal="engineer-meeting-edit-modal">×</button>
                     </div>
                     <div class="modal-body meeting-edit-modal-body">
-                        <div class="meeting-info-container">
+                        <!-- 案件選択セクション（新規作成時のみ表示） -->
+                        <div class="project-selection-section" id="project-selection-section" style="display: none; margin-bottom: 20px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+                            <h4 style="margin-bottom: 15px;">面談を行う案件を選択してください</h4>
+                            <div style="display: flex; justify-content: center; gap: 15px;">
+                                <button type="button" class="btn btn-primary" id="select-project-btn">案件を選択</button>
+                                <button type="button" class="btn btn-outline-primary" id="add-provisional-project-btn">仮案件を追加</button>
+                            </div>
+                        </div>
+
+                        <div class="meeting-info-container" id="meeting-info-container" style="display: flex; gap: 20px;">
                             <!-- エンジニアの基本情報セクション -->
-                            <div class="meeting-info-section">
+                            <div class="meeting-info-section" style="flex: 1;">
                                 <h4 class="meeting-info-section-title">
                                     エンジニア情報
                                     <a href="public-engineer-detail.html#engineer-detail-form" target="_blank" class="btn btn-outline-primary btn-sm">詳細</a>
@@ -94,7 +114,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                             </div>
 
                             <!-- 案件の基本情報セクション -->
-                            <div class="meeting-info-section">
+                            <div class="meeting-info-section" style="flex: 1;">
                                 <h4 class="meeting-info-section-title">
                                     案件情報
                                     <a href="public-project-detail.html#project-detail-form" target="_blank" class="btn btn-outline-primary btn-sm">詳細</a>
@@ -117,7 +137,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
                         </div>
 
                         <!-- メッセージスレッド一覧セクション -->
-                        <app-message-list title="面談スレッド - エンジニア・案件でスレッド1つ"></app-message-list>
+                        <div id="message-thread-section">
+                            <app-message-list title="面談スレッド - エンジニア・案件でスレッド1つ"></app-message-list>
+                        </div>
 
                         <!-- 最新ステータス表示 -->
                         <div class="latest-status-section" style="margin-bottom: 20px; padding: 16px; background-color: #e6f2ff; border-radius: 4px; border: 1px solid #b3d7ff;">
@@ -203,6 +225,9 @@ class AppEngineerMeetingEdit extends HTMLElement {
 
             <!-- スレッド全表示モーダルコンポーネント -->
             <app-message-thread-modal></app-message-thread-modal>
+
+            <!-- 案件選択モーダルコンポーネント -->
+            <app-project-selector></app-project-selector>
         `;
     }
 
@@ -619,6 +644,27 @@ class AppEngineerMeetingEdit extends HTMLElement {
                 this.handleMessageReply(e.detail);
             });
         }
+
+        // 案件選択ボタン
+        const selectProjectBtn = this.querySelector('#select-project-btn');
+        if (selectProjectBtn) {
+            selectProjectBtn.addEventListener('click', () => {
+                const projectSelector = this.querySelector('app-project-selector');
+                if (projectSelector) {
+                    projectSelector.open((project) => {
+                        this.handleProjectSelect(project);
+                    });
+                }
+            });
+        }
+
+        // 仮案件追加ボタン
+        const addProvisionalProjectBtn = this.querySelector('#add-provisional-project-btn');
+        if (addProvisionalProjectBtn) {
+            addProvisionalProjectBtn.addEventListener('click', () => {
+                this.handleProvisionalProject();
+            });
+        }
     }
 
     /**
@@ -652,12 +698,122 @@ class AppEngineerMeetingEdit extends HTMLElement {
      * モーダルを開く
      */
     open(meetingId) {
+        this.mode = 'edit';
         const modal = this.querySelector('.meeting-edit-modal');
         if (modal) {
             modal.classList.add('active');
+            this.updateViewMode();
             // TODO: 面談IDに基づいてデータを読み込む
             this.loadMeetingData(meetingId);
         }
+    }
+
+    /**
+     * 新規作成モードでモーダルを開く
+     */
+    openForNew() {
+        this.mode = 'new';
+        this.selectedProject = null;
+        const modal = this.querySelector('.meeting-edit-modal');
+        if (modal) {
+            modal.classList.add('active');
+            this.updateViewMode();
+            
+            // エンジニア情報は親画面から取得するか、ここではモックで設定
+            // 実際の実装では、コンテキストからエンジニア情報を取得する
+            this.querySelector('#meeting-engineer-name').textContent = '山田太郎';
+            this.querySelector('#meeting-engineer-company').textContent = 'テック株式会社';
+            this.querySelector('#meeting-engineer-skills').textContent = 'Java, Spring Boot, React';
+            
+            // 案件情報はクリア
+            this.querySelector('#meeting-project-name').textContent = '-';
+            this.querySelector('#meeting-project-company').textContent = '-';
+            this.querySelector('#meeting-project-manager').textContent = '-';
+        }
+    }
+
+    /**
+     * 表示モードに応じて表示を切り替え
+     */
+    updateViewMode() {
+        const selectionSection = this.querySelector('#project-selection-section');
+        const meetingInfoContainer = this.querySelector('#meeting-info-container');
+        const messageThreadSection = this.querySelector('#message-thread-section');
+        const latestStatusSection = this.querySelector('.latest-status-section');
+        const tabContainer = this.querySelector('.tab-container');
+        const footer = this.querySelector('.meeting-edit-modal-footer');
+
+        if (this.mode === 'new' && !this.selectedProject) {
+            // 新規作成かつ案件未選択時
+            if (selectionSection) selectionSection.style.display = 'block';
+            
+            // 案件情報以外の詳細部分は非表示
+            // meetingInfoContainerは表示するが、案件情報は空
+            if (meetingInfoContainer) {
+                meetingInfoContainer.style.display = 'flex';
+                // 案件情報の詳細リンクを非表示にするなどの制御が必要かも
+            }
+            
+            if (messageThreadSection) messageThreadSection.style.display = 'none';
+            if (latestStatusSection) latestStatusSection.style.display = 'none';
+            if (tabContainer) tabContainer.style.display = 'none';
+            if (footer) footer.style.display = 'none';
+            
+        } else {
+            // 編集モードまたは案件選択済み
+            if (selectionSection) selectionSection.style.display = 'none';
+            if (meetingInfoContainer) meetingInfoContainer.style.display = 'flex';
+            if (messageThreadSection) messageThreadSection.style.display = 'block';
+            if (latestStatusSection) latestStatusSection.style.display = 'block';
+            if (tabContainer) tabContainer.style.display = 'block';
+            if (footer) footer.style.display = 'flex';
+        }
+    }
+
+    /**
+     * 案件選択時の処理
+     */
+    handleProjectSelect(project) {
+        this.selectedProject = project;
+        
+        // 案件情報を表示
+        this.querySelector('#meeting-project-name').textContent = project.name;
+        this.querySelector('#meeting-project-company').textContent = project.endCompany;
+        this.querySelector('#meeting-project-manager').textContent = '担当者A'; // モック
+        
+        // ビューを更新
+        this.updateViewMode();
+        
+        // 初期データをセット（1回目の面談枠を作成）
+        this.meetingRounds = [
+            {
+                roundNumber: 1,
+                status: '',
+                date: '',
+                time: '',
+                location: '',
+                privateNote: ''
+            }
+        ];
+        this.activeRound = 1;
+        this.renderMeetingRoundTabs();
+        this.updateLatestStatus();
+    }
+
+    /**
+     * 仮案件追加時の処理
+     */
+    handleProvisionalProject() {
+        // モックの仮案件を作成
+        const provisionalProject = {
+            id: 999,
+            name: '【仮】新規案件案件',
+            endCompany: '仮株式会社',
+            status: 'recruiting'
+        };
+        
+        alert('仮案件を作成しました: ' + provisionalProject.name);
+        this.handleProjectSelect(provisionalProject);
     }
 
     /**

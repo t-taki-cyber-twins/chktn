@@ -9,6 +9,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // 面談編集モーダル初期化
   initMeetingEdit();
 
+  // 面談追加ボタン
+  const addMeetingBtn = document.querySelector(".add-meeting-btn");
+  if (addMeetingBtn) {
+    addMeetingBtn.addEventListener("click", function() {
+      const meetingEditComponent = document.querySelector("app-engineer-meeting-edit");
+      if (meetingEditComponent) {
+        // 新規作成モードで開く
+        meetingEditComponent.openForNew();
+      }
+    });
+  }
+
   // 保存ボタン
   const saveBtn = document.querySelector(".sidebar-save-btn");
   const engineerForm = document.getElementById("engineer-form");

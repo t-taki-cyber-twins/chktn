@@ -6,6 +6,8 @@ class AppProjectForm extends HTMLElement {
         this.selectedManagers = [];
         this.selectedBlacklist = [];
         this.selectedMailingList = [];
+        this.selectedContactMailingList = [];
+        this.selectedInternalNotificationMailingList = [];
     }
 
     connectedCallback() {
@@ -219,6 +221,53 @@ class AppProjectForm extends HTMLElement {
                     </div>
                 </div>
 
+                <!-- 連絡先情報セクション -->
+                <div class="form-section">
+                    <h2 class="section-title">連絡先情報</h2>
+                    <div class="form-grid">
+                        <div class="form-group form-group-full">
+                            <label class="form-label">連絡先メーリングリスト</label>
+                            <div class="form-select-wrapper">
+                                <button type="button" class="form-select-btn" id="contact-mailing-list-btn">
+                                    <span class="form-select-text">選択してください</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                                <div class="form-selected-values" id="contact-mailing-list-selected" style="display: none;">
+                                    <div class="selected-values-list" id="contact-mailing-list-selected-list"></div>
+                                    <button type="button" class="selected-value-remove-all" id="contact-mailing-list-remove-all">すべて解除</button>
+                                </div>
+                            </div>
+                            <p class="form-help-text">案件に関する連絡に使用するメーリングリストを選択します。</p>
+                        </div>
+                        <div class="form-group form-group-full">
+                            <label for="contact-email-custom" class="form-label">連絡先メールアドレス (自由入力)</label>
+                            <input type="email" id="contact-email-custom" name="contact-email-custom" class="form-input" placeholder="例: project-contact@example.com">
+                            <p class="form-help-text">メーリングリストに含まれない個別のメールアドレスを入力できます。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 非公開情報セクション -->
+                <div class="form-section">
+                    <h2 class="section-title">非公開情報</h2>
+                    <div class="form-grid">
+                        <div class="form-group form-group-full">
+                            <label class="form-label">社内通知メーリングリスト</label>
+                            <div class="form-select-wrapper">
+                                <button type="button" class="form-select-btn" id="internal-notification-mailing-list-btn">
+                                    <span class="form-select-text">選択してください</span>
+                                    <span class="form-select-arrow">▼</span>
+                                </button>
+                                <div class="form-selected-values" id="internal-notification-mailing-list-selected" style="display: none;">
+                                    <div class="selected-values-list" id="internal-notification-mailing-list-selected-list"></div>
+                                    <button type="button" class="selected-value-remove-all" id="internal-notification-mailing-list-remove-all">すべて解除</button>
+                                </div>
+                            </div>
+                            <p class="form-help-text">社内への通知に使用するメーリングリストを選択します。この情報は公開されません。</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 公開設定セクション -->
                 <div class="form-section">
                     <h2 class="section-title">公開設定</h2>
@@ -359,6 +408,8 @@ class AppProjectForm extends HTMLElement {
         this.initSkillSelection();
         this.initBlacklistSelection();
         this.initMailingListSelection();
+        this.initContactMailingListSelection();
+        this.initInternalNotificationMailingListSelection();
         this.initAiButtons();
     }
 
@@ -755,6 +806,128 @@ class AppProjectForm extends HTMLElement {
         }
     }
 
+
+    initContactMailingListSelection() {
+        const selectBtn = this.querySelector('#contact-mailing-list-btn');
+        const removeAllBtn = this.querySelector('#contact-mailing-list-remove-all');
+        const selectorComponent = this.querySelector('app-mailing-list-selector');
+        
+        if (selectBtn) {
+            selectBtn.addEventListener('click', () => {
+                if (selectorComponent) {
+                    selectorComponent.open(this.selectedContactMailingList, (newSelectedItems) => {
+                        this.selectedContactMailingList = newSelectedItems;
+                        this.renderSelectedContactMailingList();
+                    });
+                }
+            });
+        }
+
+        if (removeAllBtn) {
+            removeAllBtn.addEventListener('click', () => {
+                this.selectedContactMailingList = [];
+                this.renderSelectedContactMailingList();
+            });
+        }
+    }
+
+    renderSelectedContactMailingList() {
+        const selectedDiv = this.querySelector('#contact-mailing-list-selected');
+        const selectedList = this.querySelector('#contact-mailing-list-selected-list');
+        const selectBtn = this.querySelector('#contact-mailing-list-btn');
+
+        if (!selectedList) return;
+        
+        selectedList.innerHTML = '';
+        if (this.selectedContactMailingList.length === 0) {
+            selectedDiv.style.display = 'none';
+            if (selectBtn) selectBtn.style.display = 'flex';
+            return;
+        }
+
+        selectedDiv.style.display = 'block';
+        if (selectBtn) selectBtn.style.display = 'none';
+
+        this.selectedContactMailingList.forEach((item, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'selected-value-tag';
+            tag.innerHTML = `
+                <span class="selected-value-text">${item.name}</span>
+                <button type="button" class="selected-value-remove" data-index="${index}">×</button>
+            `;
+            selectedList.appendChild(tag);
+        });
+
+        const removeButtons = selectedList.querySelectorAll('.selected-value-remove');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const index = parseInt(button.getAttribute('data-index'));
+                this.selectedContactMailingList.splice(index, 1);
+                this.renderSelectedContactMailingList();
+            });
+        });
+    }
+
+    initInternalNotificationMailingListSelection() {
+        const selectBtn = this.querySelector('#internal-notification-mailing-list-btn');
+        const removeAllBtn = this.querySelector('#internal-notification-mailing-list-remove-all');
+        const selectorComponent = this.querySelector('app-mailing-list-selector');
+        
+        if (selectBtn) {
+            selectBtn.addEventListener('click', () => {
+                if (selectorComponent) {
+                    selectorComponent.open(this.selectedInternalNotificationMailingList, (newSelectedItems) => {
+                        this.selectedInternalNotificationMailingList = newSelectedItems;
+                        this.renderSelectedInternalNotificationMailingList();
+                    });
+                }
+            });
+        }
+
+        if (removeAllBtn) {
+            removeAllBtn.addEventListener('click', () => {
+                this.selectedInternalNotificationMailingList = [];
+                this.renderSelectedInternalNotificationMailingList();
+            });
+        }
+    }
+
+    renderSelectedInternalNotificationMailingList() {
+        const selectedDiv = this.querySelector('#internal-notification-mailing-list-selected');
+        const selectedList = this.querySelector('#internal-notification-mailing-list-selected-list');
+        const selectBtn = this.querySelector('#internal-notification-mailing-list-btn');
+
+        if (!selectedList) return;
+        
+        selectedList.innerHTML = '';
+        if (this.selectedInternalNotificationMailingList.length === 0) {
+            selectedDiv.style.display = 'none';
+            if (selectBtn) selectBtn.style.display = 'flex';
+            return;
+        }
+
+        selectedDiv.style.display = 'block';
+        if (selectBtn) selectBtn.style.display = 'none';
+
+        this.selectedInternalNotificationMailingList.forEach((item, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'selected-value-tag';
+            tag.innerHTML = `
+                <span class="selected-value-text">${item.name}</span>
+                <button type="button" class="selected-value-remove" data-index="${index}">×</button>
+            `;
+            selectedList.appendChild(tag);
+        });
+
+        const removeButtons = selectedList.querySelectorAll('.selected-value-remove');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const index = parseInt(button.getAttribute('data-index'));
+                this.selectedInternalNotificationMailingList.splice(index, 1);
+                this.renderSelectedInternalNotificationMailingList();
+            });
+        });
+    }
     getFormData() {
         return {
             recruitStatus: this.querySelector('#project-recruit-status').value,

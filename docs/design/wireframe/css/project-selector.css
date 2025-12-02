@@ -5,6 +5,10 @@
 /* モーダル基本スタイルはcommon.cssの.modalを使用 */
 
 
+.project-selector-modal {
+    z-index: 2010;
+}
+
 .project-selector-modal-content {
     width: 90%;
     max-width: 800px;
