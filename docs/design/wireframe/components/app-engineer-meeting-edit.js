@@ -257,30 +257,44 @@ class AppEngineerMeetingEdit extends HTMLElement {
                         <!-- エンジニア側参加者 -->
                         <div class="form-section">
                             <h4>エンジニア側参加者</h4>
-                            <div id="engineer-participants-selector-section">
-                                <button type="button" class="btn btn-outline-primary btn-sm" id="engineer-participants-select-btn">社員を選択</button>
+                            <div class="form-group">
+                                <label class="form-label">社員を選択</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="engineer-participants-select-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-values" id="engineer-participants-selected" style="display: none;">
+                                        <div class="selected-values-list" id="engineer-participants-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="engineer-participants-remove-all">すべて解除</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group" style="margin-top: 12px;">
                                 <label for="engineer-emails" class="form-label">メールアドレス (自由入力、カンマ区切り)</label>
                                 <textarea id="engineer-emails" class="form-textarea" rows="3" placeholder="例: tanaka@example.com, engineer@example.com"></textarea>
-                            </div>
-                            <div id="engineer-participants-display" style="margin-top: 12px;">
-                                <!-- 選択された社員が表示される -->
                             </div>
                         </div>
 
                         <!-- 案件側参加者 -->
                         <div class="form-section" style="margin-top: 20px;">
                             <h4>案件側参加者</h4>
-                            <div id="project-participants-selector-section">
-                                <button type="button" class="btn btn-outline-primary btn-sm" id="project-participants-select-btn">社員を選択</button>
+                            <div class="form-group">
+                                <label class="form-label">社員を選択</label>
+                                <div class="form-select-wrapper">
+                                    <button type="button" class="form-select-btn" id="project-participants-select-btn">
+                                        <span class="form-select-text">選択してください</span>
+                                        <span class="form-select-arrow">▼</span>
+                                    </button>
+                                    <div class="form-selected-values" id="project-participants-selected" style="display: none;">
+                                        <div class="selected-values-list" id="project-participants-selected-list"></div>
+                                        <button type="button" class="selected-value-remove-all" id="project-participants-remove-all">すべて解除</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group" style="margin-top: 12px;">
                                 <label for="project-emails" class="form-label">メールアドレス (自由入力、カンマ区切り)</label>
                                 <textarea id="project-emails" class="form-textarea" rows="3" placeholder="例: yamada@example.com, pm@example.com"></textarea>
-                            </div>
-                            <div id="project-participants-display" style="margin-top: 12px;">
-                                <!-- 選択された社員が表示される -->
                             </div>
                         </div>
                     </div>
@@ -373,7 +387,7 @@ class AppEngineerMeetingEdit extends HTMLElement {
                         </div>
                         <div class="form-group">
                             <label class="form-label">&nbsp;</label>
-                            <button type="button" class="btn btn-outline-secondary meeting-tool-setting-btn" data-round="${round.roundNumber}">面談ツール設定</button>
+                            <button type="button" class="btn btn-outline-secondary meeting-tool-setting-btn" data-round="${round.roundNumber}">参加者・設定</button>
                         </div>
                         <div class="form-group form-group-full">
                             <label for="meeting-url-${round.roundNumber}" class="form-label">面談URL</label>
@@ -881,14 +895,14 @@ class AppEngineerMeetingEdit extends HTMLElement {
 
         // テナント判定によってボタンの表示/非表示を制御（モックなので常に表示）
         // 実際の実装では、エンジニア側/案件側が自テナントかどうかを判定
-        const engineerSelectorSection = this.querySelector('#engineer-participants-selector-section');
-        const projectSelectorSection = this.querySelector('#project-participants-selector-section');
+        const engineerSelectBtn = this.querySelector('#engineer-participants-select-btn');
+        const projectSelectBtn = this.querySelector('#project-participants-select-btn');
         
         // TODO: 実際の実装では以下のようにテナント判定を行う
         // const isEngineerOwnTenant = ...; 
-        // if (engineerSelectorSection) engineerSelectorSection.style.display = isEngineerOwnTenant ? 'block' : 'none';
+        // if (engineerSelectBtn) engineerSelectBtn.style.display = isEngineerOwnTenant ? 'flex' : 'none';
         // const isProjectOwnTenant = ...;
-        // if (projectSelectorSection) projectSelectorSection.style.display = isProjectOwnTenant ? 'block' : 'none';
+        // if (projectSelectBtn) projectSelectBtn.style.display = isProjectOwnTenant ? 'flex' : 'none';
 
         modal.classList.add('active');
     }
@@ -914,10 +928,11 @@ class AppEngineerMeetingEdit extends HTMLElement {
         const round = this.meetingRounds.find(r => r.roundNumber === this.currentMeetingToolRound);
         if (!round) return;
 
-        // 既に選択されている社員を初期選択状態として渡す
-        const initialSelected = side === 'engineer' 
+        // 既に選択されている社員を初期選択状態として渡す（{id, name}の形式に変換）
+        const participants = side === 'engineer' 
             ? round.engineerParticipants.filter(p => p.id)
             : round.projectParticipants.filter(p => p.id);
+        const initialSelected = participants.map(p => ({ id: p.id, name: p.name }));
 
         employeeSelector.open(initialSelected, (selectedEmployees) => {
             // 選択された社員を反映
@@ -944,26 +959,111 @@ class AppEngineerMeetingEdit extends HTMLElement {
      * 参加者リストの表示を更新
      */
     renderParticipantsDisplay(side, participants) {
-        const displayId = side === 'engineer' ? 'engineer-participants-display' : 'project-participants-display';
-        const displayElement = this.querySelector(`#${displayId}`);
-        if (!displayElement) return;
+        const prefix = side === 'engineer' ? 'engineer-participants' : 'project-participants';
+        const selectBtn = this.querySelector(`#${prefix}-select-btn`);
+        const selectedDiv = this.querySelector(`#${prefix}-selected`);
+        const selectedList = this.querySelector(`#${prefix}-selected-list`);
+        const removeAllBtn = this.querySelector(`#${prefix}-remove-all`);
+        
+        if (!selectedList) return;
 
-        if (participants.length === 0 || !participants.some(p => p.id)) {
-            displayElement.innerHTML = '';
+        // IDを持つ参加者のみを取得
+        const employeeParticipants = participants.filter(p => p.id);
+
+        selectedList.innerHTML = '';
+        if (employeeParticipants.length === 0) {
+            selectedDiv.style.display = 'none';
+            if (selectBtn) selectBtn.style.display = 'flex';
             return;
         }
 
-        const employeeParticipants = participants.filter(p => p.id);
-        const badgesHtml = employeeParticipants.map(p => 
-            `<span class="badge badge-secondary" style="margin-right: 4px;">${p.name}</span>`
-        ).join('');
+        selectedDiv.style.display = 'block';
+        if (selectBtn) selectBtn.style.display = 'none';
 
-        displayElement.innerHTML = `
-            <div style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
-                <div style="font-size: 12px; margin-bottom: 4px; font-weight: bold;">選択済み社員:</div>
-                <div>${badgesHtml}</div>
-            </div>
-        `;
+        employeeParticipants.forEach((item, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'selected-value-tag';
+            tag.innerHTML = `
+                <span class="selected-value-text">${this.escapeHtml(item.name)}</span>
+                <button type="button" class="selected-value-remove" data-side="${side}" data-index="${index}">×</button>
+            `;
+            selectedList.appendChild(tag);
+        });
+
+        // 個別削除ボタンのイベントリスナー
+        const removeButtons = selectedList.querySelectorAll('.selected-value-remove');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const side = button.getAttribute('data-side');
+                const index = parseInt(button.getAttribute('data-index'));
+                this.removeParticipant(side, index);
+            });
+        });
+
+        // 「すべて解除」ボタンのイベントリスナー
+        if (removeAllBtn) {
+            // 既存のイベントリスナーを削除してから追加
+            const newRemoveAllBtn = removeAllBtn.cloneNode(true);
+            removeAllBtn.parentNode.replaceChild(newRemoveAllBtn, removeAllBtn);
+            newRemoveAllBtn.addEventListener('click', () => {
+                this.removeAllParticipants(side);
+            });
+        }
+    }
+
+    /**
+     * 参加者を個別に削除
+     */
+    removeParticipant(side, index) {
+        const round = this.meetingRounds.find(r => r.roundNumber === this.currentMeetingToolRound);
+        if (!round) return;
+
+        const participants = side === 'engineer' ? round.engineerParticipants : round.projectParticipants;
+        const employeeParticipants = participants.filter(p => p.id);
+        
+        if (index >= 0 && index < employeeParticipants.length) {
+            const removedParticipant = employeeParticipants[index];
+            // IDを持つ参加者から削除
+            const updatedParticipants = participants.filter(p => p.id !== removedParticipant.id);
+            
+            if (side === 'engineer') {
+                round.engineerParticipants = updatedParticipants;
+            } else {
+                round.projectParticipants = updatedParticipants;
+            }
+            
+            this.renderParticipantsDisplay(side, updatedParticipants);
+        }
+    }
+
+    /**
+     * すべての参加者を削除
+     */
+    removeAllParticipants(side) {
+        const round = this.meetingRounds.find(r => r.roundNumber === this.currentMeetingToolRound);
+        if (!round) return;
+
+        const participants = side === 'engineer' ? round.engineerParticipants : round.projectParticipants;
+        // IDを持たない参加者（メールアドレスのみ）は保持
+        const emailOnlyParticipants = participants.filter(p => !p.id);
+        
+        if (side === 'engineer') {
+            round.engineerParticipants = emailOnlyParticipants;
+        } else {
+            round.projectParticipants = emailOnlyParticipants;
+        }
+        
+        this.renderParticipantsDisplay(side, emailOnlyParticipants);
+    }
+
+    /**
+     * HTMLエスケープ
+     */
+    escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 
     /**
