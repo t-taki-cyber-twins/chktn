@@ -430,6 +430,17 @@ app-sidebar {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sidebar-title input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-left: auto;
 }
 
 .sidebar-menu {
