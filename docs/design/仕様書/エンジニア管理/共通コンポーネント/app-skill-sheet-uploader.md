@@ -42,6 +42,7 @@ PDF、Word、Excel形式のファイルに対応しています。
 | app-skill-sheet-uploader | ファイル情報表示 | 選択されたファイルの情報を表示する | 必須 | システム | |
 | app-skill-sheet-uploader | アップロード実行 | ファイルのアップロードのみを行う | 必須 | ユーザー | |
 | app-skill-sheet-uploader | AI解析実行 | ファイルをアップロードし、AI解析を行う | 必須 | ユーザー | 現状はモック実装 |
+| app-skill-sheet-uploader | AI解析エージェント作成 | AI解析用エージェントを生成する | 必須 | システム | |
 | app-skill-sheet-uploader | 進捗表示 | 解析の進捗状況をプログレスバーで表示する | 必須 | システム | |
 
 ## ユーザ確認事項

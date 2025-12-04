@@ -261,7 +261,14 @@ class AppEngineerForm extends HTMLElement {
                                     <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
                                         <label for="skill-memo" class="form-label" style="margin-bottom: 0;">メモ</label>
                                         <button type="button" class="btn btn-info btn-sm" id="extract-skill-memo-btn"><i class="icon-ai"></i>スキルメモから情報抽出</button>
+                                        &nbsp;
+                                        <select id="skill-memo-template-select" class="form-select" style="width: auto; display: inline-block;">
+                                            <option value="">テンプレート選択</option>
+                                            <option value="1">通常スキルメモ</option>
+                                            <option value="2">AIスキルメモ</option>
+                                        </select>
                                         <button type="button" class="btn btn-success btn-sm" id="generate-skill-memo-btn"><i class="icon-ai"></i>スキルメモを生成</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" id="edit-skill-memo-template-btn">スキルメモテンプレート編集</button>
                                     </div>
                                     <textarea id="skill-memo" class="form-textarea" rows="2" placeholder="スキルに関するメモを入力してください"></textarea>
                                 </div>
