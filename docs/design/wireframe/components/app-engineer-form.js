@@ -98,20 +98,7 @@ class AppEngineerForm extends HTMLElement {
                                 <label for="experience-years" class="form-label">経験年数</label>
                                 <input type="number" id="experience-years" name="experience-years" class="form-input" placeholder="年" min="0" step="0.5">
                             </div>
-                            <div class="form-group form-group-full">
-                                <label class="form-label">ブラックリスト</label>
-                                <div class="form-select-wrapper">
-                                    <button type="button" class="form-select-btn" id="blacklist-btn">
-                                        <span class="form-select-text">選択してください</span>
-                                        <span class="form-select-arrow">▼</span>
-                                    </button>
-                                    <div class="form-selected-values" id="blacklist-selected" style="display: none;">
-                                        <div class="selected-values-list" id="blacklist-selected-list"></div>
-                                        <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
-                                    </div>
-                                </div>
-                                <p class="form-help-text">このエンジニアを検索対象から除外する会社を選択します。</p>
-                            </div>
+
                             <div class="form-group form-group-full">
                                 <label for="engineer-note" class="form-label">備考</label>
                                 <textarea id="engineer-note" name="engineer-note" class="form-textarea" rows="5" placeholder="エンジニアに関する備考を入力してください"></textarea>
@@ -145,7 +132,7 @@ class AppEngineerForm extends HTMLElement {
                                         <button type="button" class="selected-value-remove-all" id="contact-mailing-list-remove-all">すべて解除</button>
                                     </div>
                                 </div>
-                                <p class="form-help-text">エンジニアへの連絡に使用するメーリングリストを選択します。</p>
+                                <p class="form-help-text">社内連絡メールに使用するメーリングリストを選択します。</p>
                             </div>
                             <div class="form-group form-group-full">
                                 <label for="contact-email-custom" class="form-label">連絡先メールアドレス (自由入力)</label>
@@ -171,6 +158,41 @@ class AppEngineerForm extends HTMLElement {
                                     </div>
                                 </div>
                                 <p class="form-help-text">社内への通知に使用するメーリングリストを選択します。この情報は公開されません。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 公開設定セクション -->
+                    <div class="form-section">
+                        <h2 class="form-section-title">公開設定</h2>
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label class="form-label">公開設定</label>
+                                        <div class="form-checkbox-group">
+                                            <label class="form-checkbox-label">
+                                                <input type="checkbox" id="is-public" name="is-public" class="form-checkbox">
+                                                <span>公開する</span>
+                                            </label>
+                                        </div>
+                                        <p class="form-help-text">公開にチェックを入れると、他の会社からもこのエンジニアを検索できるようになります。</p>
+                                    </div>
+                                    <div class="form-col">
+                                        <label for="blacklist" class="form-label">ブラックリスト</label>
+                                        <div class="form-select-wrapper">
+                                            <button type="button" class="form-select-btn" id="blacklist-btn">
+                                                <span class="form-select-text">選択してください</span>
+                                                <span class="form-select-arrow">▼</span>
+                                            </button>
+                                            <div class="form-selected-values" id="blacklist-selected" style="display: none;">
+                                                <div class="selected-values-list" id="blacklist-selected-list"></div>
+                                                <button type="button" class="selected-value-remove-all" id="blacklist-remove-all">すべて解除</button>
+                                            </div>
+                                        </div>
+                                        <p class="form-help-text">このエンジニアを検索対象から除外する会社を選択します。</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -256,21 +278,6 @@ class AppEngineerForm extends HTMLElement {
                                         <option value="4">4（エキスパート）</option>
                                         <option value="5">5（マスター）</option>
                                     </select>
-                                </div>
-                                <div class="form-group form-group-full">
-                                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
-                                        <label for="skill-memo" class="form-label" style="margin-bottom: 0;">メモ</label>
-                                        <button type="button" class="btn btn-info btn-sm" id="extract-skill-memo-btn"><i class="icon-ai"></i>スキルメモから情報抽出</button>
-                                        &nbsp;
-                                        <select id="skill-memo-template-select" class="form-select" style="width: auto; display: inline-block;">
-                                            <option value="">テンプレート選択</option>
-                                            <option value="1">通常スキルメモ</option>
-                                            <option value="2">AIスキルメモ</option>
-                                        </select>
-                                        <button type="button" class="btn btn-success btn-sm" id="generate-skill-memo-btn"><i class="icon-ai"></i>スキルメモを生成</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" id="edit-skill-memo-template-btn">スキルメモテンプレート編集</button>
-                                    </div>
-                                    <textarea id="skill-memo" class="form-textarea" rows="2" placeholder="スキルに関するメモを入力してください"></textarea>
                                 </div>
                                 <div class="form-group form-group-full">
                                     <button type="button" class="btn btn-primary skill-add-btn" id="skill-add-btn">追加</button>

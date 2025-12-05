@@ -10,14 +10,16 @@ document.addEventListener("DOMContentLoaded", function () {
   initMeetingEdit();
 
   // 面談追加ボタン
-  const addMeetingBtn = document.querySelector(".add-meeting-btn");
-  if (addMeetingBtn) {
-    addMeetingBtn.addEventListener("click", function() {
-      const meetingEditComponent = document.querySelector("app-engineer-meeting-edit");
-      if (meetingEditComponent) {
-        // 新規作成モードで開く
-        meetingEditComponent.openForNew();
-      }
+  const addMeetingBtns = document.querySelectorAll(".add-meeting-btn");
+  if (addMeetingBtns) {
+    addMeetingBtns.forEach(btn => {
+      btn.addEventListener("click", function() {
+        const meetingEditComponent = document.querySelector("app-engineer-meeting-edit");
+        if (meetingEditComponent) {
+          // 新規作成モードで開く
+          meetingEditComponent.openForNew();
+        }
+      });
     });
   }
 
